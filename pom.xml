@@ -23,6 +23,12 @@
       <artifactId>log4j</artifactId>
       <version>1.2.8</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-shade-plugin</artifactId>
+      <version>3.2.4</version>
+      <type>maven-plugin</type>
+    </dependency>
   </dependencies>
 
   <build>
