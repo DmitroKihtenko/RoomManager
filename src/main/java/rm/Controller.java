@@ -1,4 +1,4 @@
-package org.sumdu.rm;
+package main.java.rm;
 
 public class Controller {
 }
