@@ -100,11 +100,11 @@ public abstract class ConnectionsList {
     Stream<Integer> getFirstConnections(int firstId) {
         if(!firstConnections.containsKey(firstId)) {
             logger.error("Attempt to get connections for id " +
-                    firstId + "that does not exist");
+                    firstId + " that does not exist");
 
             throw new IllegalArgumentException(
                     "Attempt to get connections for id " + firstId +
-                            "that does not exist"
+                            " that does not exist"
             );
         }
         return firstConnections.get(firstId).stream();
@@ -118,11 +118,11 @@ public abstract class ConnectionsList {
     Stream<Integer> getSecondConnections(int secondId) {
         if(!secondConnections.containsKey(secondId)) {
             logger.error("Attempt to get connections for id " +
-                    secondId + "that does not exist");
+                    secondId + " that does not exist");
 
             throw new IllegalArgumentException(
                     "Attempt to get connections for id " + secondId +
-                            "that does not exist"
+                            " that does not exist"
             );
         }
 
