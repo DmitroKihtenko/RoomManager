@@ -10,7 +10,7 @@ import java.util.TreeSet;
  */
 public class FastMutableConnections extends ConnectionsList {
     public FastMutableConnections() {
-        super(0, 0);
+        super(1, 1);
     }
 
     @Override
