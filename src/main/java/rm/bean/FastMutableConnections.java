@@ -5,6 +5,9 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+/**
+ * Successor class for ConnectionsList class that realizes fast methods of creating and removing connections
+ */
 public class FastMutableConnections extends ConnectionsList {
     public FastMutableConnections() {
         super(0, 0);
