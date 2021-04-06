@@ -38,9 +38,9 @@
     <copyright>2021, Sumy State University</copyright>
     <productVersion>1.0.0.0</productVersion>
     <txtProductVersion>1.0-SNAPSHOT</txtProductVersion>
-    <productName>Room Manager</productName>
+    <productName>main.java.rm.bean.Room Manager</productName>
     <companyName>Sumy State University</companyName>
-    <internalName>Room Manager</internalName>
+    <internalName>main.java.rm.bean.Room Manager</internalName>
     <originalFilename>RoomManager.exe</originalFilename>
     <trademarks></trademarks>
     <language>ENGLISH_US</language>
