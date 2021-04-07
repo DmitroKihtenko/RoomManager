@@ -11,8 +11,8 @@ public abstract class ConnectionsList {
     private static final Logger logger =
             Logger.getLogger(ConnectionsList.class);
 
-    private final Map<Integer, Set<Integer>> firstConnections;
-    private final Map<Integer, Set<Integer>> secondConnections;
+    private Map<Integer, Set<Integer>> firstConnections;
+    private Map<Integer, Set<Integer>> secondConnections;
 
     /**
      * Abstract method that uses to create set that contains list of connected ids
@@ -28,11 +28,18 @@ public abstract class ConnectionsList {
     protected abstract Map<Integer, Set<Integer>> createMap(int capacity);
 
     /**
-     * Creates class and initializes start capacity for map containers
-     * @param firstAmount initial capacity for map of first ids, positive value
-     * @param secondAmount initial capacity for map of second ids, positive value
+     * Creates class and initializes containers with start capacity 1. Does not limit the quantity of objects
      */
-    public ConnectionsList(int firstAmount, int secondAmount) {
+    public ConnectionsList() {
+        initCapacity(1, 1);
+    }
+
+    /**
+     * Cleared list and initializes it with new capacity of objects. Does not limit the quantity of objects
+     * @param firstAmount capacity of first objects
+     * @param secondAmount capacity of second objects
+     */
+    public void initCapacity(int firstAmount, int secondAmount) {
         if(firstAmount <= 0) {
             logger.error("Initial amount of first objects has " +
                     "non-positive value");

@@ -9,10 +9,6 @@ import java.util.TreeSet;
  * Successor class for ConnectionsList class that realizes fast methods of creating and removing connections
  */
 public class FastMutableConnections extends ConnectionsList {
-    public FastMutableConnections() {
-        super(1, 1);
-    }
-
     @Override
     protected Set<Integer> createSet() {
         return new TreeSet<>();
