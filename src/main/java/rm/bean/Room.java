@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 class Room extends IdHolder {
 
     IntegerProperty roomNum;
-    BooleanProperty usyEmpty;
+    BooleanProperty useEmpty;
     StringProperty corps;
     StringProperty whoTookTheKeyOrFree;
     BooleanProperty roomAvailable;
