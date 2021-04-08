@@ -1,5 +1,7 @@
 package main.java.rm.bean;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import main.java.rm.exceptions.ConnectionDoesNotExistException;
 import org.apache.log4j.Logger;
 
@@ -13,6 +15,7 @@ public abstract class ConnectionsList {
 
     private Map<Integer, Set<Integer>> firstConnections;
     private Map<Integer, Set<Integer>> secondConnections;
+    private BooleanProperty changed;
 
     /**
      * Abstract method that uses to create set that contains list of connected ids
@@ -60,6 +63,11 @@ public abstract class ConnectionsList {
             );
         }
         secondConnections = createMap(secondAmount);
+        if(changed == null) {
+            changed = new SimpleBooleanProperty(true);
+        } else {
+            changed.set(!changed.get());
+        }
     }
 
     /**
@@ -77,6 +85,8 @@ public abstract class ConnectionsList {
             secondConnections.put(secondId, createSet());
         }
         secondConnections.get(secondId).add(firstId);
+
+        changed.set(!changed.get());
     }
 
     /**
@@ -97,6 +107,8 @@ public abstract class ConnectionsList {
         }
         firstConnections.get(firstId).remove(secondId);
         secondConnections.get(secondId).remove(firstId);
+
+        changed.set(!changed.get());
     }
 
     /**
@@ -134,5 +146,13 @@ public abstract class ConnectionsList {
         }
 
         return secondConnections.get(secondId).stream();
+    }
+
+    /**
+     * Used to track any changes in connections list
+     * @return boolean property for java fx mvc
+     */
+    public BooleanProperty changedProperty() {
+        return changed;
     }
 }
