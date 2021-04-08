@@ -6,6 +6,10 @@ public class User {
     private StringProperty name;
     private String password;
 
+    public User(String name) {
+
+    }
+
     public void setName(String name) {
 
     }
@@ -15,6 +19,10 @@ public class User {
     }
 
     public String getName() {
+        return null;
+    }
+
+    public StringProperty nameProperty() {
         return null;
     }
 
