@@ -1,50 +1,151 @@
 package main.java.rm.bean;
 
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.apache.log4j.Logger;
 
-class Teacher extends TeacherInfo {
-    private static final Logger logger = Logger.getLogger(Room.class);
+class Teacher extends IdHolder {
 
-    private BooleanProperty usesRoom;
-    private IntegerProperty usedRoomId;
+    StringProperty name;
+    StringProperty surname;
+    StringProperty fatherName;
+    IntegerProperty numberRoomWhichHasKey;
 
-    public Teacher(String name) {
-        super(name);
+    Teacher() {
+
+        name = new SimpleStringProperty("null");
+        surname = new SimpleStringProperty("null");
+        fatherName = new SimpleStringProperty("null");
+        numberRoomWhichHasKey = new SimpleIntegerProperty(0);
+
     }
 
-    public boolean usesRoom() {
-        return usesRoom.get();
-    }
+    private static final Logger logger = Logger.getLogger(Teacher.class);
 
-    public BooleanProperty usesRoomProperty() {
-        return usesRoom;
-    }
-
-    public void setUsedRoom(int roomId) {
-        this.usesRoom.set(true);
-        this.usedRoomId.set(roomId);
-    }
-
-    public void setNotUsedRoom() {
-        this.usesRoom.set(false);
-        this.usedRoomId.set(0);
+    /**
+     * Check string for invalid chatacters.
+     *
+     * @param check string to be ckecked
+     */
+    public boolean checkString(String check) {
+        for (int i = 0; i < check.length(); i++) {
+            if (!Character.isLetter(check.charAt(i)))
+                return false;
+        }
+        return true;
     }
 
     /**
-     * Getter for room id that teacher is using at the moment
-     * @return room id that teacher is use or null if teacher is not use any room
+     * Initialize neme change
+     *
+     * @param name string teacher`s name, not null, onli letter
      */
-    public Integer getUsedRoomId() {
-        if (!usesRoom.get()) {
-            logger.warn("Attempt to get room id while teacher does not use it");
+    public void setName(String name) {
+        if (name == null || !checkString(name)) {
+            logger.error("Incorrect value of the variable name" + name);
 
-            return null;
+            throw new IllegalArgumentException(
+                    "Class main.java.rm.bean.Teacher Error" +
+                            "Incorrect value of the variable name:" + name
+            );
+
+        } else {
+            this.name.set(name);
         }
-        return usedRoomId.get();
     }
 
-    public IntegerProperty usedRoomIdProperty() {
-        return usedRoomId;
+    /**
+     * Initialize surname change
+     *
+     * @param surname string teacher`s surname, not null, onli letter
+     */
+    public void setSurname(String surname) {
+        if (surname == null || !checkString(surname)) {
+            logger.error("Incorrect value of the variable surname" + surname);
+
+            throw new IllegalArgumentException(
+                    "Class main.java.rm.bean.Teacher Error" +
+                            "Incorrect value of the variable surname:" + surname
+            );
+
+        } else {
+            this.surname.set(surname);
+        }
+    }
+
+    /**
+     * Initialize fatherName change
+     *
+     * @param fatherName string teacher`s fatherName, not null, onli letter
+     */
+    public void setFatherName(String fatherName) {
+        if (fatherName == null || !checkString(fatherName)) {
+            logger.error("Incorrect value of the variable fatherName" + fatherName);
+
+            throw new IllegalArgumentException(
+                    "Class main.java.rm.bean.Teacher Error" +
+                            "Incorrect value of the variable fatherName" + fatherName
+            );
+
+        } else {
+            this.fatherName.set(fatherName);
+        }
+    }
+
+    /**
+     * Initialize numberRoomWhichHasKey change
+     *
+     * @param numberRoomWhichHasKey int number room, more than 1
+     */
+    public void setNumberRoomWhichHasKey(int numberRoomWhichHasKey) {
+        if (numberRoomWhichHasKey < 1) {
+            logger.error("Incorrect value of the variable numberRoomWhichHasKey" + numberRoomWhichHasKey);
+
+            throw new IllegalArgumentException(
+                    "Class main.java.rm.bean.Teacher Error" +
+                            "Incorrect value of the variable numberRoomWhichHasKey:" + numberRoomWhichHasKey
+            );
+
+        } else {
+            this.numberRoomWhichHasKey.set(numberRoomWhichHasKey);
+        }
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname.get();
+    }
+
+    public StringProperty surnameProperty() {
+        return surname;
+    }
+
+    public String getFatherName() {
+        return fatherName.get();
+    }
+
+    public StringProperty fatherNameProperty() {
+        return fatherName;
+    }
+
+    public int getNumberRoomWhichHasKey() {
+        return numberRoomWhichHasKey.get();
+    }
+
+    public IntegerProperty numberRoomWhichHasKeyProperty() {
+        return numberRoomWhichHasKey;
+    }
+
+    public static Logger getLogger() {
+        return logger;
     }
 }
