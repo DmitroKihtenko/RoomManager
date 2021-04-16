@@ -1,111 +1,95 @@
 package main.java.rm.view;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import org.apache.log4j.Logger;
 
-public class ItemList extends VBox {
-    private final static Logger logger =
-            Logger.getLogger(ItemList.class);
+public interface ItemList {
+    /**
+     * Puts items of list in container
+     * @param itemsList list of items, not null
+     */
+    void setItems(Iterable<SelectItem> itemsList);
 
-    private final ObjectProperty<SelectItem> onSelected;
-    private String selectedStyle;
+    /**
+     * Sets as selected item by selectable id
+     * @param selectableId selectable id of item
+     * @return true if item was successfully selected
+     */
+    boolean setSelectedById(Integer selectableId);
 
-    public ItemList() {
-        onSelected = new SimpleObjectProperty<>(null);
-    }
+    /**
+     * Sets as selected item by index in list
+     * @param index index of item in list
+     * @return true if item was successfully selected
+     */
+    boolean setSelectedByIndex(int index);
 
-    protected void manageSelection(SelectItem item) {
-        SelectItem lastSelected = onSelected.get();
-        ObservableList<String> itemStyles =
-                item.getStylesheets();
-        ObservableList<String> selectedStyles;
+    /**
+     * Sets as selected null value
+     * @return true if selected value was changed
+     */
+    boolean setNoSelected();
 
-        if(lastSelected != null && selectedStyle != null) {
-            selectedStyles = lastSelected.getStylesheets();
-            if (!selectedStyles.isEmpty()) {
-                selectedStyles.remove(selectedStyle);
-            }
-        }
+    /**
+     * Sets the stylesheet applied to the selected list item
+     * @param selectedStyle Stylesheet string in external form
+     */
+    void setSelectedStylesheet(String selectedStyle);
 
-        onSelected.set(item);
+    /**
+     * Adds a new item to the end of list
+     * @param item new item, not null
+     */
+    void pushNewItem(SelectItem item);
 
-        if(selectedStyle != null) {
-            itemStyles.add(selectedStyle);
-        }
-    }
+    /**
+     * Removes first match of item by its id
+     * @param selectableId id of item to delete
+     * @return true if item was deleted
+     */
+    boolean removeItem(Integer selectableId);
 
-    public String getSelectedStyle() {
-        return selectedStyle;
-    }
+    /**
+     * Indicates whether an item with specified id is contained in the list
+     * @param selectableId id of item
+     * @return index of item if it exists, otherwise return null
+     */
+    Integer contains(Integer selectableId);
 
-    public void setSelectedStyle(String selectedStyle) {
-        if(selectedStyle == null) {
-            logger.error("Selected style parameter has null value");
+    /**
+     * Returns stylesheet string if it has been set earlier
+     * @return Stylesheet string in external form, can be null
+     */
+    String getSelectedStylesheet();
 
-            throw new IllegalArgumentException(
-                    "Selected style parameter has null value"
-            );
-        }
-        this.selectedStyle = selectedStyle;
-    }
+    /**
+     * Finds and returns first match item in item list by selectable id
+     * @param selectableId selectable id of item to find
+     * @return item by id if it was found, otherwise returns null
+     */
+    SelectItem getItemById(Integer selectableId);
 
-    public void setItems(Iterable<SelectItem> itemsList) {
-        if(itemsList == null) {
-            logger.error("Items list parameter has null value");
+    /**
+     * Finds and returns item in item list by order index
+     * @param index index of item to find
+     * @return item by index if it was found, otherwise returns null
+     */
+    SelectItem getItemByIndex(int index);
 
-            throw new IllegalArgumentException(
-                    "Items list parameter has null value"
-            );
-        }
-        ObservableList<Node> children = this.getChildren();
-        String parentStylesheet = null;
-        if(this.getStylesheets().size() != 0) {
-            parentStylesheet = getStylesheets().
-                    get(getStylesheets().size() - 1);
-        }
+    /**
+     * Returns property of selected item, that changes if another element is selected
+     * @return Object property of selected item
+     */
+    ObjectProperty<SelectItem> onSelectedProperty();
 
-        for(SelectItem item : itemsList) {
-            if(parentStylesheet != null && item.getStylesheets().
-                    isEmpty()) {
-                item.getStylesheets().add(parentStylesheet);
-            }
-            item.onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    manageSelection(item);
-                }
-            });
-            children.add(item);
-        }
-    }
+    /**
+     * Returns the currently selected item
+     * @return Currently selected item if it was selected, otherwise returns null
+     */
+    SelectItem getSelectedItem();
 
-    public SelectItem getItemById(Integer selectableId) {
-        ObservableList<Node> children = this.getChildren();
-        SelectItem item;
-        for(Node node : children) {
-            item = (SelectItem) node;
-            if(item.getSelectableId().equals(selectableId)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public SelectItem getItemByIndex(int index) {
-        return (SelectItem) this.getChildren().get(index);
-    }
-
-    public ObjectProperty<SelectItem> onSelectedProperty() {
-        return this.onSelected;
-    }
-
-    public SelectItem getSelectedItem() {
-        return this.onSelected.get();
-    }
+    /**
+     * Returns size of current items list
+     * @return size of current items list
+     */
+    int getSize();
 }
