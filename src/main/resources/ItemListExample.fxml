@@ -13,7 +13,7 @@
             fx:controller="main.java.rm.ItemListExample"
             prefHeight="400.0" prefWidth="600.0">
     <HBox>
-        <ScrollPane>
+        <ScrollPane prefViewportHeight="200" prefViewportWidth="78">
             <VItemList fx:id="teachers" stylesheets="/itemsList.css"/>
         </ScrollPane>
         <Label fx:id="selectedString">

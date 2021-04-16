@@ -14,7 +14,7 @@ public class HItemList extends HBox implements ItemList {
             Logger.getLogger(HItemList.class);
 
     private final ObjectProperty<SelectItem> onSelected;
-    private String selectedStyle;
+    private String selectionStyle;
 
     public HItemList() {
         onSelected = new SimpleObjectProperty<>(null);
@@ -28,28 +28,28 @@ public class HItemList extends HBox implements ItemList {
         }
         ObservableList<String> selectedStyles;
 
-        if(lastSelected != null && selectedStyle != null) {
+        if(lastSelected != null && selectionStyle != null) {
             selectedStyles = lastSelected.getStylesheets();
             if (!selectedStyles.isEmpty()) {
-                selectedStyles.remove(selectedStyle);
+                selectedStyles.remove(selectionStyle);
             }
         }
 
         onSelected.set(item);
 
-        if(item != null && selectedStyle != null) {
-            itemStyles.add(selectedStyle);
+        if(item != null && selectionStyle != null) {
+            itemStyles.add(selectionStyle);
         }
     }
 
     @Override
-    public String getSelectedStylesheet() {
-        return selectedStyle;
+    public String getSelectionStylesheet() {
+        return selectionStyle;
     }
 
     @Override
-    public void setSelectedStylesheet(String selectedStyle) {
-        if(selectedStyle == null) {
+    public void setSelectionStylesheet(String selectionStyle) {
+        if(selectionStyle == null) {
             logger.error("Selected stylesheet parameter has " +
                     "null value");
 
@@ -57,7 +57,7 @@ public class HItemList extends HBox implements ItemList {
                     "Selected stylesheet parameter has null value"
             );
         }
-        this.selectedStyle = selectedStyle;
+        this.selectionStyle = selectionStyle;
     }
 
     @Override
@@ -133,6 +133,7 @@ public class HItemList extends HBox implements ItemList {
         for(Node node : items) {
             item = (SelectItem) node;
             if(item.getSelectableId().equals(selectableId)) {
+                manageSelection(item);
                 onSelected.set(item);
                 return true;
             }
@@ -152,6 +153,7 @@ public class HItemList extends HBox implements ItemList {
         for(Node node : items) {
             if(counter == index) {
                 item = (SelectItem) node;
+                manageSelection(item);
                 onSelected.set(item);
                 return true;
             }
@@ -165,6 +167,7 @@ public class HItemList extends HBox implements ItemList {
         if(onSelected.get() == null) {
             return false;
         }
+        manageSelection(null);
         onSelected.set(null);
         return true;
     }

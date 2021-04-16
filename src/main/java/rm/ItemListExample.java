@@ -39,6 +39,9 @@ public class ItemListExample implements Initializable {
         if(selectedItem != null) {
             selectedTeacher.set(allTeachers.get(selectedItem.getSelectableId()));
             selectedString.setText(selectedTeacher.get().getName());
+        } else {
+            selectedTeacher.set(null);
+            selectedString.setText("No selected");
         }
     }
 
@@ -51,7 +54,7 @@ public class ItemListExample implements Initializable {
             e.printStackTrace();
             allTeachers = new HashMap<>();
         }
-        teachers.setSelectedStylesheet(getClass().getResource("/selectedItem.css").toExternalForm());
+        teachers.setSelectionStylesheet(getClass().getResource("/selectedItem.css").toExternalForm());
         teachers.onSelectedProperty().addListener(new ChangeListener<SelectItem>() {
             @Override
             public void changed(ObservableValue<? extends SelectItem> observableValue, SelectItem selectItem, SelectItem t1) {

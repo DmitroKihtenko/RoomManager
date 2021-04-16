@@ -31,9 +31,9 @@ public interface ItemList {
 
     /**
      * Sets the stylesheet applied to the selected list item
-     * @param selectedStyle Stylesheet string in external form
+     * @param selectionStylesheet Stylesheet string in external form
      */
-    void setSelectedStylesheet(String selectedStyle);
+    void setSelectionStylesheet(String selectionStylesheet);
 
     /**
      * Adds a new item to the end of list
@@ -59,7 +59,7 @@ public interface ItemList {
      * Returns stylesheet string if it has been set earlier
      * @return Stylesheet string in external form, can be null
      */
-    String getSelectedStylesheet();
+    String getSelectionStylesheet();
 
     /**
      * Finds and returns first match item in item list by selectable id
