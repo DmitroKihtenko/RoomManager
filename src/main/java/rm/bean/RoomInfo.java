@@ -4,24 +4,25 @@ import javafx.beans.property.*;
 import main.java.rm.service.NameLogic;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class RoomInfo extends IdHolder {
     private static final Logger logger =
             Logger.getLogger(RoomInfo.class);
 
     private final StringProperty number;
-    private HousingInfo housing;
+    private IntegerProperty housingId;
     private final BooleanProperty isUsed;
     private final StringProperty notUsedReason;
 
     /**
      * Constructor for RoomInfo class objects
      * @param number number of room, similarly parameter to setter {@link #setNumber(String)}
-     * @param housing housing of room, similarly parameter to setter {@link #setHousing(HousingInfo)}
      */
-    public RoomInfo(String number, HousingInfo housing) {
+    public RoomInfo(String number) {
         this.number = new SimpleStringProperty();
         setNumber(number);
-        setHousing(housing);
+        housingId = new SimpleIntegerProperty(Integer.MIN_VALUE);
         this.isUsed = new SimpleBooleanProperty(true);
         this.notUsedReason = new SimpleStringProperty("");
     }
@@ -63,23 +64,23 @@ public class RoomInfo extends IdHolder {
         this.number.set(number);
     }
 
-    public HousingInfo getHousing() {
-        return housing;
+    /**
+     * Returns id of housing object in which this room located
+     * @return if room located in some housing returns its id otherwise returns null
+     */
+    public Integer getHousingId() {
+        if(housingId.get() == Integer.MIN_VALUE) {
+            return null;
+        }
+        return housingId.get();
     }
 
     /**
-     * Setter for housing object
-     * @param housing housing object, not null
+     * Setter for id of housing object
+     * @param housingId id of housing object
      */
-    public void setHousing(HousingInfo housing) {
-        if(housing == null) {
-            logger.error("Room housing parameter has null value");
-
-            throw new IllegalArgumentException(
-                    "Room housing parameter has null value"
-            );
-        }
-        this.housing = housing;
+    public void setHousingId(Integer housingId) {
+        this.housingId.set(Objects.requireNonNullElse(housingId, Integer.MIN_VALUE));
     }
 
     public boolean isUsed() {
@@ -100,7 +101,7 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Getter for reason if room can't be used
-     * @return if room can't be used returns reason else returns empty string
+     * @return if room can't be used returns reason otherwise returns empty string
      */
     public String getNotUsedReason() {
         return notUsedReason.get();
@@ -108,6 +109,10 @@ public class RoomInfo extends IdHolder {
 
     public StringProperty notUsedReasonProperty() {
         return notUsedReason;
+    }
+
+    public IntegerProperty housingIdProperty() {
+        return housingId;
     }
 
     /**
