@@ -1,9 +1,9 @@
 package main.java.rm.database;
 
 public interface RTDatabaseTables {
-    String TEACHERS_TABLE = "Teachers";
-    String ROOMS_TABLE = "Rooms";
-    String HOUSINGS_TABLE = "Housings";
-    String RT_ACCESS_TABLE = "RTAccess";
-    String INFO_TABLE = "Database";
+    String TEACHERS_TABLE = "teachers";
+    String ROOMS_TABLE = "rooms";
+    String HOUSINGS_TABLE = "housings";
+    String RT_ACCESS_TABLE = "rtaccess";
+    String INFO_TABLE = "info";
 }
