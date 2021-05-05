@@ -1,7 +1,7 @@
 package main.java.rm.threads;
 
 import main.java.rm.bean.Notifications;
-import main.java.rm.database.DatabaseChangesInfo;
+import main.java.rm.database.DbChangesInfo;
 import org.apache.log4j.Logger;
 
 public class DatabaseCheck implements ThreadOperation {
@@ -26,15 +26,15 @@ public class DatabaseCheck implements ThreadOperation {
         }
     }
     private CheckInterval checkInterval;
-    private DatabaseChangesInfo databaseChanges;
+    private DbChangesInfo databaseChanges;
     private Notifications notifications;
 
-    public DatabaseCheck(DatabaseChangesInfo databaseChanges,
+    public DatabaseCheck(DbChangesInfo databaseChanges,
                          Notifications notifications) {
 
     }
 
-    public void setDatabaseChanges(DatabaseChangesInfo databaseChanges) {
+    public void setDatabaseChanges(DbChangesInfo databaseChanges) {
 
     }
 

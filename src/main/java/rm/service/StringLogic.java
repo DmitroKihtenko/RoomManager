@@ -2,32 +2,28 @@ package main.java.rm.service;
 
 import org.apache.log4j.Logger;
 
-public class NameLogic {
-
-    private static final Logger logger = Logger.getLogger(NameLogic.class);
-
+public class StringLogic {
     /**
      * Indicates whether the name does not contain only those symbols that can't be visible on screen
-     *
-     * @param name string of name
-     * @return true if contains only of symbols that can't be visible on screen
+     * @param parameter string of name
      */
-    static public boolean isVisibleName(String name) {
+    static public void isVisible(String parameter,
+                                    String name, Logger logger) {
 
         boolean checkFlag1 = true, checkFlag2 = true, checkFlag3 = true, retur = true;
 
-        for (int i = 0; i < name.length(); i++) {
+        for (int i = 0; i < parameter.length(); i++) {
 
-            if (name.charAt(i) != ' ')
+            if (parameter.charAt(i) != ' ')
                 checkFlag1 = false;
-            if (name.charAt(i) == '\n')
+            if (parameter.charAt(i) == '\n')
                 checkFlag2 = false;
-            if (name.charAt(i) == '\t')
+            if (parameter.charAt(i) == '\t')
                 checkFlag3 = false;
 
         }
         if (checkFlag1 || !checkFlag2 || !checkFlag3
-                || name.isEmpty() || name == null) {
+                || parameter.isEmpty() || parameter == null) {
 
             retur = false;
 
@@ -39,32 +35,29 @@ public class NameLogic {
                             " or parameter has null value"
             );
         }
-
-        return retur;
     }
 
     /**
      * Indicates whether the phrase consists of only one whole word
-     *
-     * @param phrase phrase string
-     * @return true if the phrase consists of only one whole word
+     * @param parameter phrase string
      */
-    static public boolean isWholeWord(String phrase) {
+    static public void isWholeWord(String parameter,
+                                      String name, Logger logger) {
 
         boolean checkFlag1 = true, checkFlag2 = true, checkFlag3 = true, retur = true;
 
-        for (int i = 0; i < phrase.length(); i++) {
+        for (int i = 0; i < parameter.length(); i++) {
 
-            if (phrase.charAt(i) == ' ')
+            if (parameter.charAt(i) == ' ')
                 checkFlag1 = false;
-            if (phrase.charAt(i) == '\n')
+            if (parameter.charAt(i) == '\n')
                 checkFlag2 = false;
-            if (phrase.charAt(i) == '\t')
+            if (parameter.charAt(i) == '\t')
                 checkFlag3 = false;
 
         }
         if (!checkFlag1 || !checkFlag2 || !checkFlag3
-                || phrase.isEmpty() || phrase == null) {
+                || parameter.isEmpty() || parameter == null) {
 
             retur = false;
 
@@ -76,30 +69,28 @@ public class NameLogic {
                             " or parameter has null value"
             );
         }
-
-        return retur;
     }
 
     /**
      * Indicates whether the phrase contains at least one letter
-     *
-     * @param phrase phrase string
+     * @param parameter phrase string
      * @return true if the phrase contains at least one letter
      */
-    static public boolean containsLetter(String phrase) {
+    static public void containsLetter(String parameter,
+                                         String name, Logger logger) {
 
         boolean checkFlag = true, retur = true;
         short count = 0;
 
-        for (int i = 0; i < phrase.length(); i++) {
+        for (int i = 0; i < parameter.length(); i++) {
 
             count++;
 
-            if (!Character.isLetter(phrase.charAt(i)))
+            if (!Character.isLetter(parameter.charAt(i)))
                 checkFlag = false;
 
         }
-        if (!checkFlag || count != 1 || phrase == null) {
+        if (!checkFlag || count != 1 || parameter == null) {
 
             retur = false;
 
@@ -111,7 +102,5 @@ public class NameLogic {
                             " or parameter has null value"
             );
         }
-
-        return retur;
     }
 }

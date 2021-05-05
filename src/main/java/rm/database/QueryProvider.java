@@ -1,44 +1,52 @@
 package main.java.rm.database;
 
-import main.java.rm.bean.DatabaseInfo;
+import main.java.rm.bean.Datasource;
 import main.java.rm.bean.User;
+import main.java.rm.service.Assertions;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class QueryProvider {
+    private static final Logger logger =
+            Logger.getLogger(QueryProvider.class);
+
     private Statement statement;
     private Connection connection;
-    private final ReentrantLock lock;
+    private PreparedStatement preparedStatement;
 
-    public QueryProvider() {
-        lock = new ReentrantLock();
+    public void connect(String address, String user, String password)
+            throws SQLException {
+        Assertions.isNotNull(address, "Database address", logger);
+
+        if(connection != null) {
+            throw new IllegalStateException(
+                    "Connection already exists"
+            );
+        }
+        connection = DriverManager.getConnection(address,
+                user, password);
+        logger.debug("Connected to " + address);
     }
 
-    /**
-     * Creates connection with specified database and user. Locks the object for other threads
-     * @param database database object with database info
-     * @param user user object with user info
-     * @throws SQLException if something wrong with database connection
-     */
-    final public void connectInto(DatabaseInfo database, User user)
+    public void connect(Datasource datasource, User user)
             throws SQLException {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
+        Assertions.isNotNull(datasource, "Datasource", logger);
+        Assertions.isNotNull(user, "User", logger);
+
         StringBuilder connectionString = new StringBuilder();
-        if(database.getProtocol() != null) {
-            connectionString.append(database.getProtocol());
+        if(datasource.getProtocol() != null) {
+            connectionString.append(datasource.getProtocol());
         }
-        if(database.getSubprotocol() != null) {
-            connectionString.append(":").append(database.
-                    getSubprotocol());
+        if(datasource.getSource() != null) {
+            connectionString.append(":").append(datasource.
+                    getSource());
         }
-        if(database.getUrl() != null) {
-            connectionString.append(":").append(database.getUrl());
+        if(datasource.getUrl() != null) {
+            connectionString.append(":").append(datasource.getUrl());
         }
-        if(database.getPort() != null) {
-            connectionString.append(":").append(database.getPort());
+        if(datasource.getPort() != null) {
+            connectionString.append(":").append(datasource.getPort());
         }
         if(user.getName() != null) {
             connectionString.append(":").append(user.getName());
@@ -47,41 +55,64 @@ public class QueryProvider {
                         append(user.getPassword());
             }
         }
-        connection = DriverManager.
-                getConnection(connectionString.toString());
+        connect(connectionString.toString(), user.getName(),
+                user.getPassword());
     }
 
-    /**
-     * Executes sql statements to connected database
-     * @param sql sql statement
-     * @return ResultSet object, can be null
-     * @throws SQLException if something wrong with statement execution
-     */
     public ResultSet execute(String sql) throws SQLException {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
+        Assertions.isNotNull(sql, "Sql statement", logger);
+
         statement = connection.createStatement();
         statement.execute(sql);
         return statement.getResultSet();
     }
 
-    /**
-     * Closes created earlier connection with database. Unlocks object for other threads even if throws any exception
-     * @throws SQLException if something wrong with closing execution
-     */
-    final public void disconnect() throws SQLException {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
+    public ResultSet execute() throws SQLException {
+        if(preparedStatement == null) {
+            throw new IllegalStateException(
+                    "Prepared statement is not created"
+            );
         }
+        return preparedStatement.executeQuery();
+    }
+
+    public void prepare(String sql) throws SQLException {
+        Assertions.isNotNull(sql, "Sql statement", logger);
+
+        preparedStatement = connection.prepareStatement(sql);
+    }
+
+    public void setPrepareArguments(int index, Object parameter,
+                                    SQLType type) throws SQLException {
+        if(preparedStatement != null) {
+            preparedStatement.setObject(index, parameter, type);
+        }
+    }
+
+    public void disconnect() {
+        statement = null;
         try {
             if(connection != null) {
-                statement = null;
                 connection.close();
-                connection = null;
+
+                logger.debug("Disconnected");
             }
+        } catch (SQLException e) {
+            logger.warn("Disconnection error: " + e.getMessage());
         } finally {
-            lock.unlock();
+            connection = null;
         }
+    }
+
+    public boolean isConnected() {
+        return connection != null;
+    }
+
+    public static void setDriver(String driverClass)
+            throws ClassNotFoundException {
+        Assertions.isNotNull(driverClass,
+                "Driver class string", logger);
+
+        Class.forName(driverClass);
     }
 }

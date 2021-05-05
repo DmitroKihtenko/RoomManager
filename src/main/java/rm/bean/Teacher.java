@@ -37,8 +37,6 @@ class Teacher extends TeacherInfo {
      */
     public Integer getUsedRoomId() {
         if (!usesRoom.get()) {
-            logger.warn("Attempt to get room id while teacher does not use it");
-
             return null;
         }
         return usedRoomId.get();

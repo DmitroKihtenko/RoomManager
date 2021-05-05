@@ -1,15 +1,16 @@
 package main.java.rm.bean;
 
 public abstract class IdHolder implements Comparable<IdHolder> {
-    private static final IdHandler idHandler = new IdHandler();
+    public static final int DEFAULT_ID = Integer.MIN_VALUE;
 
+    private static int maximalValue = 0;
     private int id;
 
     /**
-     * Sets default id value from IdHandler class
+     * Sets initial id as {@link #DEFAULT_ID} value
      */
     public IdHolder() {
-        id = IdHandler.DEFAULT_ID;
+        id = DEFAULT_ID;
     }
 
     /**
@@ -17,15 +18,22 @@ public abstract class IdHolder implements Comparable<IdHolder> {
      * @param id id value
      */
     public void setId(int id) {
-        idHandler.setUsedId(id);
+        if(id > maximalValue) {
+            maximalValue = id;
+        }
         this.id = id;
     }
 
     /**
      * Creates a unique identifier for objects of this class
      */
-    public void createId() {
-        this.id = idHandler.getUniqueId();
+    public void createUniqueId() {
+        if(maximalValue == Integer.MAX_VALUE) {
+            throw new IllegalStateException("Can not get unique " +
+                    "identifier. The identifiers of one of the " +
+                    "classes are in a too scattered order");
+        }
+        id = ++maximalValue;
     }
 
     /**

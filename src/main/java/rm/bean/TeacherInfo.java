@@ -2,7 +2,8 @@ package main.java.rm.bean;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.rm.service.NameLogic;
+import main.java.rm.service.Assertions;
+import main.java.rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
 public class TeacherInfo extends IdHolder {
@@ -14,48 +15,10 @@ public class TeacherInfo extends IdHolder {
     private final StringProperty patronymic;
 
     public TeacherInfo(String name) {
-        checkNameWord(name);
-        this.name = new SimpleStringProperty(name);
-        surname = new SimpleStringProperty("");
-        patronymic = new SimpleStringProperty("");
-    }
-
-    /**
-     * Checks name word for null value, for visibility on screen, containing whole word and at least one letter
-     * @param nameWord name word string
-     */
-    protected void checkNameWord(String nameWord) {
-        if(nameWord == null) {
-            logger.error("Teacher name word parameter has null value");
-
-            throw new IllegalArgumentException(
-                    "Teacher name word parameter has null value"
-            );
-        }
-        if(!NameLogic.isVisibleName(nameWord)) {
-            logger.error("Teacher name word must contains " +
-                    "visible symbols");
-
-            throw new IllegalArgumentException(
-                    "Teacher name word must contains visible symbols"
-            );
-        }
-        if(!NameLogic.isWholeWord(nameWord)) {
-            logger.error("Teacher name word must be one whole word");
-
-            throw new IllegalArgumentException(
-                    "Teacher name word must be one whole word"
-            );
-        }
-        if(!NameLogic.containsLetter(nameWord)) {
-            logger.error("Teacher name word must have at " +
-                    "least one letter");
-
-            throw new IllegalArgumentException(
-                    "Teacher name word must have at " +
-                            "least one letter"
-            );
-        }
+        this.name = new SimpleStringProperty();
+        surname = new SimpleStringProperty(null);
+        patronymic = new SimpleStringProperty(null);
+        setName(name);
     }
 
     public String getName() {
@@ -68,10 +31,14 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teacher name setter
-     * @param name name, checks in method {@link #checkNameWord(String)}
+     * @param name name, not null
      */
     public void setName(String name) {
-        checkNameWord(name);
+        Assertions.isNotNull(name, "Teacher name", logger);
+        StringLogic.isVisible(name, "Teacher name", logger);
+        StringLogic.isWholeWord(name, "Teacher name", logger);
+        StringLogic.containsLetter(name, "Teacher name", logger);
+
         this.name.set(name);
     }
 
@@ -85,15 +52,18 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teacher surname setter
-     * @param surname surname, checks in method {@link #checkNameWord(String)}
+     * @param surname surname, not null
      */
     public void setSurname(String surname) {
-        if("".equals(surname)) {
-            this.surname.set("");
-        } else {
-            checkNameWord(surname);
-            this.surname.set(surname);
+        if(surname != null) {
+            StringLogic.isVisible(surname, "Teacher surname", logger);
+            StringLogic.isWholeWord(surname, "Teacher surname",
+                    logger);
+            StringLogic.containsLetter(surname, "Teacher surname",
+                    logger);
         }
+
+        this.surname.set(surname);
     }
 
     public String getPatronymic() {
@@ -106,14 +76,18 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teachers fatherName setter
-     * @param patronymic patronymic, checks in method {@link #checkNameWord(String)}
+     * @param patronymic patronymic, not null
      */
     public void setPatronymic(String patronymic) {
-        if("".equals(patronymic)) {
-            this.patronymic.set("");
-        } else {
-            checkNameWord(patronymic);
-            this.patronymic.set(patronymic);
+        if(surname != null) {
+            StringLogic.isVisible(patronymic, "Teacher patronymic",
+                    logger);
+            StringLogic.isWholeWord(patronymic, "Teacher patronymic",
+                    logger);
+            StringLogic.containsLetter(patronymic,
+                    "Teacher patronymic", logger);
         }
+
+        this.patronymic.set(patronymic);
     }
 }
