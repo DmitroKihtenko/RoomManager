@@ -1,5 +1,7 @@
 package main.java.rm.bean;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import main.java.rm.exceptions.ConnectionDoesNotExistException;
 import org.apache.log4j.Logger;
 
@@ -11,8 +13,9 @@ public abstract class ConnectionsList {
     private static final Logger logger =
             Logger.getLogger(ConnectionsList.class);
 
-    private final Map<Integer, Set<Integer>> firstConnections;
-    private final Map<Integer, Set<Integer>> secondConnections;
+    private Map<Integer, Set<Integer>> firstConnections;
+    private Map<Integer, Set<Integer>> secondConnections;
+    private BooleanProperty changed;
 
     /**
      * Abstract method that uses to create set that contains list of connected ids
@@ -28,11 +31,18 @@ public abstract class ConnectionsList {
     protected abstract Map<Integer, Set<Integer>> createMap(int capacity);
 
     /**
-     * Creates class and initializes start capacity for map containers
-     * @param firstAmount initial capacity for map of first ids, positive value
-     * @param secondAmount initial capacity for map of second ids, positive value
+     * Creates class and initializes containers with start capacity 1. Does not limit the quantity of objects
      */
-    public ConnectionsList(int firstAmount, int secondAmount) {
+    public ConnectionsList() {
+        initCapacity(1, 1);
+    }
+
+    /**
+     * Cleared list and initializes it with new capacity of objects. Does not limit the quantity of objects
+     * @param firstAmount capacity of first objects
+     * @param secondAmount capacity of second objects
+     */
+    public void initCapacity(int firstAmount, int secondAmount) {
         if(firstAmount <= 0) {
             logger.error("Initial amount of first objects has " +
                     "non-positive value");
@@ -53,6 +63,11 @@ public abstract class ConnectionsList {
             );
         }
         secondConnections = createMap(secondAmount);
+        if(changed == null) {
+            changed = new SimpleBooleanProperty(true);
+        } else {
+            changed.set(!changed.get());
+        }
     }
 
     /**
@@ -70,6 +85,8 @@ public abstract class ConnectionsList {
             secondConnections.put(secondId, createSet());
         }
         secondConnections.get(secondId).add(firstId);
+
+        changed.set(!changed.get());
     }
 
     /**
@@ -90,6 +107,8 @@ public abstract class ConnectionsList {
         }
         firstConnections.get(firstId).remove(secondId);
         secondConnections.get(secondId).remove(firstId);
+
+        changed.set(!changed.get());
     }
 
     /**
@@ -140,5 +159,13 @@ public abstract class ConnectionsList {
         }
 
         return secondConnections.get(secondId).stream();
+    }
+
+    /**
+     * Used to track any changes in connections list
+     * @return boolean property for java fx mvc
+     */
+    public BooleanProperty changedProperty() {
+        return changed;
     }
 }
