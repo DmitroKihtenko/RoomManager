@@ -112,6 +112,19 @@ public abstract class ConnectionsList {
     }
 
     /**
+     * indicates whether a connection exists between the specified identifiers
+     * @param firstId id of first object
+     * @param secondId id of second object
+     * @return true if connection exists otherwise returns false
+     */
+    public boolean existsConnection(int firstId, int secondId) {
+        if(!firstConnections.containsKey(firstId)) {
+            return false;
+        }
+        return firstConnections.get(firstId).contains(secondId);
+    }
+
+    /**
      * Returns stream of second type objects ids connected with first type object id
      * @param firstId id of first type object
      * @return stream of connected ids to id of first type object

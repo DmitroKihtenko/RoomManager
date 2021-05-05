@@ -9,8 +9,8 @@ class Room extends RoomInfo {
     private final BooleanProperty isAvailable;
     private final IntegerProperty occupiedBy;
 
-    public Room(String number, HousingInfo housing) {
-        super(number, housing);
+    public Room(String number) {
+        super(number);
         this.isAvailable = new SimpleBooleanProperty(true);
         this.occupiedBy = new SimpleIntegerProperty(0);
     }

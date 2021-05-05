@@ -33,4 +33,3 @@ public class IdHandler {
         return ++maximalId;
     }
 }
-
