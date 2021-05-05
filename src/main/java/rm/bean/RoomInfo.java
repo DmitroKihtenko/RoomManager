@@ -11,7 +11,7 @@ public class RoomInfo extends IdHolder {
             Logger.getLogger(RoomInfo.class);
 
     private final StringProperty number;
-    private IntegerProperty housingId;
+    private final IntegerProperty housingId;
     private final BooleanProperty isUsed;
     private final StringProperty notUsedReason;
 

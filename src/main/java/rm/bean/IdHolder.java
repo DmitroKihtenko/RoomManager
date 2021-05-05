@@ -1,13 +1,15 @@
 package main.java.rm.bean;
 
 public abstract class IdHolder implements Comparable<IdHolder> {
+    private static final IdHandler idHandler = new IdHandler();
+
     private int id;
 
     /**
-     * Sets default id value 0
+     * Sets default id value from IdHandler class
      */
     public IdHolder() {
-        id = 0;
+        id = IdHandler.DEFAULT_ID;
     }
 
     /**
@@ -15,7 +17,15 @@ public abstract class IdHolder implements Comparable<IdHolder> {
      * @param id id value
      */
     public void setId(int id) {
+        idHandler.setUsedId(id);
         this.id = id;
+    }
+
+    /**
+     * Creates a unique identifier for objects of this class
+     */
+    public void createId() {
+        this.id = idHandler.getUniqueId();
     }
 
     /**
