@@ -1,6 +1,6 @@
 package main.java.rm.exceptions;
 
-public class NameAlreadyExistsException extends Exception {
+public class NameAlreadyExistsException extends RuntimeException {
     public NameAlreadyExistsException() {
     }
 

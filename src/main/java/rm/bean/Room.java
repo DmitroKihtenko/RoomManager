@@ -25,9 +25,6 @@ class Room extends RoomInfo {
 
     public Integer getOccupiedBy() {
         if(!this.isAvailable.get()) {
-            logger.warn("Attempt to get id of teacher that " +
-                    "occupied room while room is available");
-
             return null;
         }
         return this.occupiedBy.get();

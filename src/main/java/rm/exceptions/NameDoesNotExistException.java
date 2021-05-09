@@ -1,6 +1,6 @@
 package main.java.rm.exceptions;
 
-public class NameDoesNotExistException extends Exception {
+public class NameDoesNotExistException extends RuntimeException {
     public NameDoesNotExistException() {
     }
 

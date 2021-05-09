@@ -1,12 +1,11 @@
 package main.java.rm.database;
 
-import main.java.rm.bean.DatabaseInfo;
+import main.java.rm.bean.Datasource;
 
-public class DatabaseChangesInfo extends DatabaseInfo {
+public class DbChangesInfo extends Datasource {
     private long changesVersion;
 
-    public DatabaseChangesInfo(String url, String port, String subprotocol) {
-        super(url, port, subprotocol);
+    public DbChangesInfo() {
         changesVersion = -1;
     }
 

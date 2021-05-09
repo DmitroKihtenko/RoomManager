@@ -1,7 +1,8 @@
 package main.java.rm.bean;
 
 import javafx.beans.property.*;
-import main.java.rm.service.NameLogic;
+import main.java.rm.service.Assertions;
+import main.java.rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
 import java.util.Objects;
@@ -24,7 +25,7 @@ public class RoomInfo extends IdHolder {
         setNumber(number);
         housingId = new SimpleIntegerProperty(Integer.MIN_VALUE);
         this.isUsed = new SimpleBooleanProperty(true);
-        this.notUsedReason = new SimpleStringProperty("");
+        this.notUsedReason = new SimpleStringProperty(null);
     }
 
     public String getNumber() {
@@ -40,27 +41,10 @@ public class RoomInfo extends IdHolder {
      * @param number number of room, not null, must be whole word and visible on screen
      */
     public void setNumber(String number) {
-        if(number == null) {
-            logger.error("Room number parameter has null value");
+        Assertions.isNotNull(number, "Room number", logger);
+        StringLogic.isVisible(number, "Room number", logger);
+        StringLogic.isWholeWord(number, "Room number", logger);
 
-            throw new IllegalArgumentException(
-                    "Room number parameter has null value"
-            );
-        }
-        if(!NameLogic.isVisibleName(number)) {
-            logger.error("Room number must contains visible symbols");
-
-            throw new IllegalArgumentException(
-                    "Room number must contains visible symbols"
-            );
-        }
-        if(!NameLogic.isWholeWord(number)) {
-            logger.error("Room number must be whole word");
-
-            throw new IllegalArgumentException(
-                    "Room number must be whole word"
-            );
-        }
         this.number.set(number);
     }
 
@@ -96,7 +80,7 @@ public class RoomInfo extends IdHolder {
      */
     public void setUsed() {
         this.isUsed.set(true);
-        this.notUsedReason.set("");
+        this.notUsedReason.set(null);
     }
 
     /**
@@ -120,22 +104,11 @@ public class RoomInfo extends IdHolder {
      * @param notUsedReason the reason why room is not used, not null, must be visible on screen
      */
     public void setNotUsedReason(String notUsedReason) {
-        if(notUsedReason == null) {
-            logger.error("Reason for not to use has null value");
+        Assertions.isNotNull(notUsedReason, "Not used reason", logger);
+        StringLogic.isVisible(notUsedReason, "Not used reason", logger);
+        StringLogic.isWholeWord(notUsedReason, "Not used reason",
+                logger);
 
-            throw new IllegalArgumentException(
-                    "Reason for not to use has null value"
-            );
-        }
-        if(NameLogic.isVisibleName(notUsedReason)) {
-            logger.error("Reason for not to use must " +
-                    "contains visible symbols");
-
-            throw new IllegalArgumentException(
-                    "Reason for not to use must " +
-                            "contains visible symbols"
-            );
-        }
         this.isUsed.set(false);
         this.notUsedReason.set(notUsedReason);
     }

@@ -3,6 +3,7 @@ package main.java.rm.bean;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import main.java.rm.exceptions.ConnectionDoesNotExistException;
+import main.java.rm.service.Assertions;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
@@ -43,25 +44,12 @@ public abstract class ConnectionsList {
      * @param secondAmount capacity of second objects
      */
     public void initCapacity(int firstAmount, int secondAmount) {
-        if(firstAmount <= 0) {
-            logger.error("Initial amount of first objects has " +
-                    "non-positive value");
+        Assertions.isPositive(firstAmount,
+                "Initial amount of first objects", logger);
+        Assertions.isPositive(secondAmount,
+                "Initial amount of second objects", logger);
 
-            throw new IllegalArgumentException(
-                    "Initial amount of first objects has " +
-                            "non-positive value"
-            );
-        }
         firstConnections = createMap(firstAmount);
-        if(secondAmount <= 0) {
-            logger.error("Initial amount of second objects has " +
-                    "non-positive value");
-
-            throw new IllegalArgumentException(
-                    "Initial amount of second objects has " +
-                            "non-positive value"
-            );
-        }
         secondConnections = createMap(secondAmount);
         if(changed == null) {
             changed = new SimpleBooleanProperty(true);
@@ -95,7 +83,7 @@ public abstract class ConnectionsList {
      * @param secondId id of second object
      * @throws ConnectionDoesNotExistException if this list does not contain such connection
      */
-    void removeConnection(int firstId, int secondId) throws ConnectionDoesNotExistException {
+    void removeConnection(int firstId, int secondId) {
         if(!firstConnections.containsKey(firstId)) {
             logger.error("Attempt to remove connections that does" +
                     "not exist");
@@ -125,11 +113,27 @@ public abstract class ConnectionsList {
     }
 
     /**
+     * Gets all first ids contained in list
+     * @return contained first ids
+     */
+    public Iterable<Integer> getFirstIds() {
+        return firstConnections.keySet();
+    }
+
+    /**
+     * Gets all second ids contained in list
+     * @return contained seconds ids
+     */
+    public Iterable<Integer> getSecondIds() {
+        return secondConnections.keySet();
+    }
+
+    /**
      * Returns stream of second type objects ids connected with first type object id
      * @param firstId id of first type object
-     * @return stream of connected ids to id of first type object
+     * @return list of connected ids to id of first type object
      */
-    Stream<Integer> getFirstConnections(int firstId) {
+    public Iterable<Integer> getFirstConnections(int firstId) {
         if(!firstConnections.containsKey(firstId)) {
             logger.error("Attempt to get connections for id " +
                     firstId + " that does not exist");
@@ -139,15 +143,15 @@ public abstract class ConnectionsList {
                             " that does not exist"
             );
         }
-        return firstConnections.get(firstId).stream();
+        return firstConnections.get(firstId);
     }
 
     /**
      * Returns stream of first type objects ids connected with second type object id
      * @param secondId id of second type object
-     * @return stream of connected ids to id of second type object
+     * @return list of connected ids to id of second type object
      */
-    Stream<Integer> getSecondConnections(int secondId) {
+    public Iterable<Integer> getSecondConnections(int secondId) {
         if(!secondConnections.containsKey(secondId)) {
             logger.error("Attempt to get connections for id " +
                     secondId + " that does not exist");
@@ -158,7 +162,7 @@ public abstract class ConnectionsList {
             );
         }
 
-        return secondConnections.get(secondId).stream();
+        return secondConnections.get(secondId);
     }
 
     /**

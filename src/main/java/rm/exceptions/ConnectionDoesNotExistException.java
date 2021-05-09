@@ -1,6 +1,6 @@
 package main.java.rm.exceptions;
 
-public class ConnectionDoesNotExistException extends Exception {
+public class ConnectionDoesNotExistException extends RuntimeException {
     public ConnectionDoesNotExistException() {
     }
 
