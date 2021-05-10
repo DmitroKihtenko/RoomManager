@@ -63,7 +63,7 @@ public abstract class ConnectionsList {
      * @param firstId id of first object
      * @param secondId id of second object
      */
-    void setConnection(int firstId, int secondId) {
+   public void setConnection(int firstId, int secondId) {
         if(!firstConnections.containsKey(firstId)) {
             firstConnections.put(firstId, createSet());
         }
