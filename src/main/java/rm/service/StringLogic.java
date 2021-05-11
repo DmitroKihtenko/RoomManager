@@ -5,10 +5,11 @@ import org.apache.log4j.Logger;
 public class StringLogic {
     /**
      * Indicates whether the name does not contain only those symbols that can't be visible on screen
+     *
      * @param parameter string of name
      */
     static public void isVisible(String parameter,
-                                    String name, Logger logger) {
+                                 String name, Logger logger) {
 
         boolean checkFlag1 = true, checkFlag2 = true, checkFlag3 = true, retur = true;
 
@@ -39,10 +40,11 @@ public class StringLogic {
 
     /**
      * Indicates whether the phrase consists of only one whole word
+     *
      * @param parameter phrase string
      */
     static public void isWholeWord(String parameter,
-                                      String name, Logger logger) {
+                                   String name, Logger logger) {
 
         boolean checkFlag1 = true, checkFlag2 = true, checkFlag3 = true, retur = true;
 
@@ -73,11 +75,12 @@ public class StringLogic {
 
     /**
      * Indicates whether the phrase contains at least one letter
+     *
      * @param parameter phrase string
      * @return true if the phrase contains at least one letter
      */
     static public void containsLetter(String parameter,
-                                         String name, Logger logger) {
+                                      String name, Logger logger) {
 
         boolean checkFlag = true, retur = true;
         short count = 0;
