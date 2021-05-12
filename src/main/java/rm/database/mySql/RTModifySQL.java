@@ -13,353 +13,245 @@ import java.sql.SQLException;
 import java.util.function.Consumer;
 
 public class RTModifySQL extends QueryExecutor {
+
     private static final Logger logger =
             Logger.getLogger(RTModifySQL.class);
 
     /**
+     * Method of Adding Data TeacherInfo to table teachers
      *
+     * @param teachers list with the details of the TeacherInfo’s class.
      */
     public void addTeachers(Iterable<TeacherInfo> teachers) throws SQLException {
 
-        teachers.forEach(new Consumer<TeacherInfo>() {
-            @Override
-            public void accept(TeacherInfo teacherInfo) {
+        for (TeacherInfo teacherInfo : teachers) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("INSERT INTO teachers (Id, Name, Surname, Patronymic) Values (?, ?, ?, ?)");
 
-                try {
-                    getProvider().prepare("INSERT INTO teachers (Id, Name, Surname, Patronymic) Values (?, ?, ?, ?)");
+                getProvider().setPrepareArguments(1, teacherInfo.getId(), JDBCType.INTEGER);
+                getProvider().setPrepareArguments(2, teacherInfo.getName(), JDBCType.VARCHAR);
+                getProvider().setPrepareArguments(3, teacherInfo.getSurname(), JDBCType.VARCHAR);
+                getProvider().setPrepareArguments(4, teacherInfo.getPatronymic(), JDBCType.VARCHAR);
 
-                    getProvider().setPrepareArguments(1, teacherInfo.getId(), JDBCType.INTEGER);
-                    getProvider().setPrepareArguments(2, teacherInfo.getName(), JDBCType.VARCHAR);
-                    getProvider().setPrepareArguments(3, teacherInfo.getSurname(), JDBCType.VARCHAR);
-                    getProvider().setPrepareArguments(4, teacherInfo.getPatronymic(), JDBCType.VARCHAR);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, INSERT INTO teachers (Id, Name, Surname, Patronymic) Values (?, ?, ?, ?)");
-
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  INSERT INTO teachers " +
-                                    throwables
-                    );
-                }
-
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - INSERT INTO teachers ");
+                throw e;
 
             }
-        });
-
+        }
     }
 
     /**
+     * Deleting labels of the table teachers
      *
+     * @param teachers list with the details of the TeacherInfo’s class
      */
-    public void removeTeachers(Iterable<TeacherInfo> teachers) {
+    public void removeTeachers(Iterable<TeacherInfo> teachers) throws SQLException {
 
-        teachers.forEach(new Consumer<TeacherInfo>() {
-            @Override
-            public void accept(TeacherInfo teacherInfo) {
+        for (TeacherInfo teacherInfo : teachers) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("DELETE FROM teachers WHERE Id = ?");
 
-                try {
-                    getProvider().prepare("DELETE FROM teachers WHERE Id = ?");
+                getProvider().setPrepareArguments(1, teacherInfo.getId(), JDBCType.INTEGER);
 
-                    getProvider().setPrepareArguments(1, teacherInfo.getId(), JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, DELETE FROM teachers WHERE Id = ?");
-
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  DELETE FROM teachers " +
-                                    throwables
-                    );
-                }
-
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - DELETE FROM teachers ");
+                throw e;
 
             }
-        });
+        }
     }
 
     /**
+     * Method of Adding Data RoomInfo to table rooms
      *
+     * @param rooms list with the details of the RoomInfo’s class.
      */
-    public void addRooms(Iterable<RoomInfo> rooms) {
+    public void addRooms(Iterable<RoomInfo> rooms) throws SQLException {
 
-        rooms.forEach(new Consumer<RoomInfo>() {
-            @Override
-            public void accept(RoomInfo roomInfo) {
+        for (RoomInfo roomInfo : rooms) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("INSERT INTO rooms (Id, Number, HousingId, NotUsedReason) Values (?, ?, ?, ?)");
 
-                try {
-                    getProvider().prepare("INSERT INTO rooms (Id, Number, HousingId, NotUsedReason) Values (?, ?, ?, ?)");
+                getProvider().setPrepareArguments(1, roomInfo.getId(), JDBCType.INTEGER);
+                getProvider().setPrepareArguments(2, roomInfo.getNumber(), JDBCType.VARCHAR);
+                getProvider().setPrepareArguments(3, roomInfo.getHousingId(), JDBCType.INTEGER);
+                getProvider().setPrepareArguments(4, roomInfo.getNotUsedReason(), JDBCType.VARCHAR);
 
-                    getProvider().setPrepareArguments(1, roomInfo.getId(), JDBCType.INTEGER);
-                    getProvider().setPrepareArguments(2, roomInfo.getNumber(), JDBCType.VARCHAR);
-                    getProvider().setPrepareArguments(3, roomInfo.getHousingId(), JDBCType.INTEGER);
-                    getProvider().setPrepareArguments(4, roomInfo.getNotUsedReason(), JDBCType.VARCHAR);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, INSERT INTO rooms (Id, Number, HousingId, NotUsedReason) Values (?, ?, ?, ?)");
-
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  INSERT INTO rooms " +
-                                    throwables
-                    );
-                }
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - INSERT INTO rooms ");
+                throw e;
 
             }
-        });
+        }
     }
 
     /**
+     * Deleting labels of the table rooms
      *
+     * @param rooms list with the details of the RoomInfo’s class
      */
-    public void removeRooms(Iterable<RoomInfo> rooms) {
+    public void removeRooms(Iterable<RoomInfo> rooms) throws SQLException {
 
-        rooms.forEach(new Consumer<RoomInfo>() {
-            @Override
-            public void accept(RoomInfo roomInfo) {
+        for (RoomInfo roomInfo : rooms) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("DELETE FROM rooms WHERE Id = ?");
 
-                try {
-                    getProvider().prepare("DELETE FROM rooms WHERE Id = ?");
+                getProvider().setPrepareArguments(1, roomInfo.getId(), JDBCType.INTEGER);
 
-                    getProvider().setPrepareArguments(1, roomInfo.getId(), JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, DELETE FROM rooms WHERE Id = ?");
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - DELETE FROM rooms ");
+                throw e;
 
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  DELETE FROM rooms " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
     }
 
     /**
+     * Method of Adding Data HousingInfo to table housings
      *
+     * @param housings list with the details of the HousingInfo’s class.
      */
-    public void addHousings(Iterable<HousingInfo> housings) {
+    public void addHousings(Iterable<HousingInfo> housings) throws SQLException {
 
-        housings.forEach(new Consumer<HousingInfo>() {
-            @Override
-            public void accept(HousingInfo housingInfo) {
+        for (HousingInfo housingInfo : housings) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("INSERT INTO housings (Id, Name) Values (?, ?)");
 
-                try {
-                    getProvider().prepare("INSERT INTO housings (Id, Name) Values (?, ?)");
+                getProvider().setPrepareArguments(1, housingInfo.getId(), JDBCType.INTEGER);
+                getProvider().setPrepareArguments(2, housingInfo.getName(), JDBCType.VARCHAR);
 
-                    getProvider().setPrepareArguments(1, housingInfo.getId(), JDBCType.INTEGER);
-                    getProvider().setPrepareArguments(2, housingInfo.getName(), JDBCType.VARCHAR);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, INSERT INTO housings (Id, Name) Values (?, ?)");
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - INSERT INTO housings ");
+                throw e;
 
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  INSERT INTO housings " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
     }
 
     /**
+     * Deleting labels of the table housings
      *
+     * @param housings list with the details of the HousingInfo’s class
      */
-    public void removeHousings(Iterable<HousingInfo> housings) {
+    public void removeHousings(Iterable<HousingInfo> housings) throws SQLException {
 
-        housings.forEach(new Consumer<HousingInfo>() {
-            @Override
-            public void accept(HousingInfo housingInfo) {
+        for (HousingInfo housingInfo : housings) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("DELETE FROM housings WHERE Id = ?");
 
-                try {
-                    getProvider().prepare("DELETE FROM housings WHERE Id = ?");
+                getProvider().setPrepareArguments(1, housingInfo.getId(), JDBCType.INTEGER);
 
-                    getProvider().setPrepareArguments(1, housingInfo.getId(), JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, DELETE FROM housings WHERE Id = ?");
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - DELETE FROM housings ");
+                throw e;
 
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  DELETE FROM housings " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
     }
 
     /**
+     * Method of Adding Data ConnectionsList to table rtaccess
      *
+     * @param access variable ConnectionsList’s class.
      */
-    public void addAccess(ConnectionsList access) {
+    public void addAccess(ConnectionsList access) throws SQLException {
 
-        access.getFirstIds().forEach(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) {
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+        for (Integer integer : access.getFirstIds()) {
 
-                try {
-                    getProvider().prepare("INSERT INTO rtaccess (TeacherId, RoomId) Values (?, ?)");
+            try {
+                getProvider().prepare("INSERT INTO rtaccess (TeacherId, RoomId) Values (?, ?)");
 
-                    getProvider().setPrepareArguments(1, access.getFirstConnections(integer), JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().setPrepareArguments(1, access.getFirstConnections(integer), JDBCType.INTEGER);
 
-                    logger.debug("SQL, INSERT INTO rtaccess (TeacherId, RoomId) Values (?)");
+                getProvider().execute();
 
-                } catch (SQLException throwables) {
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - INSERT INTO rtaccess (TeacherId) ");
+                throw e;
 
-                    throw new IllegalStateException(
-                            "Error  INSERT INTO rtaccess (TeacherId) " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
 
-        access.getSecondIds().forEach(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) {
+        for (Integer integer : access.getSecondIds()) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("INSERT INTO rtaccess (TeacherId, RoomId) Values (?, ?)");
 
-                try {
-                    getProvider().prepare("INSERT INTO rtaccess (TeacherId, RoomId) Values (?, ?)");
+                getProvider().setPrepareArguments(2, access.getSecondConnections(integer), JDBCType.INTEGER);
 
-                    getProvider().setPrepareArguments(2, access.getSecondConnections(integer), JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, INSERT INTO rtaccess (TeacherId, RoomId) Values (, ?)");
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - INSERT INTO rtaccess (RoomId) ");
+                throw e;
 
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  INSERT INTO rtaccess (RoomId) " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
     }
 
     /**
+     * Deleting labels of the table rtaccess
      *
+     * @param access variable ConnectionsList’s class.
      */
-    public void removeAccess(ConnectionsList access) {
+    public void removeAccess(ConnectionsList access) throws SQLException {
 
-        access.getFirstIds().forEach(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) {
+        for (Integer integer : access.getFirstIds()) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("DELETE FROM rtaccess WHERE TeacherId = ?");
 
-                try {
-                    getProvider().prepare("DELETE FROM rtaccess WHERE TeacherId = ?");
+                getProvider().setPrepareArguments(1, integer, JDBCType.INTEGER);
 
-                    getProvider().setPrepareArguments(1, integer, JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, DELETE FROM rtaccess WHERE TeacherId = ?");
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - DELETE FROM rtaccess (TeacherId) ");
+                throw e;
 
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  DELETE FROM rtaccess WHERE TeacherId " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
 
-        access.getSecondIds().forEach(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) {
+        for (Integer integer : access.getSecondIds()) {
 
-                if (!getProvider().isConnected()) {
-                    throw new IllegalStateException(
-                            "Error  No connection to Database"
-                    );
-                }
+            try {
+                getProvider().prepare("DELETE FROM rtaccess WHERE RoomId = ?");
 
-                try {
-                    getProvider().prepare("DELETE FROM rtaccess WHERE RoomId = ?");
+                getProvider().setPrepareArguments(1, integer, JDBCType.INTEGER);
 
-                    getProvider().setPrepareArguments(1, integer, JDBCType.INTEGER);
-                    getProvider().execute();
+                getProvider().execute();
 
-                    logger.debug("SQL, DELETE FROM rtaccess WHERE RoomId = ?");
+            } catch (SQLException e) {
+                logger.warn("SQL query execution error - DELETE FROM rtaccess (RoomId) ");
+                throw e;
 
-                } catch (SQLException throwables) {
-
-                    throw new IllegalStateException(
-                            "Error  DELETE FROM rtaccess WHERE RoomId " +
-                                    throwables
-                    );
-                }
             }
-        });
+        }
     }
 
     /**
      *
      */
     public void provideChanges(DbChangesInfo dbChanges) {
-
     }
+
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class RTGetSQL extends QueryExecutor {
+
     private static final Logger logger =
             Logger.getLogger(RTGetSQL.class);
 
@@ -16,24 +17,18 @@ public class RTGetSQL extends QueryExecutor {
      *
      */
     public Integer getDatabaseChanges() throws SQLException {
-
         return null;
     }
 
     /**
+     * Reading information from housings.
      *
+     * @param housings empty data structure to save stored data tables housings
      */
     public void getHousings(Map<Integer, HousingInfo> housings)
             throws SQLException {
 
-        if (!getProvider().isConnected()) {
-            throw new IllegalStateException(
-                    "Error  No connection to Database"
-            );
-        }
-
-        getProvider().prepare("SELECT * FROM housings");
-        ResultSet resultSet = getProvider().execute();
+        ResultSet resultSet = getProvider().execute("SELECT * FROM housings");
 
         while (resultSet.next()) {
             Integer key = resultSet.getInt("Id");
@@ -42,25 +37,21 @@ public class RTGetSQL extends QueryExecutor {
             value.setId(key);
 
             housings.put(key, value);
-        }
 
+        }
         logger.debug("SQL, SELECT * FROM housings");
+
     }
 
     /**
+     * Reading information from teachers.
      *
+     * @param teachers empty data structure to save stored data tables teachers
      */
     public void getTeachers(Map<Integer, TeacherInfo> teachers)
             throws SQLException {
 
-        if (!getProvider().isConnected()) {
-            throw new IllegalStateException(
-                    "Error  No connection to Database"
-            );
-        }
-
-        getProvider().prepare("SELECT * FROM teachers");
-        ResultSet resultSet = getProvider().execute();
+        ResultSet resultSet = getProvider().execute("SELECT * FROM teachers");
 
         while (resultSet.next()) {
 
@@ -70,26 +61,22 @@ public class RTGetSQL extends QueryExecutor {
             value.setSurname(resultSet.getString("Surname"));
             value.setPatronymic(resultSet.getString("Patronymic"));
             value.setId(key);
+
             teachers.put(key, value);
 
         }
-
         logger.debug("SQL, SELECT * FROM teachers");
+
     }
 
     /**
+     * Reading information from rooms.
      *
+     * @param rooms empty data structure to save stored data tables rooms
      */
     public void getRooms(Map<Integer, RoomInfo> rooms) throws SQLException {
 
-        if (!getProvider().isConnected()) {
-            throw new IllegalStateException(
-                    "Error  No connection to Database"
-            );
-        }
-
-        getProvider().prepare("SELECT * FROM rooms");
-        ResultSet resultSet = getProvider().execute();
+        ResultSet resultSet = getProvider().execute("SELECT * FROM rooms");
 
         while (resultSet.next()) {
 
@@ -103,23 +90,18 @@ public class RTGetSQL extends QueryExecutor {
             rooms.put(key, value);
 
         }
-
         logger.debug("SQL, SELECT * FROM rooms");
+
     }
 
     /**
+     * Reading information from rooms.
      *
+     * @param access empty variable to save stored data tables rooms
      */
     public void getRtAccess(ConnectionsList access) throws SQLException {
 
-        if (!getProvider().isConnected()) {
-            throw new IllegalStateException(
-                    "Error  No connection to Database"
-            );
-        }
-
-        getProvider().prepare("SELECT * FROM rtaccess");
-        ResultSet resultSet = getProvider().execute();
+        ResultSet resultSet = getProvider().execute("SELECT * FROM rtaccess");
 
         while (resultSet.next()) {
 
@@ -127,7 +109,7 @@ public class RTGetSQL extends QueryExecutor {
                     resultSet.getInt("RoomId"));
 
         }
-
         logger.debug("SQL, SELECT * FROM rtaccess");
+
     }
 }
