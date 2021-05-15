@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import java.sql.JDBCType;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 public class RTModifySQL extends QueryExecutor {
@@ -175,33 +176,21 @@ public class RTModifySQL extends QueryExecutor {
      */
     public void addAccess(ConnectionsList access) throws SQLException {
 
-        for (Integer integer : access.getFirstIds()) {
+        Iterator<Integer> iterator1 = access.getFirstIds().iterator();
+        Iterator<Integer> iterator2 = access.getSecondIds().iterator();
+
+        while (iterator1.hasNext() && iterator2.hasNext()) {
 
             try {
                 getProvider().prepare("INSERT INTO rtaccess (TeacherId, RoomId) Values (?, ?)");
 
-                getProvider().setPrepareArguments(1, access.getFirstConnections(integer), JDBCType.INTEGER);
+                getProvider().setPrepareArguments(1, access.getFirstConnections(iterator1.next()), JDBCType.INTEGER);
+                getProvider().setPrepareArguments(2, access.getSecondConnections(iterator2.next()), JDBCType.INTEGER);
 
                 getProvider().execute();
 
             } catch (SQLException e) {
                 logger.warn("SQL query execution error - INSERT INTO rtaccess (TeacherId) ");
-                throw e;
-
-            }
-        }
-
-        for (Integer integer : access.getSecondIds()) {
-
-            try {
-                getProvider().prepare("INSERT INTO rtaccess (TeacherId, RoomId) Values (?, ?)");
-
-                getProvider().setPrepareArguments(2, access.getSecondConnections(integer), JDBCType.INTEGER);
-
-                getProvider().execute();
-
-            } catch (SQLException e) {
-                logger.warn("SQL query execution error - INSERT INTO rtaccess (RoomId) ");
                 throw e;
 
             }
@@ -215,33 +204,20 @@ public class RTModifySQL extends QueryExecutor {
      */
     public void removeAccess(ConnectionsList access) throws SQLException {
 
-        for (Integer integer : access.getFirstIds()) {
+        Iterator<Integer> iterator1 = access.getFirstIds().iterator();
+        Iterator<Integer> iterator2 = access.getSecondIds().iterator();
+
+        while (iterator1.hasNext()) {
 
             try {
                 getProvider().prepare("DELETE FROM rtaccess WHERE TeacherId = ?");
 
-                getProvider().setPrepareArguments(1, integer, JDBCType.INTEGER);
+                getProvider().setPrepareArguments(1, iterator1.next(), JDBCType.INTEGER);
 
                 getProvider().execute();
 
             } catch (SQLException e) {
                 logger.warn("SQL query execution error - DELETE FROM rtaccess (TeacherId) ");
-                throw e;
-
-            }
-        }
-
-        for (Integer integer : access.getSecondIds()) {
-
-            try {
-                getProvider().prepare("DELETE FROM rtaccess WHERE RoomId = ?");
-
-                getProvider().setPrepareArguments(1, integer, JDBCType.INTEGER);
-
-                getProvider().execute();
-
-            } catch (SQLException e) {
-                logger.warn("SQL query execution error - DELETE FROM rtaccess (RoomId) ");
                 throw e;
 
             }
