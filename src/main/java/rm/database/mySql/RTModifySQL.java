@@ -153,7 +153,6 @@ public class RTModifySQL extends QueryExecutor {
         logger.debug("Deleting housings from database");
 
         for (HousingInfo housingInfo : housings) {
-
             try {
                 getProvider().prepare("DELETE FROM housings " +
                         "WHERE Id = ?");
