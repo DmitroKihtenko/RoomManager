@@ -5,44 +5,37 @@ import org.apache.log4j.Logger;
 
 public class Assertions {
     /**
-     * Checking string empty or no.
-     *
-     * @param object    Variable to test
-     * @param parameter The name is a changeling
-     * @param logger    Variable to log
+     * Checks some object for null value
+     * @param object object to test
+     * @param parameter parameter name
+     * @param logger logger object
      */
     public static void isNotNull(Object object, String parameter,
                                  Logger logger) {
-
         if (object == null) {
-
-            logger.error("Passed an empty string as an argument.");
+            logger.error(parameter + " object has null value");
 
             throw new IllegalArgumentException(
-                    "Float " + parameter + " equals " + null
+                    parameter + " object has null value"
             );
-
         }
     }
 
     /**
-     * Check a number for a positive
-     *
-     * @param number    Variable to test
-     * @param parameter The name is a changeling
-     * @param logger    Variable to log
+     * Check a number for a positive     *
+     * @param number variable to test
+     * @param parameter parameter name
+     * @param logger logger object
      */
     public static void isPositive(float number, String parameter,
                                   Logger logger) {
-
         if (number <= 0) {
-
-            logger.error("Passed a negative number as an argument.");
+            logger.error(parameter + " has non-positive value " +
+                    number);
 
             throw new IllegalArgumentException(
-                    "Float " + parameter + " equals " + null
+                    parameter + " has non-positive value " + number
             );
-
         }
     }
 }

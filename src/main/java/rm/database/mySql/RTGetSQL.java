@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class RTGetSQL extends QueryExecutor {
-
     private static final Logger logger =
             Logger.getLogger(RTGetSQL.class);
 
@@ -21,41 +20,39 @@ public class RTGetSQL extends QueryExecutor {
     }
 
     /**
-     * Reading information from housings.
-     *
-     * @param housings empty data structure to save stored data tables housings
+     * Gets housing objects from database
+     * @param housings map data structure to save housings objects
      */
     public void getHousings(Map<Integer, HousingInfo> housings)
             throws SQLException {
+        logger.debug("Getting housings data from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * FROM housings");
+        ResultSet resultSet = getProvider().execute("SELECT * " +
+                "FROM housings");
 
         while (resultSet.next()) {
-            Integer key = resultSet.getInt("Id");
+            int key = resultSet.getInt("Id");
 
-            HousingInfo value = new HousingInfo(resultSet.getString("Name"));
+            HousingInfo value = new HousingInfo(resultSet.getString(
+                    "Name"));
             value.setId(key);
 
             housings.put(key, value);
-
         }
-        logger.debug("SQL, SELECT * FROM housings");
-
     }
 
     /**
-     * Reading information from teachers.
-     *
-     * @param teachers empty data structure to save stored data tables teachers
+     * Gets teachers objects from database
+     * @param teachers map object for saving new teacher objects
      */
     public void getTeachers(Map<Integer, TeacherInfo> teachers)
             throws SQLException {
+        logger.debug("Getting teachers data from database");
 
         ResultSet resultSet = getProvider().execute("SELECT * FROM teachers");
 
         while (resultSet.next()) {
-
-            Integer key = resultSet.getInt("Id");
+            int key = resultSet.getInt("Id");
 
             TeacherInfo value = new TeacherInfo(resultSet.getString("Name"));
             value.setSurname(resultSet.getString("Surname"));
@@ -63,24 +60,20 @@ public class RTGetSQL extends QueryExecutor {
             value.setId(key);
 
             teachers.put(key, value);
-
         }
-        logger.debug("SQL, SELECT * FROM teachers");
-
     }
 
     /**
-     * Reading information from rooms.
-     *
-     * @param rooms empty data structure to save stored data tables rooms
+     * Gets rooms objects from database
+     * @param rooms map data structure to save rooms objects
      */
     public void getRooms(Map<Integer, RoomInfo> rooms) throws SQLException {
+        logger.debug("Getting rooms data from database");
 
         ResultSet resultSet = getProvider().execute("SELECT * FROM rooms");
 
         while (resultSet.next()) {
-
-            Integer key = resultSet.getInt("Id");
+            int key = resultSet.getInt("Id");
 
             RoomInfo value = new RoomInfo(resultSet.getString("Number"));
             value.setHousingId(resultSet.getInt("HousingId"));
@@ -88,28 +81,22 @@ public class RTGetSQL extends QueryExecutor {
             value.setId(key);
 
             rooms.put(key, value);
-
         }
-        logger.debug("SQL, SELECT * FROM rooms");
-
     }
 
     /**
-     * Reading information from rooms.
-     *
-     * @param access empty variable to save stored data tables rooms
+     * Gets access connections between teachers and rooms
+     * @param access connections list object for saving data
      */
     public void getRtAccess(ConnectionsList access) throws SQLException {
+        logger.debug("Getting access connections list from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * FROM rtaccess");
+        ResultSet resultSet = getProvider().execute("SELECT * " +
+                "FROM rtaccess");
 
         while (resultSet.next()) {
-
             access.setConnection(resultSet.getInt("TeacherId"),
                     resultSet.getInt("RoomId"));
-
         }
-        logger.debug("SQL, SELECT * FROM rtaccess");
-
     }
 }
