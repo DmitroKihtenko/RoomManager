@@ -9,7 +9,7 @@
     <ScrollPane blendMode="SRC_OVER" layoutX="69.0" layoutY="118.0" prefHeight="321.0" prefWidth="234.0"
                 style="-fx-background-color: #ffffff;">
         <content>
-            <TilePane fx:id="room" prefHeight="305.0" prefWidth="130.0"/>
+            <TilePane fx:id="room" prefHeight="305.0" prefWidth="107.0"/>
         </content>
     </ScrollPane>
     <RadioButton fx:id="onlyEmployed" layoutX="69.0" layoutY="71.0" mnemonicParsing="false" prefHeight="0.0"
