@@ -13,10 +13,19 @@ public class RTGetSQL extends QueryExecutor {
             Logger.getLogger(RTGetSQL.class);
 
     /**
-     *
+     * Gets data about database edit version
+     * @return number of database edit version
      */
     public Integer getDatabaseChanges() throws SQLException {
-        return null;
+        logger.debug("Getting database version info");
+        Integer result = null;
+
+        ResultSet resultSet = getProvider().execute("SELECT FROM " +
+                "info WHERE Data = 'ChangesVersion'");
+        if(resultSet.next()) {
+            result = resultSet.getInt("Value");
+        }
+        return result;
     }
 
     /**
@@ -71,13 +80,17 @@ public class RTGetSQL extends QueryExecutor {
         logger.debug("Getting rooms data from database");
 
         ResultSet resultSet = getProvider().execute("SELECT * FROM rooms");
+        String temp;
 
         while (resultSet.next()) {
             int key = resultSet.getInt("Id");
 
             RoomInfo value = new RoomInfo(resultSet.getString("Number"));
             value.setHousingId(resultSet.getInt("HousingId"));
-            value.setNotUsedReason(resultSet.getString("NotUsedReason"));
+            temp = resultSet.getString("NotUsedReason");
+            if(temp != null) {
+                value.setNotUsedReason(temp);
+            }
             value.setId(key);
 
             rooms.put(key, value);

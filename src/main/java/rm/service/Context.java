@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Context {
     private static final Logger logger = Logger.getLogger(Context.class);
-    private static HashMap<String, Object> context;
+    private HashMap<String, Object> context;
 
     /**
      * Put any object into context with some name

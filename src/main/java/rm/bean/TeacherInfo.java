@@ -52,7 +52,7 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teacher surname setter
-     * @param surname surname, not null
+     * @param surname surname
      */
     public void setSurname(String surname) {
         if(surname != null) {
@@ -76,10 +76,10 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teachers fatherName setter
-     * @param patronymic patronymic, not null
+     * @param patronymic patronymic
      */
     public void setPatronymic(String patronymic) {
-        if(surname != null) {
+        if(patronymic != null) {
             StringLogic.isVisible(patronymic, "Teacher patronymic",
                     logger);
             StringLogic.isWholeWord(patronymic, "Teacher patronymic",

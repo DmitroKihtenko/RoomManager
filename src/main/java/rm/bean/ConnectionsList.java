@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public abstract class ConnectionsList {
     private static final Logger logger =
