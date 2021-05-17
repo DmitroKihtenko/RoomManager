@@ -52,16 +52,8 @@ public class Controller {
     private Label LabelRoom;
 
 
-
-    public void roomList()//список аудиторий
+    public void printRoomList(ArrayList<TestRoom> rooms)//список аудиторий
     {
-
-        ArrayList<TestRoom> rooms = new ArrayList<>();
-
-        rooms.add(new TestRoom("Н-107","доступна","Альошина А.І","не зайнята", "Вахтер"));
-        rooms.add(new TestRoom("Н-101","недоступна","Альошина А.І","Зайнята", "Колесніков"));
-        rooms.add(new TestRoom("Н-108","доступна","Альошина А.І","Зайнята", "Вахтер"));
-
 
         for (int i = 0; i < rooms.size(); i++) {
 
@@ -78,11 +70,11 @@ public class Controller {
                     if (!c.isSelected())
                         LabelRoom.setText("");
 
-                    else{
+                    else {
                         System.out.println(c.getText());
                         LabelRoom.setText("Аудиторія:\n" + rooms.get(iterator).getName() + "\nСтатус: " +
-                                rooms.get(iterator).getStatus() + "\nМає доступ: " +  rooms.get(iterator).getAccess() +
-                                "\nАудиторія:  " +  rooms.get(iterator).getCondition() + "\nКлюч у " +  rooms.get(iterator).getLastKey());
+                                rooms.get(iterator).getStatus() + "\nМає доступ: " + rooms.get(iterator).getAccess() +
+                                "\nАудиторія:  " + rooms.get(iterator).getCondition() + "\nКлюч у " + rooms.get(iterator).getLastKey());
                         LabelRoom.setAlignment(Pos.TOP_LEFT);
                     }
                 }
@@ -92,17 +84,8 @@ public class Controller {
 
     }
 
-    public void teacherList()//список преподавателей
+    public void printTeacherList(ArrayList<TestTeacher> teachers)//список преподавателей
     {
-
-        ArrayList<TestTeacher> teachers = new ArrayList<>();
-
-        teachers.add(new TestTeacher("Колесніков Валерій Анатолійович","Н-107","Н-109"));
-        teachers.add(new TestTeacher("Лаврик Тетяна Володимирівна","Ц-107","ЕТ-109"));
-        teachers.add(new TestTeacher("Назаренко Людмила Дмитрівна","Н-107","не має"));
-        teachers.add(new TestTeacher("Зарецький Микола Олександрович","Н-221","Н-101"));
-        teachers.add(new TestTeacher("Шовкопляс Оксана Анатоліївна","Н-105","Ц-223"));
-
         for (int i = 0; i < teachers.size(); i++) {
             CheckBox c = new CheckBox(teachers.get(i).getName());
             teacher.getChildren().add(c);
@@ -116,7 +99,7 @@ public class Controller {
                     if (!c.isSelected())
                         LabelTeacher.setText("");
 
-                        else{
+                    else {
                         System.out.println(c.getText());
                         LabelTeacher.setText("Викладач:\n" + teachers.get(iterator).getName() + "\nМає доступ до:\n" +
                                 teachers.get(iterator).getRoom() + "\nМає ключ до:\n" + teachers.get(iterator).getKey());
@@ -126,29 +109,61 @@ public class Controller {
         }
     }
 
+    public void roomInfo() {
+        ArrayList<TestRoom> rooms = new ArrayList<>();
+
+        rooms.add(new TestRoom("Н-107", "доступна", "Альошина А.І", "не зайнята", "Вахтер"));
+        rooms.add(new TestRoom("Н-101", "недоступна", "Альошина А.І", "Зайнята", "Колесніков"));
+        rooms.add(new TestRoom("Н-108", "доступна", "Альошина А.І", "Зайнята", "Вахтер"));
+
+        printRoomList(rooms);
+    }
+
+
+
+    private static int radio;
+
+    public void teacherInfo() {
+        ArrayList<TestTeacher> teachers = new ArrayList<>();
+
+        teachers.add(new TestTeacher("Колесніков Валерій Анатолійович", "Н-107", "Н-109"));
+        teachers.add(new TestTeacher("Лаврик Тетяна Володимирівна", "Ц-107", "ЕТ-109"));
+        teachers.add(new TestTeacher("Назаренко Людмила Дмитрівна", "Н-107", "не має"));
+        teachers.add(new TestTeacher("Зарецький Микола Олександрович", "Н-221", "Н-101"));
+        teachers.add(new TestTeacher("Шовкопляс Оксана Анатоліївна", "Н-105", "Ц-223"));
+
+        printTeacherList(teachers);
+    }
+
+
     public void radioBtn() {
         ToggleGroup group = new ToggleGroup();
         onlyFree.setToggleGroup(group);
         onlyEmployed.setToggleGroup(group);
 
-        group.selectedToggleProperty().addListener((obs, oldValue, newValue) -> {
-            RadioButton tempRadioButton = (RadioButton) newValue;
-            if (tempRadioButton == onlyFree) {
+        onlyFree.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 System.out.println("свободные");
-
+                radio = 1;
             }
-            if (tempRadioButton == onlyEmployed) {
+        });
+
+        onlyEmployed.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 System.out.println("занятые");
+                radio = 2;
             }
-
         });
 
     }
 
     @FXML
     void initialize() {
-        roomList();
-        teacherList();
+
+        roomInfo();
+        teacherInfo();
         radioBtn();
 
     }
