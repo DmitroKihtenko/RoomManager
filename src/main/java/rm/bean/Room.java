@@ -3,7 +3,7 @@ package main.java.rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
-class Room extends RoomInfo {
+public class Room extends RoomInfo {
     private final static Logger logger = Logger.getLogger(Room.class);
 
     private final BooleanProperty isAvailable;
