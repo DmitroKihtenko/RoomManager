@@ -14,8 +14,8 @@
             <TilePane fx:id="room" prefHeight="305.0" prefWidth="107.0" />
         </content>
     </ScrollPane>
-    <RadioButton fx:id="onlyEmployed" layoutX="69.0" layoutY="71.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="176.0" text="Тільки вільні" />
-    <RadioButton fx:id="onlyFree" layoutX="69.0" layoutY="93.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="140.0" text="Тільки зайняті" />
+    <RadioButton fx:id="onlyFree" layoutX="69.0" layoutY="71.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="176.0" text="Тільки вільні" />
+    <RadioButton fx:id="onlyEmployed" layoutX="69.0" layoutY="93.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="140.0" text="Тільки зайняті" />
     <ScrollPane layoutX="377.0" layoutY="118.0" prefHeight="321.0" prefWidth="247.0" style="-fx-background-color: #ffffff;">
         <content>
             <TilePane fx:id="teacher" prefHeight="320.0" prefWidth="232.0" />

@@ -56,7 +56,6 @@ public class Controller {
     public void roomList()//список аудиторий
     {
 
-        String str[] = {"Н-108", "Н-107", "Н-106", "Н-109", "Н-110", "Н-207", "Н-212", "Ц-110/1", "Ц-221", "Ц-301", "ЕТ-220", "ЕТ-315"};
         ArrayList<TestRoom> rooms = new ArrayList<>();
 
         rooms.add(new TestRoom("Н-107","доступна","Альошина А.І","не зайнята", "Вахтер"));
@@ -65,11 +64,10 @@ public class Controller {
 
 
         for (int i = 0; i < rooms.size(); i++) {
-            radioBtn();
+
             CheckBox c = new CheckBox(rooms.get(i).getName());
             room.getChildren().add(c);
             room.setVgap(15);
-
             room.setTileAlignment(Pos.CENTER_LEFT);
 
             int iterator = i;
@@ -90,6 +88,8 @@ public class Controller {
                 }
             });
         }
+
+
     }
 
     public void teacherList()//список преподавателей
@@ -131,15 +131,16 @@ public class Controller {
         onlyFree.setToggleGroup(group);
         onlyEmployed.setToggleGroup(group);
 
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-                // Has selection.
-                if (group.getSelectedToggle() != null) {
-                    RadioButton button = (RadioButton) group.getSelectedToggle();
-                    System.out.println(button.getText());
-                }
+        group.selectedToggleProperty().addListener((obs, oldValue, newValue) -> {
+            RadioButton tempRadioButton = (RadioButton) newValue;
+            if (tempRadioButton == onlyFree) {
+                System.out.println("свободные");
+
             }
+            if (tempRadioButton == onlyEmployed) {
+                System.out.println("занятые");
+            }
+
         });
 
     }
