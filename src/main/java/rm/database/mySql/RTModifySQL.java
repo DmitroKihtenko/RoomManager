@@ -233,9 +233,22 @@ public class RTModifySQL extends QueryExecutor {
     }
 
     /**
-     *
+     * Saves data about database edit version
+     * @param dbChanges Object that contains changes version
      */
-    public void provideChanges(DbChangesInfo dbChanges) {
+    public void provideChanges(DbChangesInfo dbChanges)
+            throws SQLException {
+        logger.debug("Saving database edit version");
 
+        try {
+            getProvider().execute("DELETE FROM info " +
+                    "WHERE Data = 'ChangesVersion'");
+            getProvider().execute("INSERT INTO info (Id," +
+                    " Data, Value) VALUES(1, 'ChangesVersion', "
+                    + dbChanges.getChangesVersion() + ")");
+        } catch (SQLException e) {
+            logger.warn("Error while saving database edit version");
+            throw e;
+        }
     }
 }
