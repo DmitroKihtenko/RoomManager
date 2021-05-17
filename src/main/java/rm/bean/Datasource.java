@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.apache.log4j.Logger;
 
-public abstract class Datasource {
+public class Datasource {
     private static final Logger logger =
             Logger.getLogger(Datasource.class);
 

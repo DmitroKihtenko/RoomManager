@@ -3,7 +3,7 @@ package main.java.rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
-class Teacher extends TeacherInfo {
+public class Teacher extends TeacherInfo {
     private static final Logger logger = Logger.getLogger(Room.class);
 
     private BooleanProperty usesRoom;
