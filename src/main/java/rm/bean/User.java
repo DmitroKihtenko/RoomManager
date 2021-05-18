@@ -1,32 +1,49 @@
 package main.java.rm.bean;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import main.java.rm.service.Assertions;
+import main.java.rm.service.StringLogic;
+import org.apache.log4j.Logger;
 
 public class User {
-    private StringProperty name;
+    private static final Logger logger =
+            Logger.getLogger(Datasource.class);
+
+    private final StringProperty name;
     private String password;
 
-    public User(String name) {
-
+    public User() {
+        name = new SimpleStringProperty();
+        setName("unidentified");
+        password = "password";
     }
 
     public void setName(String name) {
+        Assertions.isNotNull(name, "User name", logger);
+        StringLogic.isWholeWord(name, "User name", logger);
+        StringLogic.isVisible(name, "User name", logger);
 
+        this.name.set(name);
     }
 
     public void setPassword(String password) {
+        Assertions.isNotNull(password, "User password", logger);
+        StringLogic.isVisible(password, "User password", logger);
+        StringLogic.isWholeWord(password, "User password", logger);
 
+        this.password = password;
     }
 
     public String getName() {
-        return null;
+        return name.get();
     }
 
     public StringProperty nameProperty() {
-        return null;
+        return name;
     }
 
     public String getPassword() {
-        return null;
+        return password;
     }
 }
