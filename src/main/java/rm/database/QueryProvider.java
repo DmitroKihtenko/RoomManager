@@ -14,6 +14,32 @@ public class QueryProvider {
     private Statement statement;
     private Connection connection;
     private PreparedStatement preparedStatement;
+    private Datasource datasource;
+    private User user;
+
+    public Datasource getDatasource() {
+        return datasource;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setDatasource(Datasource datasource) {
+        if(datasource!=null)
+        this.datasource = datasource;
+        else {
+            Assertions.isNotNull(null, "Datasource", logger);
+        }
+    }
+
+    public void setUser(User user) {
+        if(user!=null)
+        this.user = user;
+        else{
+            Assertions.isNotNull(null, "User", logger);
+        }
+    }
 
     public void connect(String address, String user, String password)
             throws SQLException {
@@ -29,8 +55,9 @@ public class QueryProvider {
         logger.debug("Connected to " + address);
     }
 
-    public void connect(Datasource datasource, User user)
+    public void connect( )
             throws SQLException {
+
         Assertions.isNotNull(datasource, "Datasource", logger);
         Assertions.isNotNull(user, "User", logger);
 

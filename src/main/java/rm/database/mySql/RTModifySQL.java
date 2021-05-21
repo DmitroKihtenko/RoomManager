@@ -180,6 +180,7 @@ public class RTModifySQL extends QueryExecutor {
             for (Integer roomId : access.getFirstConnections(
                     teacherId)) {
                 try {
+
                     getProvider().prepare("INSERT INTO rtaccess" +
                             "(TeacherId, RoomId) Values (?, ?)");
 
@@ -191,6 +192,7 @@ public class RTModifySQL extends QueryExecutor {
                             JDBCType.INTEGER);
 
                     getProvider().execute();
+
                 } catch (SQLException e) {
                     logger.warn("Error while adding access" +
                             "connections to database");
