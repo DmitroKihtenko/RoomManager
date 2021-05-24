@@ -14,10 +14,34 @@ public class QueryProvider {
     private Statement statement;
     private Connection connection;
     private PreparedStatement preparedStatement;
+    private Datasource datasource;
+    private User user;
+
+    public Datasource getDatasource() {
+        return datasource;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setDatasource(Datasource datasource) {
+        Assertions.isNotNull(datasource, "Datasource", logger);
+
+        this.datasource = datasource;
+    }
+
+    public void setUser(User user) {
+        Assertions.isNotNull(user, "User", logger);
+
+        this.user = user;
+    }
 
     public void connect(String address, String user, String password)
             throws SQLException {
         Assertions.isNotNull(address, "Database address", logger);
+        Assertions.isNotNull(user, "User string", logger);
+        Assertions.isNotNull(password, "Password string", logger);
 
         if(connection != null) {
             throw new IllegalStateException(
@@ -29,11 +53,7 @@ public class QueryProvider {
         logger.debug("Connected to " + address);
     }
 
-    public void connect(Datasource datasource, User user)
-            throws SQLException {
-        Assertions.isNotNull(datasource, "Datasource", logger);
-        Assertions.isNotNull(user, "User", logger);
-
+    public void connect() throws SQLException {
         StringBuilder connectionString = new StringBuilder();
         if(datasource.getProtocol() != null) {
             connectionString.append(datasource.getProtocol());
