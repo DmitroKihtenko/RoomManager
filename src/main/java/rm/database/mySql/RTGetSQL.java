@@ -36,8 +36,7 @@ public class RTGetSQL extends QueryExecutor {
             throws SQLException {
         logger.debug("Getting housings data from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * " +
-                "FROM housings");
+        ResultSet resultSet = getProvider().execute("SELECT * FROM housings");
 
         while (resultSet.next()) {
             int key = resultSet.getInt("Id");
@@ -76,10 +75,16 @@ public class RTGetSQL extends QueryExecutor {
      * Gets rooms objects from database
      * @param rooms map data structure to save rooms objects
      */
-    public void getRooms(Map<Integer, RoomInfo> rooms) throws SQLException {
+    public void getRooms(Map<Integer, RoomInfo> rooms,
+                         HousingInfo roomsHousing) throws SQLException {
         logger.debug("Getting rooms data from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * FROM rooms");
+        String sql = "SELECT * FROM housings";
+        if(roomsHousing != null) {
+            sql += " WHERE HousingId = " + roomsHousing.getId();
+        }
+
+        ResultSet resultSet = getProvider().execute(sql);
         String temp;
 
         while (resultSet.next()) {
