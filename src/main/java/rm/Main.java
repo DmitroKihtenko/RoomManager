@@ -1,11 +1,13 @@
 package main.java.rm;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 
 public class Main extends Application {
 
@@ -19,6 +21,8 @@ public class Main extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         this.stage = stage;
         stage.show();
+
+
     }
 
     public static void main(String[] args) {
