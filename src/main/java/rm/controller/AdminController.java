@@ -24,13 +24,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import main.java.rm.Main;
-import main.java.rm.bean.Datasource;
 import main.java.rm.database.DbConnect;
-
 
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.java.rm.database.mySql.RTGetSQL;
 
 public class AdminController implements Initializable{
 
@@ -55,17 +52,10 @@ public class AdminController implements Initializable{
     ResultSet resultSet = null;
     Names names = null;
 
-
-
     ObservableList<Names> NamesList = FXCollections.observableArrayList();
 
     @Override
     public void initialize (URL url, ResourceBundle rb) {
-        RTGetSQL DbConnect = new RTGetSQL();
-        Datasource datasource = DbConnect.getProvider().getDatasource();
-        datasource.setPort("3306");
-        datasource.setUrl("127.0.0.1");
-        datasource.setSource("mysql:");
         loadDate();
         makeStageDragable();
     }
@@ -117,7 +107,7 @@ public class AdminController implements Initializable{
     }
 
     private void loadDate() {
-
+        connection = DbConnect.getConnect();
         refreshTable();
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
