@@ -1,4 +1,4 @@
-package main.java.rm.threads;
+package rm.threads;
 
 public interface ThreadOperation {
     void make();

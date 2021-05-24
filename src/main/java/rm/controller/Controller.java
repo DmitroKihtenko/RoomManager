@@ -1,4 +1,4 @@
-package main.java.rm.controller;
+package rm.controller;
 
 
 import javafx.event.ActionEvent;

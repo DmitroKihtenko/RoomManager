@@ -1,4 +1,4 @@
-package main.java.rm.view;
+package rm.view;
 
 import javafx.scene.layout.BorderPane;
 

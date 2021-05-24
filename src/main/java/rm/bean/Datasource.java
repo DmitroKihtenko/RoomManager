@@ -1,9 +1,9 @@
-package main.java.rm.bean;
+package rm.bean;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.rm.service.Assertions;
-import main.java.rm.service.StringLogic;
+import rm.service.Assertions;
+import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
 public class Datasource {
@@ -14,11 +14,13 @@ public class Datasource {
     private final StringProperty url;
     private final StringProperty port;
     private String source;
+    private String databaseName;
 
     public Datasource() {
         url = new SimpleStringProperty("@localhost");
         port = new SimpleStringProperty("1521");
         source = "oracle:thin";
+        databaseName = null;
     }
 
     public void setSource(String source) {
@@ -27,6 +29,15 @@ public class Datasource {
         StringLogic.isWholeWord(source, "Source", logger);
 
         this.source = source;
+    }
+
+    public void setDatabaseName(String databaseName) {
+        if(databaseName != null) {
+            StringLogic.isVisible(databaseName, "Database name", logger);
+            StringLogic.isWholeWord(databaseName, "Database name", logger);
+        }
+
+        this.databaseName = databaseName;
     }
 
     public void setUrl(String url) {
@@ -57,6 +68,10 @@ public class Datasource {
         return source;
     }
 
+    public String getDatabaseName() {
+        return databaseName;
+    }
+
     public String getPort() {
         return port.get();
     }
@@ -67,5 +82,14 @@ public class Datasource {
 
     public StringProperty portProperty() {
         return port;
+    }
+
+    public String getAddress() {
+        String address = protocol + ":" + source + ":" + url.get() +
+                ":" + port.get();
+        if(databaseName != null) {
+            address += "/" + databaseName;
+        }
+        return address;
     }
 }

@@ -1,6 +1,6 @@
-package main.java.rm.database;
+package rm.database;
 
-import main.java.rm.bean.Datasource;
+import rm.bean.Datasource;
 
 public class DbChangesInfo extends Datasource {
     private long changesVersion;

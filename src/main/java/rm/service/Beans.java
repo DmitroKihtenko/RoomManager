@@ -1,4 +1,4 @@
-package main.java.rm.service;
+package rm.service;
 
 public class Beans {
     private static Context instance;

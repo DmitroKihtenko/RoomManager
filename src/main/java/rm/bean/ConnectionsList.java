@@ -1,9 +1,9 @@
-package main.java.rm.bean;
+package rm.bean;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import main.java.rm.exceptions.ConnectionDoesNotExistException;
-import main.java.rm.service.Assertions;
+import rm.exceptions.ConnectionDoesNotExistException;
+import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
 import java.util.Map;

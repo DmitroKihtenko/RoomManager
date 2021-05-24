@@ -1,4 +1,4 @@
-package main.java.rm.bean;
+package rm.bean;
 
 public abstract class IdHolder implements Comparable<IdHolder> {
     public static final int DEFAULT_ID = Integer.MIN_VALUE;

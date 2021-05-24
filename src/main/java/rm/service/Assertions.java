@@ -1,4 +1,4 @@
-package main.java.rm.service;
+package rm.service;
 
 
 import org.apache.log4j.Logger;

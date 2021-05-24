@@ -1,4 +1,4 @@
-package main.java.rm.bean;
+package rm.bean;
 
 import java.util.Map;
 import java.util.Set;

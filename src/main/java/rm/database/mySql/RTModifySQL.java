@@ -1,11 +1,11 @@
-package main.java.rm.database.mySql;
+package rm.database.mySql;
 
-import main.java.rm.bean.ConnectionsList;
-import main.java.rm.bean.HousingInfo;
-import main.java.rm.bean.RoomInfo;
-import main.java.rm.bean.TeacherInfo;
-import main.java.rm.database.DbChangesInfo;
-import main.java.rm.database.QueryExecutor;
+import rm.bean.ConnectionsList;
+import rm.bean.HousingInfo;
+import rm.bean.RoomInfo;
+import rm.bean.TeacherInfo;
+import rm.database.DbChangesInfo;
+import rm.database.QueryExecutor;
 import org.apache.log4j.Logger;
 
 import java.sql.JDBCType;

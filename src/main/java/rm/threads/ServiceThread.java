@@ -1,4 +1,4 @@
-package main.java.rm.threads;
+package rm.threads;
 
 import jdk.dynalink.Operation;
 import org.apache.log4j.Logger;

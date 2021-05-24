@@ -1,4 +1,4 @@
-package main.java.rm.controller;
+package rm.controller;
 
 public class Names {
     int id;
