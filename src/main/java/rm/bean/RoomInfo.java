@@ -1,8 +1,8 @@
-package main.java.rm.bean;
+package rm.bean;
 
 import javafx.beans.property.*;
-import main.java.rm.service.Assertions;
-import main.java.rm.service.StringLogic;
+import rm.service.Assertions;
+import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
 import java.util.Objects;

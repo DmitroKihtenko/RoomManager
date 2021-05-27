@@ -1,9 +1,9 @@
-package main.java.rm.bean;
+package rm.bean;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.rm.service.Assertions;
-import main.java.rm.service.StringLogic;
+import rm.service.Assertions;
+import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
 public class User {

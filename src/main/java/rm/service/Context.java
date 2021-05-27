@@ -1,7 +1,7 @@
-package main.java.rm.service;
+package rm.service;
 
-import main.java.rm.exceptions.NameAlreadyExistsException;
-import main.java.rm.exceptions.NameDoesNotExistException;
+import rm.exceptions.NameAlreadyExistsException;
+import rm.exceptions.NameDoesNotExistException;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;

@@ -1,7 +1,7 @@
-package main.java.rm.threads;
+package rm.threads;
 
-import main.java.rm.bean.Notifications;
-import main.java.rm.database.DbChangesInfo;
+import rm.bean.Notifications;
+import rm.database.DbChangesInfo;
 import org.apache.log4j.Logger;
 
 public class DatabaseCheck implements ThreadOperation {

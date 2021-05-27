@@ -1,8 +1,8 @@
-package main.java.rm.database;
+package rm.database;
 
-import main.java.rm.bean.Datasource;
-import main.java.rm.bean.User;
-import main.java.rm.service.Assertions;
+import rm.bean.Datasource;
+import rm.bean.User;
+import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -16,6 +16,11 @@ public class QueryProvider {
     private PreparedStatement preparedStatement;
     private Datasource datasource;
     private User user;
+
+    public QueryProvider() {
+        datasource = new Datasource();
+        user = new User();
+    }
 
     public Datasource getDatasource() {
         return datasource;
@@ -54,28 +59,7 @@ public class QueryProvider {
     }
 
     public void connect() throws SQLException {
-        StringBuilder connectionString = new StringBuilder();
-        if(datasource.getProtocol() != null) {
-            connectionString.append(datasource.getProtocol());
-        }
-        if(datasource.getSource() != null) {
-            connectionString.append(":").append(datasource.
-                    getSource());
-        }
-        if(datasource.getUrl() != null) {
-            connectionString.append(":").append(datasource.getUrl());
-        }
-        if(datasource.getPort() != null) {
-            connectionString.append(":").append(datasource.getPort());
-        }
-        if(user.getName() != null) {
-            connectionString.append(":").append(user.getName());
-            if(user.getPassword() != null) {
-                connectionString.append(":").
-                        append(user.getPassword());
-            }
-        }
-        connect(connectionString.toString(), user.getName(),
+        connect(datasource.getAddress(), user.getName(),
                 user.getPassword());
     }
 

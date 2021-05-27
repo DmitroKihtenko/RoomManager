@@ -1,7 +1,7 @@
-package main.java.rm.database.mySql;
+package rm.database.mySql;
 
-import main.java.rm.bean.*;
-import main.java.rm.database.QueryExecutor;
+import rm.bean.*;
+import rm.database.QueryExecutor;
 import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;

@@ -1,6 +1,6 @@
-package main.java.rm.database;
+package rm.database;
 
-import main.java.rm.service.Assertions;
+import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
 public abstract class QueryExecutor {

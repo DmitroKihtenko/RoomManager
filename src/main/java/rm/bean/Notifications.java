@@ -1,4 +1,4 @@
-package main.java.rm.bean;
+package rm.bean;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
