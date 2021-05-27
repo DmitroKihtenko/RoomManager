@@ -53,4 +53,14 @@ public abstract class IdHolder implements Comparable<IdHolder> {
     public int compareTo(IdHolder o) {
         return Integer.compare(this.id, o.id);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

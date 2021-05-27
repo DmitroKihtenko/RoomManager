@@ -32,4 +32,14 @@ public class HousingInfo extends IdHolder {
 
         this.name.set(name);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

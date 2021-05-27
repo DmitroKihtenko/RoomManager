@@ -90,4 +90,14 @@ public class TeacherInfo extends IdHolder {
 
         this.patronymic.set(patronymic);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }
