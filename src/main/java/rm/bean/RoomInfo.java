@@ -112,4 +112,14 @@ public class RoomInfo extends IdHolder {
         this.isUsed.set(false);
         this.notUsedReason.set(notUsedReason);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

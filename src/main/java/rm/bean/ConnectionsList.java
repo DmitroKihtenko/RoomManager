@@ -7,6 +7,7 @@ import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class ConnectionsList {
@@ -74,7 +75,7 @@ public abstract class ConnectionsList {
         secondConnections.get(secondId).add(firstId);
 
         changed.set(!changed.get());
-    }
+   }
 
     /**
      * Removes bilateral connection between id of first and second objects
@@ -170,5 +171,32 @@ public abstract class ConnectionsList {
      */
     public BooleanProperty changedProperty() {
         return changed;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringValue = new StringBuilder();
+        for(Integer key : firstConnections.keySet()) {
+            stringValue.append(key).append(":").
+                    append(firstConnections.get(key).toString());
+        }
+        return stringValue.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ConnectionsList)) {
+            return false;
+        }
+        ConnectionsList that = (ConnectionsList) o;
+        return Objects.equals(firstConnections, that.firstConnections);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstConnections);
     }
 }

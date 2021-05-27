@@ -45,4 +45,14 @@ public class Teacher extends TeacherInfo {
     public IntegerProperty usedRoomIdProperty() {
         return usedRoomId;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }
