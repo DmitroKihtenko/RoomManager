@@ -21,26 +21,56 @@ public class Notifications {
     }
 
     public void push(String notification) {
-
+        if(!lock.isHeldByCurrentThread()) {
+            lock.lock();
+        }
+        notifications.push(notification);
+        lock.unlock();
     }
 
     public void removeLast() {
-
+        if(!lock.isHeldByCurrentThread()) {
+            lock.lock();
+        }
+        if(!notifications.empty()) {
+            notifications.pop();
+        }
+        lock.unlock();
     }
 
     public String getLast() {
-        return null;
+        if(!lock.isHeldByCurrentThread()) {
+            lock.lock();
+        }
+        String message = null;
+        if(!notifications.empty()) {
+            message = notifications.peek();
+        }
+        lock.unlock();
+        return message;
     }
 
     public int size() {
-        return 0;
+        if(!lock.isHeldByCurrentThread()) {
+            lock.lock();
+        }
+        return notifications.size();
     }
 
     public void clear() {
+        if(!lock.isHeldByCurrentThread()) {
+            lock.lock();
+        }
+        notifications.clear();
     }
 
     public Iterable<String> getAll() {
-        return notifications;
+        if(!lock.isHeldByCurrentThread()) {
+            lock.lock();
+        }
+        Iterable<String> values = (Iterable<String>) notifications.clone();
+        lock.unlock();
+        return values;
     }
 
     public BooleanProperty changesProperty() {

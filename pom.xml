@@ -34,6 +34,16 @@
       <version>3.2.4</version>
       <type>maven-plugin</type>
     </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx</artifactId>
+      <version>8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jfoenix</groupId>
+      <artifactId>jfoenix</artifactId>
+      <version>9.0.1</version>
+    </dependency>
   </dependencies>
 
   <build>
