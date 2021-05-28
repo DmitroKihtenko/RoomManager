@@ -49,11 +49,31 @@ public class User {
 
     @Override
     public String toString() {
-        return super.toString();
+        String result = "";
+
+        if (getName() != null)
+            result += "name - " + getName() + ", ";
+        if (getPassword() != null)
+            result += "password - " + getPassword() + ".";
+
+        return result;
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+
+        User guest = (User) obj;
+        return (name.get().equals(guest.getName()) &&
+                password.equals(guest.getPassword())
+        );
     }
 }

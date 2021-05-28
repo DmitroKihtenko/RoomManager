@@ -32,7 +32,7 @@ public class Datasource {
     }
 
     public void setDatabaseName(String databaseName) {
-        if(databaseName != null) {
+        if (databaseName != null) {
             StringLogic.isVisible(databaseName, "Database name", logger);
             StringLogic.isWholeWord(databaseName, "Database name", logger);
         }
@@ -87,7 +87,7 @@ public class Datasource {
     public String getAddress() {
         String address = protocol + ":" + source + ":" + url.get() +
                 ":" + port.get();
-        if(databaseName != null) {
+        if (databaseName != null) {
             address += "/" + databaseName;
         }
         return address;
@@ -95,11 +95,40 @@ public class Datasource {
 
     @Override
     public String toString() {
-        return super.toString();
+        String result = "";
+
+        if (getProtocol() != null)
+            result += "protocol - " + getProtocol() + ", ";
+        if (getUrl() != null)
+            result += "url - " + getUrl() + ", ";
+        if (getPort() != null)
+            result += "port - " + getPort() + ", ";
+        if (getSource() != null)
+            result += "source - " + getSource() + ", ";
+        if (getDatabaseName() != null)
+            result += "databaseName - " + getDatabaseName() + ".";
+
+        return result;
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Datasource)) {
+            return false;
+        }
+
+        Datasource guest = (Datasource) obj;
+        return (protocol.equals(guest.getProtocol()) &&
+                url.get().equals(guest.getUrl()) &&
+                port.get().equals(guest.getPort()) &&
+                source.equals(guest.getSource()) &&
+                databaseName.equals(guest.getDatabaseName())
+        );
     }
 }
