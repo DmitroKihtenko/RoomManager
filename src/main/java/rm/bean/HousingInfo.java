@@ -35,11 +35,30 @@ public class HousingInfo extends IdHolder {
 
     @Override
     public String toString() {
-        return super.toString();
+        String result = "";
+
+        if (getName() != null)
+            result += "name - " + getName() + ". ";
+
+        return result += super.toString();
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof HousingInfo)) {
+            return false;
+        }
+        if (!(super.equals(obj))) {
+            return false;
+        }
+
+        HousingInfo guest = (HousingInfo) obj;
+        return (name.get().equals(guest.getName()));
     }
 }

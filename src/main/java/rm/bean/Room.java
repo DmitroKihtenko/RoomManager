@@ -24,7 +24,7 @@ public class Room extends RoomInfo {
     }
 
     public Integer getOccupiedBy() {
-        if(!this.isAvailable.get()) {
+        if (!this.isAvailable.get()) {
             return null;
         }
         return this.occupiedBy.get();
@@ -46,11 +46,32 @@ public class Room extends RoomInfo {
 
     @Override
     public String toString() {
-        return super.toString();
+        String result = "";
+
+        if (String.valueOf(isAvailable()) != null)
+            result += "isAvailable - " + isAvailable() + ", ";
+        if (getOccupiedBy() != null)
+            result += "occupiedBy - " + getOccupiedBy() + ". ";
+
+        return result += super.toString();
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Room)) {
+            return false;
+        }
+        if (!(super.equals(obj))) {
+            return false;
+        }
+
+        Room guest = (Room) obj;
+        return (isAvailable.get() == guest.isAvailable() && occupiedBy.get() == guest.getOccupiedBy());
     }
 }
