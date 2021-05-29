@@ -9,31 +9,33 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 import rm.Main;
 import rm.bean.Datasource;
 import rm.bean.RoomInfo;
 import rm.bean.User;
-import rm.database.DbConnect;
 
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import rm.database.mySql.RTGetSQL;
 import org.apache.log4j.Logger;
+import rm.database.mySql.RTModifySQL;
+import rm.service.Beans;
 
 public class AdminController implements Initializable {
     private static final Logger logger =
@@ -43,46 +45,35 @@ public class AdminController implements Initializable {
     private AnchorPane parent;
 
     @FXML
-    private TableView<Names> namesTable;
+    private TableView<RoomInfo> namesTable;
     @FXML
-    private TableColumn<Names, String> idCol;
+    private TableColumn<RoomInfo, String> idCol;
     @FXML
-    private TableColumn<Names, String> nameCol;
+    private TableColumn<RoomInfo, String> nameCol;
     @FXML
-    private TableColumn<Names, String> editCol;
+    private TableColumn<RoomInfo, CheckBox> editCol;
 
-    private RTGetSQL getSql;
+    private RTModifySQL getSql;
     private HashMap<Integer, RoomInfo> rooms;
 
     private double xOffSet = 0;
     private double yOffSet = 0;
-
-    String query = null;
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-    Names names = null;
 
     ObservableList<RoomInfo> NamesList = FXCollections.observableArrayList();
 
     @Override
     public void initialize (URL url, ResourceBundle rb) {
         if(getSql == null) {
-            getSql = new RTGetSQL();
-            Datasource datasource = getSql.getProvider().getDatasource();
+            getSql = (RTModifySQL) Beans.context().get("databaseQueries");
+
             User user = getSql.getProvider().getUser();
-            datasource.setUrl("//localhost");
-            datasource.setPort("3306");
-            datasource.setSource("mysql");
-            datasource.setDatabaseName("roommanager");
+
 
             user.setName("root");
-            user.setPassword("number1298UA");
+            //user.setPassword("number1298UA");
 
             rooms = new HashMap<>();
         }
-
-
         loadDate();
         makeStageDragable();
     }
@@ -126,8 +117,10 @@ public class AdminController implements Initializable {
         }
         refreshTable();
 
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("number"));
+        nameCol.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getNumber()));
+
+        namesTable.setItems(NamesList);
+
     }
 
     private void makeStageDragable() {
