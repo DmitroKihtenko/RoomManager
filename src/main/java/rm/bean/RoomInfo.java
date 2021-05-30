@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import java.util.Objects;
 
-public class RoomInfo extends IdHolder {
+public class RoomInfo extends IdHolder implements Cloneable {
     private static final Logger logger =
             Logger.getLogger(RoomInfo.class);
 
@@ -27,6 +27,10 @@ public class RoomInfo extends IdHolder {
         housingId = new SimpleIntegerProperty(Integer.MIN_VALUE);
         this.isUsed = new SimpleBooleanProperty(true);
         this.notUsedReason = new SimpleStringProperty(null);
+    }
+
+    public void setiIUsed(int id) {
+        super.setId(id);
     }
 
     public String getNumber() {
@@ -120,17 +124,37 @@ public class RoomInfo extends IdHolder {
     }
 
     @Override
+    public RoomInfo clone() throws CloneNotSupportedException {
+        RoomInfo newRoomInfo = (RoomInfo) super.clone();
+
+        newRoomInfo.setHousingId(this.housingId.get());
+        newRoomInfo.setNumber(this.number.get());
+
+        if (!this.isUsed()) {
+            newRoomInfo.setNotUsedReason(this.getNotUsedReason());
+        } else {
+            newRoomInfo.setUsed();
+        }
+
+        return newRoomInfo;
+    }
+
+    @Override
     public String toString() {
         String result = "";
 
-        if (getNumber() != null)
+        if (getNumber() != null) {
             result += "number - " + isUsed() + ", ";
-        if (getHousingId() != null)
+        }
+        if (getHousingId() != null) {
             result += "housingId - " + isUsed() + ", ";
-        if (String.valueOf(isUsed()) != null)
-            result += "isUsed - " + isUsed() + ", ";
-        if (getNotUsedReason() != null)
+        }
+
+        result += "isUsed - " + isUsed() + ", ";
+
+        if (getNotUsedReason() != null) {
             result += "notUsedReason - " + isUsed() + ". ";
+        }
 
         return result += super.toString();
     }

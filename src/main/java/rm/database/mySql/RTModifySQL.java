@@ -5,12 +5,13 @@ import rm.bean.HousingInfo;
 import rm.bean.RoomInfo;
 import rm.bean.TeacherInfo;
 import rm.database.DbChangesInfo;
+import rm.database.QueryExecutor;
 import org.apache.log4j.Logger;
 
 import java.sql.JDBCType;
 import java.sql.SQLException;
 
-public class RTModifySQL extends RTGetSQL {
+public class RTModifySQL extends QueryExecutor {
     private static final Logger logger =
             Logger.getLogger(RTModifySQL.class);
     /**

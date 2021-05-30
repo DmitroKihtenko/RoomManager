@@ -3,7 +3,7 @@ package rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
-public class Teacher extends TeacherInfo {
+public class Teacher extends TeacherInfo implements Cloneable {
     private static final Logger logger = Logger.getLogger(Room.class);
 
     private BooleanProperty usesRoom;
@@ -48,14 +48,27 @@ public class Teacher extends TeacherInfo {
     }
 
     @Override
+    public Teacher clone() throws CloneNotSupportedException {
+        Teacher newTeacher = (Teacher) super.clone();
+
+        if (this.usesRoom()) {
+            newTeacher.setUsedRoom(this.usedRoomId.get());
+        } else {
+            newTeacher.setNotUsedRoom();
+        }
+
+        return newTeacher;
+    }
+
+    @Override
     public String toString() {
         String result = "";
 
-        if (String.valueOf(usesRoom()) != null)
-            result += "usesRoom - " + usesRoom() + ", ";
-        if (getUsedRoomId() != null)
-            result += "usedRoomId - " + getUsedRoomId() + ". ";
+        result += "usesRoom - " + usesRoom() + ", ";
 
+        if (getUsedRoomId() != null) {
+            result += "usedRoomId - " + getUsedRoomId() + ". ";
+        }
         return result += super.toString();
     }
 

@@ -1,6 +1,7 @@
 package rm.bean;
 
-public abstract class IdHolder implements Comparable<IdHolder> {
+
+public abstract class IdHolder implements Comparable<IdHolder>, Cloneable {
     public static final int DEFAULT_ID = Integer.MIN_VALUE;
 
     private static int maximalValue = 0;
@@ -52,6 +53,15 @@ public abstract class IdHolder implements Comparable<IdHolder> {
     }
 
     @Override
+    public IdHolder clone() throws CloneNotSupportedException {
+        IdHolder newIdHolder = (IdHolder) super.clone();
+
+        newIdHolder.setId(this.id);
+
+        return newIdHolder;
+    }
+
+    @Override
     public int compareTo(IdHolder o) {
         return Integer.compare(this.id, o.id);
     }
@@ -60,8 +70,7 @@ public abstract class IdHolder implements Comparable<IdHolder> {
     public String toString() {
         String result = "";
 
-        if (String.valueOf(getId()) != null)
-            result += "id - " + getId() + ".";
+        result += "id - " + getId() + ".";
 
         return result;
     }

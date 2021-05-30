@@ -6,7 +6,7 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
-public class TeacherInfo extends IdHolder {
+public class TeacherInfo extends IdHolder implements Cloneable {
     private final static Logger logger =
             Logger.getLogger(TeacherInfo.class);
 
@@ -95,15 +95,29 @@ public class TeacherInfo extends IdHolder {
     }
 
     @Override
+    public TeacherInfo clone() throws CloneNotSupportedException {
+        TeacherInfo newTeacherInfo = (TeacherInfo) super.clone();
+
+        newTeacherInfo.setName(this.name.get());
+        newTeacherInfo.setSurname(this.surname.get());
+        newTeacherInfo.setPatronymic(this.patronymic.get());
+
+        return newTeacherInfo;
+    }
+
+    @Override
     public String toString() {
         String result = "";
 
-        if (getName() != null)
+        if (getName() != null) {
             result += "name - " + getName() + ", ";
-        if (getSurname() != null)
+        }
+        if (getSurname() != null) {
             result += "surname - " + getSurname() + ", ";
-        if (getPatronymic() != null)
+        }
+        if (getPatronymic() != null) {
             result += "patronymic - " + getPatronymic() + ". ";
+        }
 
         return result += super.toString();
     }

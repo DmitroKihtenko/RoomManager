@@ -3,7 +3,7 @@ package rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
-public class Room extends RoomInfo {
+public class Room extends RoomInfo implements Cloneable {
     private final static Logger logger = Logger.getLogger(Room.class);
 
     private final BooleanProperty isAvailable;
@@ -45,13 +45,23 @@ public class Room extends RoomInfo {
     }
 
     @Override
+    public Room clone() throws CloneNotSupportedException {
+        Room newRoom = (Room) super.clone();
+
+        newRoom.setOccupiedBy(this.occupiedBy.get());
+
+        return newRoom;
+    }
+
+    @Override
     public String toString() {
         String result = "";
 
-        if (String.valueOf(isAvailable()) != null)
-            result += "isAvailable - " + isAvailable() + ", ";
-        if (getOccupiedBy() != null)
+        result += "isAvailable - " + isAvailable() + ", ";
+
+        if (getOccupiedBy() != null) {
             result += "occupiedBy - " + getOccupiedBy() + ". ";
+        }
 
         return result += super.toString();
     }
@@ -72,6 +82,6 @@ public class Room extends RoomInfo {
         }
 
         Room guest = (Room) obj;
-        return (isAvailable.get() == guest.isAvailable() && occupiedBy.get() == guest.getOccupiedBy());
+        return (occupiedBy.get() == guest.getOccupiedBy());
     }
 }
