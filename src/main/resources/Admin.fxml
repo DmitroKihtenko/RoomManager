@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -9,9 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="parent" prefHeight="580.0" prefWidth="1024.0" styleClass="parent" stylesheets="@rm/css/Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminController">
+<AnchorPane fx:id="parent" prefHeight="580.0" prefWidth="1024.0" styleClass="parent" stylesheets="@../java/rm/css/Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminController">
    <children>
       <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="1024.0">
          <children>
@@ -86,13 +89,26 @@
                   <FontAwesomeIcon iconName="REFRESH" layoutX="10.0" layoutY="67.0" onMouseClicked="#refreshTable" size="20" />
                </children>
             </HBox>
-            <TableView fx:id="namesTable1" layoutX="472.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;">
+            <TableView fx:id="tableViewNames" layoutX="472.0" layoutY="115.0" onMouseClicked="#selectContractContractTab" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;">
                <columns>
-                  <TableColumn fx:id="idCol1" maxWidth="70.0" prefWidth="42.39999467134476" text="ID" />
-                  <TableColumn fx:id="nameCol1" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="NAME" />
-                  <TableColumn fx:id="editCol1" maxWidth="100.0" prefWidth="100.0" text="EDIT" />
+                  <TableColumn fx:id="namesCol" maxWidth="249.19998168945312" prefWidth="249.19998168945312" text="NAME" />
                </columns>
             </TableView>
+            <JFXButton buttonType="RAISED" layoutX="472.0" layoutY="474.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#addNewName" prefHeight="45.0" prefWidth="250.0" ripplerFill="WHITE" styleClass="login-btn" text="Add ">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="15.0" />
+               </font>
+            </JFXButton>
+            <VBox layoutX="795.0" layoutY="115.0" prefHeight="200.0" prefWidth="204.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                  <TextField fx:id="nameTextField" onAction="#renameName" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" />
+                  <TextField fx:id="surnameTextField" onAction="#renameName" />
+                  <Text layoutX="10.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patronymic:" />
+                  <TextField fx:id="patronymicTextField" layoutX="10.0" layoutY="69.0" onAction="#renameName" />
+               </children>
+            </VBox>
          </children>
       </Pane>
    </children>
