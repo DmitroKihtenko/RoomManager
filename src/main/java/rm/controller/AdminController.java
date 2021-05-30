@@ -2,16 +2,10 @@ package rm.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -24,20 +18,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import rm.Main;
-import rm.bean.Datasource;
 import rm.bean.RoomInfo;
 import rm.bean.TeacherInfo;
 import rm.bean.User;
 
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import rm.database.mySql.RTGetSQL;
 import org.apache.log4j.Logger;
 import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
@@ -45,22 +35,20 @@ import rm.service.Beans;
 public class AdminController implements Initializable {
     private static final Logger logger =
             Logger.getLogger(AdminController.class);
-
     @FXML
     private AnchorPane parent;
-
     @FXML
-    private TableView<RoomInfo> namesTable;
+    private TableView<RoomInfo> roomsTable;
     @FXML
-    private TableView<TeacherInfo> tableViewNames;
+    private TableView<TeacherInfo> teachersTable;
     @FXML
-    private TableColumn<RoomInfo, String> idCol;
+    private TableColumn<RoomInfo, String> roomIdCol;
     @FXML
-    private TableColumn<RoomInfo, String> nameCol;
+    private TableColumn<RoomInfo, String> roomNameCol;
     @FXML
     private TableColumn<RoomInfo, CheckBox> editCol;
     @FXML
-    private TableColumn<TeacherInfo, String> namesCol;
+    private TableColumn<TeacherInfo, String> teacherNameCol;
 
     @FXML
     private TextField nameTextField;
@@ -148,11 +136,11 @@ public class AdminController implements Initializable {
         }
         refreshTable();
 
-        nameCol.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getNumber()));
+        roomNameCol.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getNumber()));
 
-        namesTable.setItems(NamesList);
+        roomsTable.setItems(NamesList);
 
-        namesCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TeacherInfo, String>, ObservableValue<String>>() {
+        teacherNameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TeacherInfo, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<TeacherInfo, String> p) {
                 SimpleStringProperty smp = new SimpleStringProperty(p.getValue().getSurname() + " " +
@@ -160,32 +148,9 @@ public class AdminController implements Initializable {
                 return smp;
             }
         });
-        tableViewNames.setItems(TeachersList);
+        teachersTable.setItems(TeachersList);
 
 
-    }
-
-
-
-
-
-
-    private void makeStageDragable() {
-        parent.setOnMousePressed((event) -> {
-            xOffSet = event.getSceneX();
-            yOffSet = event.getSceneY();
-        });
-        parent.setOnMouseDragged((event) -> {
-            Main.stage.setX(event.getScreenX() - xOffSet);
-            Main.stage.setY(event.getScreenY() - yOffSet);
-            Main.stage.setOpacity(0.8f);
-        });
-        parent.setOnDragDone((event) -> {
-            Main.stage.setOpacity(1.0f);
-        });
-        parent.setOnMouseReleased((event) -> {
-            Main.stage.setOpacity(1.0f);
-        });
     }
 
     @FXML
@@ -197,7 +162,7 @@ public class AdminController implements Initializable {
     public void selectContractContractTab(MouseEvent mouseEvent) {
 
 
-        temp = tableViewNames.getSelectionModel().getSelectedItem();
+        temp = teachersTable.getSelectionModel().getSelectedItem();
         nameTextField.setText(temp.getName());
         surnameTextField.setText(temp.getSurname());
         patronymicTextField.setText(temp.getPatronymic());
@@ -216,5 +181,23 @@ public class AdminController implements Initializable {
 
         refreshTable();
         //System.out.println(temp.getName());
+    }
+
+    private void makeStageDragable() {
+        parent.setOnMousePressed((event) -> {
+            xOffSet = event.getSceneX();
+            yOffSet = event.getSceneY();
+        });
+        parent.setOnMouseDragged((event) -> {
+            Main.stage.setX(event.getScreenX() - xOffSet);
+            Main.stage.setY(event.getScreenY() - yOffSet);
+            Main.stage.setOpacity(0.8f);
+        });
+        parent.setOnDragDone((event) -> {
+            Main.stage.setOpacity(1.0f);
+        });
+        parent.setOnMouseReleased((event) -> {
+            Main.stage.setOpacity(1.0f);
+        });
     }
 }

@@ -2,13 +2,16 @@ package rm.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,11 +19,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import rm.Main;
+import rm.bean.User;
+import rm.database.mySql.RTModifySQL;
+import rm.service.Beans;
 
 
-public class LoginController implements Initializable{
-
+public class LoginController {
     @FXML
     private AnchorPane parent;
     @FXML
@@ -32,15 +38,22 @@ public class LoginController implements Initializable{
     @FXML
     private PasswordField password;
 
+    private RTModifySQL getSql;
     private double xOffSet = 0;
     private double yOffSet = 0;
 
-    @Override
-    public void initialize (URL url, ResourceBundle rb) {
-        makeStageDragable();
+    @FXML
+    public void initialize() {
+        if(getSql == null) {
+            getSql = (RTModifySQL) Beans.context().get("databaseQueries");
+            User user = getSql.getProvider().getUser();
+            user.setName("admin");
+            user.setPassword("admin");
+        }
+        makeStageDraggable();
     }
 
-    private void makeStageDragable() {
+    private void makeStageDraggable() {
         parent.setOnMousePressed((event) -> {
             xOffSet = event.getSceneX();
             yOffSet = event.getSceneY();
@@ -70,10 +83,16 @@ public class LoginController implements Initializable{
 
     @FXML
     private void handle_login(ActionEvent event) throws IOException {
-        Parent admin = FXMLLoader.load(getClass().getResource("/Admin.fxml"));
-        content.getChildren().removeAll();
-        content.getChildren().setAll(admin);
+        try {
+            getSql.getProvider().connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Scene scene = stage.getScene();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().
+                getResource("/adminPanel.fxml"));
+        scene.setRoot(fxmlLoader.load());
     }
-
-
 }

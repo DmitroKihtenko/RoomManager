@@ -72,11 +72,11 @@
                   </TextField>
                </children>
             </HBox>
-            <TableView fx:id="namesTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
+            <TableView fx:id="roomsTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
               <columns>
-                <TableColumn fx:id="idCol" maxWidth="70.0" prefWidth="42.39999467134476" text="ID" />
-                <TableColumn fx:id="nameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="NAME" />
-                  <TableColumn fx:id="editCol" maxWidth="100.0" prefWidth="100.0" text="EDIT" />
+                <TableColumn fx:id="roomIdCol" maxWidth="70.0" prefWidth="42.39999467134476" text="ID" />
+                <TableColumn fx:id="roomNameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="NAME" />
+                <TableColumn fx:id="editCol" maxWidth="100.0" prefWidth="100.0" text="EDIT" />
               </columns>
             </TableView>
             <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
@@ -89,9 +89,9 @@
                   <FontAwesomeIcon iconName="REFRESH" layoutX="10.0" layoutY="67.0" onMouseClicked="#refreshTable" size="20" />
                </children>
             </HBox>
-            <TableView fx:id="tableViewNames" layoutX="472.0" layoutY="115.0" onMouseClicked="#selectContractContractTab" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;">
+            <TableView fx:id="teachersTable" layoutX="472.0" layoutY="115.0" onMouseClicked="#selectContractContractTab" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;">
                <columns>
-                  <TableColumn fx:id="namesCol" maxWidth="249.19998168945312" prefWidth="249.19998168945312" text="NAME" />
+                  <TableColumn fx:id="teacherNameCol" maxWidth="249.19998168945312" prefWidth="249.19998168945312" text="NAME" />
                </columns>
             </TableView>
             <JFXButton buttonType="RAISED" layoutX="472.0" layoutY="474.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#addNewName" prefHeight="45.0" prefWidth="250.0" ripplerFill="WHITE" styleClass="login-btn" text="Add ">

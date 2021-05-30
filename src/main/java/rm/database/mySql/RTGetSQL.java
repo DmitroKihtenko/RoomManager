@@ -79,7 +79,7 @@ public class RTGetSQL extends QueryExecutor {
                          HousingInfo roomsHousing) throws SQLException {
         logger.debug("Getting rooms data from database");
 
-        String sql = "SELECT * FROM housings";
+        String sql = "SELECT * FROM rooms";
         if(roomsHousing != null) {
             sql += " WHERE HousingId = " + roomsHousing.getId();
         }
