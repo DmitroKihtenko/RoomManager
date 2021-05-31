@@ -40,6 +40,8 @@ public class Main extends Application {
                 new SimpleObjectProperty<>(null);
         ObjectProperty<TeacherInfo> selectedTeacher =
                 new SimpleObjectProperty<>(null);
+        ObjectProperty<HousingInfo> selectedHousing =
+                new SimpleObjectProperty<>(null);
         dataHandler.propertiesForPath("datasource.xml",
                 new DatasourceProperty(datasource));
         dataHandler.propertiesForPath("properties.xml",
@@ -49,6 +51,7 @@ public class Main extends Application {
         Beans.context().set("databaseQueries", databaseQueries);
         Beans.context().set("selectedRoom", selectedRoom);
         Beans.context().set("selectedTeacher", selectedTeacher);
+        Beans.context().set("selectedHousing", selectedHousing);
     }
 
     public static void main(String[] args) {

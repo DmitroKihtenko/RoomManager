@@ -22,6 +22,8 @@ public class AdminPanelController {
     private TeachersTableController teachersTableController;
     @FXML
     private EditController editController;
+    @FXML
+    private HousingsTableController housingsTableController;
 
     private RTModifySQL getSql;
     private double xOffSet;
@@ -68,6 +70,7 @@ public class AdminPanelController {
 
             roomsTableController.setRooms(rooms, housings, rtAccess);
             teachersTableController.setTeachers(teachers, rtAccess);
+            housingsTableController.setHousings(housings, rooms);
         } catch (Exception e) {
             e.printStackTrace();
         }

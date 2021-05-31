@@ -17,7 +17,7 @@
                         <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" onMouseClicked="#searchRooms" />
                     </graphic>
                 </Label>
-                <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="roomSearch">
+                <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="searchField">
                     <font>
                         <Font size="14.0" />
                     </font>

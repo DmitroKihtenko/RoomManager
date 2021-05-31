@@ -16,11 +16,12 @@ import rm.service.Assertions;
 import rm.service.Beans;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class RoomsTableController {
     private static final Logger logger =
-            Logger.getLogger(AdminController.class);
+            Logger.getLogger(RoomsTableController.class);
     private static final String DEF_ROOM_NAME = "0";
     private static final String NO_HOUSING_SYMBOL = "-";
     @FXML
@@ -30,7 +31,7 @@ public class RoomsTableController {
     @FXML
     private TableColumn<RoomInfo, String> roomHousingCol;
     @FXML
-    private TextField roomSearch;
+    private TextField searchField;
     private HashMap<Integer, RoomInfo> rooms;
     private HashMap<Integer, HousingInfo> housings;
     private ConnectionsList rtAccess;
@@ -119,9 +120,9 @@ public class RoomsTableController {
                         addListener(housingListener);
                 return property;
             });
-            roomSearch.textProperty().addListener((observableValue,
-                                                   oldValue,
-                                                   newValue) -> {
+            searchField.textProperty().addListener((observableValue,
+                                                    oldValue,
+                                                    newValue) -> {
                 if(!oldValue.equals(newValue)) {
                     searchRooms();
                 }
@@ -152,7 +153,7 @@ public class RoomsTableController {
     }
 
     public void searchRooms() {
-        String text = roomSearch.getText();
+        String text = searchField.getText().toLowerCase(Locale.ROOT);
         ObservableList<RoomInfo> roomsList = roomsTable.getItems();
         roomsList.clear();
         for (RoomInfo room : rooms.values()) {
@@ -173,7 +174,8 @@ public class RoomsTableController {
                     summaryValue.append(room.getNotUsedReason());
                 }
                 Pattern pattern = Pattern.compile(".*" + text + ".*");
-                if(pattern.matcher(summaryValue).matches()) {
+                if(pattern.matcher(summaryValue.toString().
+                        toLowerCase(Locale.ROOT)).matches()) {
                     roomsList.add(room);
                 }
             }

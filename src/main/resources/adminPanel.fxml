@@ -38,8 +38,9 @@
         </HBox>
         <Pane layoutY="21.0" prefHeight="545.0" prefWidth="1024.0">
             <HBox>
-                <fx:include source="roomsTable.fxml" fx:id="roomsTable"/>
-                <fx:include source="teachersTable.fxml" fx:id="teachersTable"/>
+                <fx:include source="roomsTable.fxml" fx:id="roomsTable" />
+                <fx:include source="teachersTable.fxml" fx:id="teachersTable" />
+                <fx:include source="housingsTable.fxml" fx:id="housingsTable" />
                 <fx:include source="edit.fxml" fx:id="edit"/>
             </HBox>
         </Pane>
