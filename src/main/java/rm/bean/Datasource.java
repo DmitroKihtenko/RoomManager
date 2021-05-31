@@ -6,6 +6,8 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class Datasource {
     private static final Logger logger =
             Logger.getLogger(Datasource.class);
@@ -124,11 +126,51 @@ public class Datasource {
         }
 
         Datasource guest = (Datasource) obj;
-        return (protocol.equals(guest.getProtocol()) &&
-                url.get().equals(guest.getUrl()) &&
-                port.get().equals(guest.getPort()) &&
-                source.equals(guest.getSource()) &&
-                databaseName.equals(guest.getDatabaseName())
-        );
+        Object s1 = Objects.requireNonNullElse(
+                getProtocol(), "");
+        Object s2 = Objects.requireNonNullElse(guest.
+                getProtocol(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getUrl(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getUrl(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getPort(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getPort(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getSource(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getSource(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getDatabaseName(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getDatabaseName(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        return true;
     }
 }

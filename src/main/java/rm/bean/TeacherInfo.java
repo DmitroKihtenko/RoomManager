@@ -6,6 +6,8 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class TeacherInfo extends IdHolder implements Cloneable {
     private final static Logger logger =
             Logger.getLogger(TeacherInfo.class);
@@ -35,7 +37,7 @@ public class TeacherInfo extends IdHolder implements Cloneable {
      * @param name name, not null
      */
     public void setName(String name) {
-        if(name != null) {
+        if (name != null) {
             StringLogic.isVisible(name, "Teacher name", logger);
             StringLogic.isWholeWord(name, "Teacher name", logger);
             StringLogic.containsLetter(name, "Teacher name", logger);
@@ -138,7 +140,33 @@ public class TeacherInfo extends IdHolder implements Cloneable {
         }
 
         TeacherInfo guest = (TeacherInfo) obj;
-        return (name.get().equals(guest.getName()) && surname.get().equals(guest.getSurname())
-                && patronymic.get().equals(guest.getPatronymic()));
+        Object s1 = Objects.requireNonNullElse(
+                getName(), "");
+        Object s2 = Objects.requireNonNullElse(guest.
+                getName(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getSurname(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getSurname(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getPatronymic(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getPatronymic(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        return true;
     }
 }

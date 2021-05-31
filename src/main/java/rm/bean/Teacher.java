@@ -3,6 +3,8 @@ package rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class Teacher extends TeacherInfo implements Cloneable {
     private static final Logger logger = Logger.getLogger(Room.class);
 
@@ -88,6 +90,24 @@ public class Teacher extends TeacherInfo implements Cloneable {
         }
 
         Teacher guest = (Teacher) obj;
-        return (usesRoom.get() == guest.usesRoom() && usedRoomId.get() == guest.getUsedRoomId());
+        Object s1 = Objects.requireNonNullElse(
+                usesRoom(), Boolean.FALSE);
+        Object s2 = Objects.requireNonNullElse(guest.
+                usesRoom(), Boolean.FALSE);
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getUsedRoomId(), Integer.MIN_VALUE);
+        s2 = Objects.requireNonNullElse(guest.
+                getUsedRoomId(), Integer.MIN_VALUE);
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        return true;
     }
 }

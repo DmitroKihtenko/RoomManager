@@ -3,6 +3,8 @@ package rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class Room extends RoomInfo implements Cloneable {
     private final static Logger logger = Logger.getLogger(Room.class);
 
@@ -82,6 +84,15 @@ public class Room extends RoomInfo implements Cloneable {
         }
 
         Room guest = (Room) obj;
-        return (occupiedBy.get() == guest.getOccupiedBy());
+        Object s1 = Objects.requireNonNullElse(
+                getOccupiedBy(), Boolean.FALSE);
+        Object s2 = Objects.requireNonNullElse(guest.
+                getOccupiedBy(), Boolean.FALSE);
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -144,16 +144,16 @@ public class RoomInfo extends IdHolder implements Cloneable {
         String result = "";
 
         if (getNumber() != null) {
-            result += "number - " + isUsed() + ", ";
+            result += "number - " + getNumber() + ", ";
         }
         if (getHousingId() != null) {
-            result += "housingId - " + isUsed() + ", ";
+            result += "housingId - " + getHousingId() + ", ";
         }
 
         result += "isUsed - " + isUsed() + ", ";
 
         if (getNotUsedReason() != null) {
-            result += "notUsedReason - " + isUsed() + ". ";
+            result += "notUsedReason - " + getNotUsedReason() + ". ";
         }
 
         return result += super.toString();
@@ -179,16 +179,20 @@ public class RoomInfo extends IdHolder implements Cloneable {
                 getNotUsedReason(), "");
         Object s2 = Objects.requireNonNullElse(guest.
                 getNotUsedReason(), "");
-        if(!s1.equals(s2)) {
+
+        if (!s1.equals(s2)) {
             return false;
         }
+
         s1 = Objects.requireNonNullElse(
                 getHousingId(), Integer.MIN_VALUE);
         s2 = Objects.requireNonNullElse(guest.
                 getHousingId(), Integer.MIN_VALUE);
-        if(!s1.equals(s2)) {
+
+        if (!s1.equals(s2)) {
             return false;
         }
+
         return number.get().equals(guest.getNumber());
     }
 }
