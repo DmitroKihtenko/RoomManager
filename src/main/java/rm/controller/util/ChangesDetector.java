@@ -23,14 +23,17 @@ public class ChangesDetector<T> {
 
     public void findChanges(HashMap<Integer, T> changed,
                             HashMap<Integer, T> removed,
-                            HashMap<Integer, T> added) {
+                            HashMap<Integer, T> added,
+                            HashMap<Integer, T> updated) {
         logger.debug("Searching changes for objects");
 
-        Assertions.isNotNull(original, "Changed map for changes",
+        Assertions.isNotNull(changed, "Changed map for changes",
                 logger);
-        Assertions.isNotNull(original, "Added elements for changes",
+        Assertions.isNotNull(removed, "Added elements for changes",
                 logger);
-        Assertions.isNotNull(original, "Removed elements for changes",
+        Assertions.isNotNull(added, "Removed elements for changes",
+                logger);
+        Assertions.isNotNull(updated, "Updated elements for changes",
                 logger);
 
         T object;
@@ -39,8 +42,7 @@ public class ChangesDetector<T> {
             if(changed.containsKey(key)) {
                 if(object != null &&
                         !object.equals(changed.get(key))) {
-                    removed.put(key, object);
-                    added.put(key, object);
+                    updated.put(key, object);
                 }
             } else {
                 removed.put(key, object);
