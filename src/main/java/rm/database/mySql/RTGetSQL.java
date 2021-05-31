@@ -62,8 +62,8 @@ public class RTGetSQL extends QueryExecutor {
         while (resultSet.next()) {
             int key = resultSet.getInt("Id");
 
-            TeacherInfo value = new TeacherInfo(resultSet.getString("Name"));
-            value.setSurname(resultSet.getString("Surname"));
+            TeacherInfo value = new TeacherInfo(resultSet.getString("Surname"));
+            value.setName(resultSet.getString("Name"));
             value.setPatronymic(resultSet.getString("Patronymic"));
             value.setId(key);
 
