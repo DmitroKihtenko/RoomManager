@@ -3,6 +3,7 @@ package rm.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -36,7 +37,8 @@ public class TeachersTableController {
     private ObjectProperty<TeacherInfo> selectedTeacher;
     private ConnectionsList rtAccess;
     private HashMap<Integer, TeacherInfo> teachers;
-    private ChangeListener<String> initialsChange;
+
+    private ChangeListener<Object> refreshListener;
 
     public void setTeachers(HashMap<Integer, TeacherInfo> teachers,
                             ConnectionsList rtAccess) {
@@ -57,6 +59,33 @@ public class TeachersTableController {
         if(selectedTeacher == null) {
             selectedTeacher = (ObjectProperty<TeacherInfo>)
                     Beans.context().get("selectedTeacher");
+            refreshListener = (observableValue, o, t1) ->
+                    teachersTable.refresh();
+            teachersTable.getItems().addListener((ListChangeListener
+                    <TeacherInfo>) change -> {
+                while(change.next()) {
+                    if(change.wasAdded()) {
+                        for (TeacherInfo teacher : change.
+                                getAddedSubList()) {
+                            teacher.nameProperty().
+                                    addListener(refreshListener);
+                            teacher.surnameProperty().
+                                    addListener(refreshListener);
+                            teacher.patronymicProperty().
+                                    addListener(refreshListener);
+                        }
+                    } else if(change.wasRemoved()) {
+                        for (TeacherInfo teacher : change.getRemoved()) {
+                            teacher.nameProperty().
+                                    removeListener(refreshListener);
+                            teacher.surnameProperty().
+                                    removeListener(refreshListener);
+                            teacher.patronymicProperty().
+                                    removeListener(refreshListener);
+                        }
+                    }
+                }
+            });
             teachersTable.getSelectionModel().selectedItemProperty().
                     addListener((observableValue, teacherInfo,
                                  t1) -> {
@@ -68,25 +97,9 @@ public class TeachersTableController {
                     });
             teacherSurnameCol.setCellValueFactory(teacherFeatures
                     -> teacherFeatures.getValue().surnameProperty());
-            teacherInitialsCol.setCellValueFactory(teacherFeatures -> {
-                TeacherInfo teacher = teacherFeatures.getValue();
-                SimpleStringProperty property =
-                        new SimpleStringProperty(getInitials(teacher));
-                if (initialsChange == null) {
-                    initialsChange = (observableValue, s, t1) -> {
-                        if(s != null && !s.equals(t1)) {
-                            property.set(getInitials(teacher));
-                        }
-                    };
-                }
-                teacher.nameProperty().removeListener(initialsChange);
-                teacher.nameProperty().addListener(initialsChange);
-                teacher.patronymicProperty().removeListener(
-                        initialsChange);
-                teacher.patronymicProperty().addListener(
-                        initialsChange);
-                return property;
-            });
+            teacherInitialsCol.setCellValueFactory(teacherFeatures ->
+                new SimpleStringProperty(getInitials(
+                        teacherFeatures.getValue())));
             searchField.textProperty().addListener((observableValue,
                                                     oldValue,
                                                     newValue) -> {
