@@ -3,6 +3,7 @@ package rm.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -37,8 +38,7 @@ public class RoomsTableController {
     private ConnectionsList rtAccess;
     private ObjectProperty<RoomInfo> selectedRoom;
 
-    private ChangeListener<Number> housingListener;
-    private ChangeListener<String> housingNameListener;
+    private ChangeListener<Object> refreshListener;
 
     public void setRooms(HashMap<Integer, RoomInfo> rooms,
                          HashMap<Integer, HousingInfo> housings,
@@ -61,6 +61,29 @@ public class RoomsTableController {
         if(selectedRoom == null) {
             selectedRoom = (ObjectProperty<RoomInfo>)
                     Beans.context().get("selectedRoom");
+            refreshListener = (observableValue, o, t1) ->
+                    roomsTable.refresh();
+            roomsTable.getItems().addListener((ListChangeListener
+                    <RoomInfo>) change -> {
+                while(change.next()) {
+                    if(change.wasAdded()) {
+                        for (RoomInfo room : change.
+                                getAddedSubList()) {
+                            room.numberProperty().
+                                    addListener(refreshListener);
+                            room.housingIdProperty().
+                                    addListener(refreshListener);
+                        }
+                    } else if(change.wasRemoved()) {
+                        for (RoomInfo room : change.getRemoved()) {
+                            room.numberProperty().
+                                    removeListener(refreshListener);
+                            room.housingIdProperty().
+                                    removeListener(refreshListener);
+                        }
+                    }
+                }
+            });
             roomsTable.getSelectionModel().selectedItemProperty().
                     addListener((observableValue, roomInfo,
                                  t1) -> {
@@ -81,15 +104,6 @@ public class RoomsTableController {
                 if(housing != null) {
                     object = housings.get(housing);
                     if(object != null) {
-                        if(housingNameListener == null) {
-                            housingNameListener = (observableValue, s, t1) -> {
-                                if(!s.equals(t1)) {
-                                    property.set(object.getName());
-                                }
-                            };
-                        }
-                        object.nameProperty().removeListener(housingNameListener);
-                        object.nameProperty().addListener(housingNameListener);
                         property.set(object.getName());
                     } else {
                         property.set(NO_HOUSING_SYMBOL);
@@ -97,27 +111,6 @@ public class RoomsTableController {
                 } else {
                     property.set(NO_HOUSING_SYMBOL);
                 }
-                if(housingListener == null) {
-                    housingListener = (observableValue, integer, t1) -> {
-                        Integer housing1 = roomFeatures.
-                                getValue().getHousingId();
-                        HousingInfo object1;
-                        if(housing1 != null) {
-                            object1 = housings.get(housing1);
-                            if(object1 != null) {
-                                property.set(object1.getName());
-                            } else {
-                                property.set(NO_HOUSING_SYMBOL);
-                            }
-                        } else {
-                            property.set(NO_HOUSING_SYMBOL);
-                        }
-                    };
-                }
-                roomFeatures.getValue().housingIdProperty().
-                        removeListener(housingListener);
-                roomFeatures.getValue().housingIdProperty().
-                        addListener(housingListener);
                 return property;
             });
             searchField.textProperty().addListener((observableValue,

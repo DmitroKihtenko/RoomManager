@@ -1,6 +1,8 @@
 package rm.controller;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -31,6 +33,7 @@ public class HousingsTableController {
     private ObjectProperty<HousingInfo> selectedHousing;
     private HashMap<Integer, RoomInfo> rooms;
     private HashMap<Integer, HousingInfo> housings;
+    private ChangeListener<Object> refreshListener;
 
     public void setHousings(HashMap<Integer, HousingInfo> housings,
                             HashMap<Integer, RoomInfo> rooms) {
@@ -51,6 +54,25 @@ public class HousingsTableController {
         if(selectedHousing == null) {
             selectedHousing = (ObjectProperty<HousingInfo>)
                     Beans.context().get("selectedHousing");
+            refreshListener = (observableValue, o, t1) ->
+                    housingsTable.refresh();
+            housingsTable.getItems().addListener((ListChangeListener
+                    <HousingInfo>) change -> {
+                while(change.next()) {
+                    if(change.wasAdded()) {
+                        for (HousingInfo housing : change.
+                                getAddedSubList()) {
+                            housing.nameProperty().
+                                    addListener(refreshListener);
+                        }
+                    } else if(change.wasRemoved()) {
+                        for (HousingInfo housing : change.getRemoved()) {
+                            housing.nameProperty().
+                                    addListener(refreshListener);
+                        }
+                    }
+                }
+            });
             housingsTable.getSelectionModel().selectedItemProperty().
                     addListener((observableValue, housing,
                                  t1) -> {
