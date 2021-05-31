@@ -20,6 +20,8 @@ public class AdminPanelController {
     private RoomsTableController roomsTableController;
     @FXML
     private TeachersTableController teachersTableController;
+    @FXML
+    private EditController editController;
 
     private RTModifySQL getSql;
     private double xOffSet;

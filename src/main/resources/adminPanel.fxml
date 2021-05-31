@@ -40,6 +40,7 @@
             <HBox>
                 <fx:include source="roomsTable.fxml" fx:id="roomsTable"/>
                 <fx:include source="teachersTable.fxml" fx:id="teachersTable"/>
+                <fx:include source="edit.fxml" fx:id="edit"/>
             </HBox>
         </Pane>
         <FontAwesomeIcon iconName="REFRESH" layoutX="10.0" layoutY="67.0" onMouseClicked="#reloadData" size="20" />
