@@ -3,7 +3,6 @@ package rm.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -21,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class TeachersTableController {
     private static final Logger logger =
-            Logger.getLogger(AdminController.class);
+            Logger.getLogger(TeachersTableController.class);
     private static final String DEF_TEACHER_NAME = "Teacher";
     private static final String NO_INIT_SYMBOL = "-";
 
@@ -138,7 +137,7 @@ public class TeachersTableController {
     }
 
     public void searchTeachers() {
-        String text = searchField.getText();
+        String text = searchField.getText().toLowerCase(Locale.ROOT);
         ObservableList<TeacherInfo> teachersList =
                 teachersTable.getItems();
         teachersList.clear();
@@ -156,7 +155,8 @@ public class TeachersTableController {
                     summaryValue.append(teacher.getPatronymic());
                 }
                 Pattern pattern = Pattern.compile(".*" + text + ".*");
-                if(pattern.matcher(summaryValue).matches()) {
+                if(pattern.matcher(summaryValue.toString().
+                        toLowerCase(Locale.ROOT)).matches()) {
                     teachersList.add(teacher);
                 }
             }
