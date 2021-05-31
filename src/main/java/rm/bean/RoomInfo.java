@@ -175,7 +175,20 @@ public class RoomInfo extends IdHolder implements Cloneable {
         }
 
         RoomInfo guest = (RoomInfo) obj;
-        return (number.get().equals(guest.getNumber()) && housingId.get() == guest.getHousingId()
-                && isUsed.get() == guest.isUsed() && notUsedReason.get().equals(guest.getNotUsedReason()));
+        Object s1 = Objects.requireNonNullElse(
+                getNotUsedReason(), "");
+        Object s2 = Objects.requireNonNullElse(guest.
+                getNotUsedReason(), "");
+        if(!s1.equals(s2)) {
+            return false;
+        }
+        s1 = Objects.requireNonNullElse(
+                getHousingId(), Integer.MIN_VALUE);
+        s2 = Objects.requireNonNullElse(guest.
+                getHousingId(), Integer.MIN_VALUE);
+        if(!s1.equals(s2)) {
+            return false;
+        }
+        return number.get().equals(guest.getNumber());
     }
 }

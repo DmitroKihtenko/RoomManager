@@ -1,13 +1,14 @@
 package rm;
 
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import rm.bean.Datasource;
-import rm.bean.User;
+import rm.bean.*;
 import rm.database.mySql.RTModifySQL;
 import rm.properties.DatasourceProperty;
 import rm.properties.HousingProperty;
@@ -35,6 +36,10 @@ public class Main extends Application {
         Datasource datasource = new Datasource();
         RTModifySQL databaseQueries = new RTModifySQL();
         databaseQueries.getProvider().setDatasource(datasource);
+        ObjectProperty<RoomInfo> selectedRoom =
+                new SimpleObjectProperty<>(null);
+        ObjectProperty<TeacherInfo> selectedTeacher =
+                new SimpleObjectProperty<>(null);
         dataHandler.propertiesForPath("datasource.xml",
                 new DatasourceProperty(datasource));
         dataHandler.propertiesForPath("properties.xml",
@@ -42,6 +47,8 @@ public class Main extends Application {
         dataHandler.read();
 
         Beans.context().set("databaseQueries", databaseQueries);
+        Beans.context().set("selectedRoom", selectedRoom);
+        Beans.context().set("selectedTeacher", selectedTeacher);
     }
 
     public static void main(String[] args) {

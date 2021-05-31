@@ -14,11 +14,11 @@ public class TeacherInfo extends IdHolder implements Cloneable {
     private final StringProperty surname;
     private final StringProperty patronymic;
 
-    public TeacherInfo(String name) {
-        this.name = new SimpleStringProperty();
-        surname = new SimpleStringProperty(null);
+    public TeacherInfo(String surname) {
+        name = new SimpleStringProperty();
+        this.surname = new SimpleStringProperty(null);
         patronymic = new SimpleStringProperty(null);
-        setName(name);
+        setSurname(surname);
     }
 
     public String getName() {
@@ -35,10 +35,11 @@ public class TeacherInfo extends IdHolder implements Cloneable {
      * @param name name, not null
      */
     public void setName(String name) {
-        Assertions.isNotNull(name, "Teacher name", logger);
-        StringLogic.isVisible(name, "Teacher name", logger);
-        StringLogic.isWholeWord(name, "Teacher name", logger);
-        StringLogic.containsLetter(name, "Teacher name", logger);
+        if(name != null) {
+            StringLogic.isVisible(name, "Teacher name", logger);
+            StringLogic.isWholeWord(name, "Teacher name", logger);
+            StringLogic.containsLetter(name, "Teacher name", logger);
+        }
 
         this.name.set(name);
     }
@@ -57,13 +58,12 @@ public class TeacherInfo extends IdHolder implements Cloneable {
      * @param surname surname
      */
     public void setSurname(String surname) {
-        if (surname != null) {
-            StringLogic.isVisible(surname, "Teacher surname", logger);
-            StringLogic.isWholeWord(surname, "Teacher surname",
-                    logger);
-            StringLogic.containsLetter(surname, "Teacher surname",
-                    logger);
-        }
+        Assertions.isNotNull(surname, "Teacher surname", logger);
+        StringLogic.isVisible(surname, "Teacher surname", logger);
+        StringLogic.isWholeWord(surname, "Teacher surname",
+                logger);
+        StringLogic.containsLetter(surname, "Teacher surname",
+                logger);
 
         this.surname.set(surname);
     }

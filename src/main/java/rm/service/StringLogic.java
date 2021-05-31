@@ -68,7 +68,7 @@ public class StringLogic {
      */
     static public void containsLetter(String parameter,
                                       String name, Logger logger) {
-        boolean checkFlag = true, retur = true;
+        /*boolean checkFlag = true, retur = true;
         short count = 0;
 
         for (int i = 0; i < parameter.length(); i++) {
@@ -86,6 +86,6 @@ public class StringLogic {
             throw new IllegalArgumentException(
                     "A string that contains no letters " + name
             );
-        }
+        }*/
     }
 }

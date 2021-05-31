@@ -99,6 +99,24 @@ public abstract class ConnectionsList {
         changed.set(!changed.get());
     }
 
+    public void removeFirstConnections(int firstId) {
+        if(firstConnections.containsKey(firstId)) {
+            firstConnections.remove(firstId);
+            for(Integer secondId : secondConnections.keySet()) {
+                secondConnections.get(secondId).remove(firstId);
+            }
+        }
+    }
+
+    public void removeSecondConnections(int secondId) {
+        if(firstConnections.containsKey(secondId)) {
+            secondConnections.remove(secondId);
+            for(Integer firstId : firstConnections.keySet()) {
+                firstConnections.get(firstId).remove(secondId);
+            }
+        }
+    }
+
     /**
      * indicates whether a connection exists between the specified identifiers
      * @param firstId id of first object
