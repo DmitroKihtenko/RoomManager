@@ -7,13 +7,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 <Pane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="rm.controller.TeachersTableController">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="rm.controller.HousingsTableController">
     <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
         <children>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
                 <graphic>
-                    <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" onMouseClicked="#searchTeachers"/>
+                    <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" onMouseClicked="#searchHousings"/>
                 </graphic>
             </Label>
             <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="searchField">
@@ -23,22 +23,21 @@
             </TextField>
         </children>
     </HBox>
-    <TableView fx:id="teachersTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
+    <TableView fx:id="housingsTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
         <columns>
-            <TableColumn fx:id="teacherSurnameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Name" />
-            <TableColumn fx:id="teacherInitialsCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Initials" />
+            <TableColumn fx:id="housingNameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Name" />
         </columns>
     </TableView>
     <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
         <children>
-            <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#newTeacher" size="20">
+            <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#newHousing" size="20">
                 <HBox.margin>
                     <Insets right="10.0" />
                 </HBox.margin>
             </FontAwesomeIcon>
         </children>
         <children>
-            <FontAwesomeIcon iconName="MINUS" onMouseClicked="#deleteTeacher" size="20">
+            <FontAwesomeIcon iconName="MINUS" onMouseClicked="#deleteHousing" size="20">
                 <HBox.margin>
                     <Insets right="10.0" />
                 </HBox.margin>

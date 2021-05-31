@@ -90,6 +90,5 @@ public class StringLogic {
                     "A string that contains no letters " + name
             );
         }
-
     }
 }

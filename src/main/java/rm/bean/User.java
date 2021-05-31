@@ -18,7 +18,7 @@ public class User {
     public User() {
         name = new SimpleStringProperty();
         setName("unidentified");
-        password = "password";
+        password = "";
     }
 
     public void setName(String name) {

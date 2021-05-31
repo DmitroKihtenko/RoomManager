@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import rm.bean.ConnectionsList;
 import rm.bean.HousingInfo;
@@ -16,10 +16,12 @@ import rm.service.Assertions;
 import rm.service.Beans;
 
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class RoomsTableController {
     private static final Logger logger =
-            Logger.getLogger(AdminController.class);
+            Logger.getLogger(RoomsTableController.class);
     private static final String DEF_ROOM_NAME = "0";
     private static final String NO_HOUSING_SYMBOL = "-";
     @FXML
@@ -28,6 +30,9 @@ public class RoomsTableController {
     private TableColumn<RoomInfo, String> roomNameCol;
     @FXML
     private TableColumn<RoomInfo, String> roomHousingCol;
+    @FXML
+    private TextField searchField;
+    private HashMap<Integer, RoomInfo> rooms;
     private HashMap<Integer, HousingInfo> housings;
     private ConnectionsList rtAccess;
     private ObjectProperty<RoomInfo> selectedRoom;
@@ -42,13 +47,13 @@ public class RoomsTableController {
         Assertions.isNotNull(housings, "Housings map", logger);
         Assertions.isNotNull(rtAccess, "Access connections", logger);
 
+        this.rooms = rooms;
         this.housings = housings;
         this.rtAccess = rtAccess;
 
         ObservableList<RoomInfo> roomsList = roomsTable.getItems();
         roomsList.clear();
         roomsList.addAll(rooms.values());
-        roomsTable.setItems(roomsList);
     }
 
     @FXML
@@ -115,6 +120,13 @@ public class RoomsTableController {
                         addListener(housingListener);
                 return property;
             });
+            searchField.textProperty().addListener((observableValue,
+                                                    oldValue,
+                                                    newValue) -> {
+                if(!oldValue.equals(newValue)) {
+                    searchRooms();
+                }
+            });
         }
     }
 
@@ -122,7 +134,9 @@ public class RoomsTableController {
     public void newRoom() {
         ObservableList<RoomInfo> roomsList = roomsTable.getItems();
         RoomInfo newRoom = new RoomInfo(DEF_ROOM_NAME);
+        newRoom.createUniqueId();
         roomsList.add(newRoom);
+        rooms.put(newRoom.getId(), newRoom);
         roomsTable.getSelectionModel().select(newRoom);
     }
 
@@ -134,6 +148,37 @@ public class RoomsTableController {
         if(roomToDelete != null) {
             rtAccess.removeSecondConnections(roomToDelete.getId());
             roomsList.remove(roomToDelete);
+            rooms.remove(roomToDelete.getId());
+        }
+    }
+
+    public void searchRooms() {
+        String text = searchField.getText().toLowerCase(Locale.ROOT);
+        ObservableList<RoomInfo> roomsList = roomsTable.getItems();
+        roomsList.clear();
+        for (RoomInfo room : rooms.values()) {
+            if(text.length() == 0) {
+                roomsList.add(room);
+            } else {
+                StringBuilder summaryValue =
+                        new StringBuilder();
+                HousingInfo housing = housings.get(room.
+                        getHousingId());
+                if(housing != null) {
+                    summaryValue.append(housing.getName());
+                } else {
+                    summaryValue.append(NO_HOUSING_SYMBOL);
+                }
+                summaryValue.append(room.getNumber());
+                if(room.getNotUsedReason() != null) {
+                    summaryValue.append(room.getNotUsedReason());
+                }
+                Pattern pattern = Pattern.compile(".*" + text + ".*");
+                if(pattern.matcher(summaryValue.toString().
+                        toLowerCase(Locale.ROOT)).matches()) {
+                    roomsList.add(room);
+                }
+            }
         }
     }
 }
