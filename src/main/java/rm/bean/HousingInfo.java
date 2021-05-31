@@ -6,6 +6,8 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class HousingInfo extends IdHolder implements Cloneable {
     private static final Logger logger =
             Logger.getLogger(HousingInfo.class);
@@ -69,6 +71,15 @@ public class HousingInfo extends IdHolder implements Cloneable {
         }
 
         HousingInfo guest = (HousingInfo) obj;
-        return (name.get().equals(guest.getName()));
+        Object s1 = Objects.requireNonNullElse(
+                getName(), "");
+        Object s2 = Objects.requireNonNullElse(guest.
+                getName(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        return true;
     }
 }

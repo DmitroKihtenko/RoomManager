@@ -6,6 +6,8 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 public class User {
     private static final Logger logger =
             Logger.getLogger(Datasource.class);
@@ -72,8 +74,24 @@ public class User {
         }
 
         User guest = (User) obj;
-        return (name.get().equals(guest.getName()) &&
-                password.equals(guest.getPassword())
-        );
+        Object s1 = Objects.requireNonNullElse(
+                getName(), "");
+        Object s2 = Objects.requireNonNullElse(guest.
+                getName(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        s1 = Objects.requireNonNullElse(
+                getPassword(), "");
+        s2 = Objects.requireNonNullElse(guest.
+                getPassword(), "");
+
+        if (!s1.equals(s2)) {
+            return false;
+        }
+
+        return true;
     }
 }
