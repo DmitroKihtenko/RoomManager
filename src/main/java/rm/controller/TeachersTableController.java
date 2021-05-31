@@ -3,10 +3,12 @@ package rm.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import rm.bean.ConnectionsList;
 import rm.bean.TeacherInfo;
@@ -15,12 +17,16 @@ import rm.service.Beans;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class TeachersTableController {
     private static final Logger logger =
             Logger.getLogger(AdminController.class);
     private static final String DEF_TEACHER_NAME = "Teacher";
     private static final String NO_INIT_SYMBOL = "-";
+
+    @FXML
+    private TextField searchField;
     @FXML
     private TableView<TeacherInfo> teachersTable;
     @FXML
@@ -30,12 +36,15 @@ public class TeachersTableController {
 
     private ObjectProperty<TeacherInfo> selectedTeacher;
     private ConnectionsList rtAccess;
+    private HashMap<Integer, TeacherInfo> teachers;
     private ChangeListener<String> initialsChange;
 
     public void setTeachers(HashMap<Integer, TeacherInfo> teachers,
                             ConnectionsList rtAccess) {
         Assertions.isNotNull(teachers, "Teachers map", logger);
+        Assertions.isNotNull(rtAccess, "Access connections", logger);
 
+        this.teachers = teachers;
         this.rtAccess = rtAccess;
         ObservableList<TeacherInfo> teachersList =
                 teachersTable.getItems();
@@ -79,6 +88,13 @@ public class TeachersTableController {
                         initialsChange);
                 return property;
             });
+            searchField.textProperty().addListener((observableValue,
+                                                    oldValue,
+                                                    newValue) -> {
+                if(!oldValue.equals(newValue)) {
+                    searchTeachers();
+                }
+            });
         }
     }
 
@@ -87,7 +103,9 @@ public class TeachersTableController {
         ObservableList<TeacherInfo> teachersList =
                 teachersTable.getItems();
         TeacherInfo newTeacher = new TeacherInfo(DEF_TEACHER_NAME);
+        newTeacher.createUniqueId();
         teachersList.add(newTeacher);
+        teachers.put(newTeacher.getId(), newTeacher);
         teachersTable.getSelectionModel().select(newTeacher);
     }
 
@@ -100,6 +118,7 @@ public class TeachersTableController {
         if(teacherToDelete != null) {
             rtAccess.removeFirstConnections(teacherToDelete.getId());
             teachersList.remove(teacherToDelete);
+            teachers.remove(teacherToDelete.getId());
         }
     }
 
@@ -116,5 +135,31 @@ public class TeachersTableController {
             initials += NO_INIT_SYMBOL + ".";
         }
         return initials;
+    }
+
+    public void searchTeachers() {
+        String text = searchField.getText();
+        ObservableList<TeacherInfo> teachersList =
+                teachersTable.getItems();
+        teachersList.clear();
+        for (TeacherInfo teacher : teachers.values()) {
+            if(text.length() == 0) {
+                teachersList.add(teacher);
+            } else {
+                StringBuilder summaryValue =
+                        new StringBuilder();
+                summaryValue.append(teacher.getSurname());
+                if(teacher.getName() != null) {
+                    summaryValue.append(teacher.getName());
+                }
+                if(teacher.getPatronymic() != null) {
+                    summaryValue.append(teacher.getPatronymic());
+                }
+                Pattern pattern = Pattern.compile(".*" + text + ".*");
+                if(pattern.matcher(summaryValue).matches()) {
+                    teachersList.add(teacher);
+                }
+            }
+        }
     }
 }

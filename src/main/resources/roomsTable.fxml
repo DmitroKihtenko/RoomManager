@@ -14,10 +14,10 @@
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
                     <graphic>
-                        <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" />
+                        <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" onMouseClicked="#searchRooms" />
                     </graphic>
                 </Label>
-                <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS">
+                <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="roomSearch">
                     <font>
                         <Font size="14.0" />
                     </font>
