@@ -1,44 +1,13 @@
 package rm.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
-
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
-import rm.Main;
 import rm.bean.*;
 
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import rm.database.mySql.RTGetSQL;
 import org.apache.log4j.Logger;
-import rm.database.mySql.RTModifySQL;
 import rm.service.Assertions;
 import rm.service.Beans;
 

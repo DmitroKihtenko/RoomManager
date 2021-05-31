@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="parent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" styleClass="parent" stylesheets="@../java/rm/css/Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.EditController">
-    <VBox layoutX="159.0" layoutY="41.0" prefHeight="200.0" prefWidth="204.0">
+    <VBox layoutX="23.0" layoutY="43.0" prefHeight="200.0" prefWidth="204.0">
         <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
             <TextField fx:id="nameTextField" />
