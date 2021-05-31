@@ -58,6 +58,9 @@ public class EditController {
     @FXML
     private TextField numberTextField;
 
+    @FXML
+    private  TextField housingTextField;
+
     private ConnectionsList rtAccess;
     ObjectProperty<TeacherInfo> selectedTeacher;
     ObjectProperty<RoomInfo> selectedRoom;
@@ -86,6 +89,22 @@ public class EditController {
                     }
                 }
             });
+            surnameTextField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (!t1.equals(s)) {
+                        selectedTeacher.get().setSurname(t1);
+                    }
+                }
+            });
+            patronymicTextField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (!t1.equals(s)) {
+                        selectedTeacher.get().setPatronymic(t1);
+                    }
+                }
+            });
         }
 
         if (selectedRoom == null) {
@@ -99,9 +118,16 @@ public class EditController {
                     }
                 }
             });
+            numberTextField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (!t1.equals(s)) {
+                        selectedRoom.get().setNumber(t1);
+                    }
+                }
+            });
         }
 
-        /*
         if (selectedHousing == null) {
             selectedHousing = (ObjectProperty<HousingInfo>) Beans.context().get("selectedHousing");
             selectedHousing.addListener(new ChangeListener<HousingInfo>() {
@@ -109,12 +135,19 @@ public class EditController {
                 public void changed(ObservableValue<? extends HousingInfo> observableValue,
                                     HousingInfo housingInfo, HousingInfo t1) {
                     if (t1 != null && !t1.equals(housingInfo)) {
-                        numberTextField.setText(t1.getName());
+                        housingTextField.setText(t1.getName());
+                    }
+                }
+            });
+            housingTextField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (!t1.equals(s)) {
+                        selectedHousing.get().setName(t1);
                     }
                 }
             });
         }
-         */
     }
 
     public void setEditTeachers(ConnectionsList rtAccess) {
