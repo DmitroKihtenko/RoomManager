@@ -6,7 +6,7 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
-public class HousingInfo extends IdHolder {
+public class HousingInfo extends IdHolder implements Cloneable {
     private static final Logger logger =
             Logger.getLogger(HousingInfo.class);
 
@@ -34,12 +34,41 @@ public class HousingInfo extends IdHolder {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public HousingInfo clone() throws CloneNotSupportedException {
+        HousingInfo newHousingInfo = (HousingInfo) super.clone();
+
+        newHousingInfo.setName(this.name.get());
+
+        return newHousingInfo;
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public String toString() {
+        String result = "";
+
+        if (getName() != null) {
+            result += "name - " + getName() + ". ";
+        }
+
+        return result += super.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof HousingInfo)) {
+            return false;
+        }
+        if (!(super.equals(obj))) {
+            return false;
+        }
+
+        HousingInfo guest = (HousingInfo) obj;
+        return (name.get().equals(guest.getName()));
     }
 }

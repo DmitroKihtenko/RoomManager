@@ -6,7 +6,7 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
-public class TeacherInfo extends IdHolder {
+public class TeacherInfo extends IdHolder implements Cloneable {
     private final static Logger logger =
             Logger.getLogger(TeacherInfo.class);
 
@@ -31,6 +31,7 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teacher name setter
+     *
      * @param name name, not null
      */
     public void setName(String name) {
@@ -52,10 +53,11 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teacher surname setter
+     *
      * @param surname surname
      */
     public void setSurname(String surname) {
-        if(surname != null) {
+        if (surname != null) {
             StringLogic.isVisible(surname, "Teacher surname", logger);
             StringLogic.isWholeWord(surname, "Teacher surname",
                     logger);
@@ -76,10 +78,11 @@ public class TeacherInfo extends IdHolder {
 
     /**
      * Teachers fatherName setter
+     *
      * @param patronymic patronymic
      */
     public void setPatronymic(String patronymic) {
-        if(patronymic != null) {
+        if (patronymic != null) {
             StringLogic.isVisible(patronymic, "Teacher patronymic",
                     logger);
             StringLogic.isWholeWord(patronymic, "Teacher patronymic",
@@ -92,12 +95,50 @@ public class TeacherInfo extends IdHolder {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public TeacherInfo clone() throws CloneNotSupportedException {
+        TeacherInfo newTeacherInfo = (TeacherInfo) super.clone();
+
+        newTeacherInfo.setName(this.name.get());
+        newTeacherInfo.setSurname(this.surname.get());
+        newTeacherInfo.setPatronymic(this.patronymic.get());
+
+        return newTeacherInfo;
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public String toString() {
+        String result = "";
+
+        if (getName() != null) {
+            result += "name - " + getName() + ", ";
+        }
+        if (getSurname() != null) {
+            result += "surname - " + getSurname() + ", ";
+        }
+        if (getPatronymic() != null) {
+            result += "patronymic - " + getPatronymic() + ". ";
+        }
+
+        return result += super.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TeacherInfo)) {
+            return false;
+        }
+        if (!(super.equals(obj))) {
+            return false;
+        }
+
+        TeacherInfo guest = (TeacherInfo) obj;
+        return (name.get().equals(guest.getName()) && surname.get().equals(guest.getSurname())
+                && patronymic.get().equals(guest.getPatronymic()));
     }
 }

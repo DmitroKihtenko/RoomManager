@@ -3,7 +3,7 @@ package rm.bean;
 import javafx.beans.property.*;
 import org.apache.log4j.Logger;
 
-public class Room extends RoomInfo {
+public class Room extends RoomInfo implements Cloneable {
     private final static Logger logger = Logger.getLogger(Room.class);
 
     private final BooleanProperty isAvailable;
@@ -24,7 +24,7 @@ public class Room extends RoomInfo {
     }
 
     public Integer getOccupiedBy() {
-        if(!this.isAvailable.get()) {
+        if (!this.isAvailable.get()) {
             return null;
         }
         return this.occupiedBy.get();
@@ -45,12 +45,43 @@ public class Room extends RoomInfo {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public Room clone() throws CloneNotSupportedException {
+        Room newRoom = (Room) super.clone();
+
+        newRoom.setOccupiedBy(this.occupiedBy.get());
+
+        return newRoom;
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public String toString() {
+        String result = "";
+
+        result += "isAvailable - " + isAvailable() + ", ";
+
+        if (getOccupiedBy() != null) {
+            result += "occupiedBy - " + getOccupiedBy() + ". ";
+        }
+
+        return result += super.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Room)) {
+            return false;
+        }
+        if (!(super.equals(obj))) {
+            return false;
+        }
+
+        Room guest = (Room) obj;
+        return (occupiedBy.get() == guest.getOccupiedBy());
     }
 }

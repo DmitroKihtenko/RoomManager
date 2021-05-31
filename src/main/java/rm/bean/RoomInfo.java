@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import java.util.Objects;
 
-public class RoomInfo extends IdHolder {
+public class RoomInfo extends IdHolder implements Cloneable {
     private static final Logger logger =
             Logger.getLogger(RoomInfo.class);
 
@@ -18,6 +18,7 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Constructor for RoomInfo class objects
+     *
      * @param number number of room, similarly parameter to setter {@link #setNumber(String)}
      */
     public RoomInfo(String number) {
@@ -26,6 +27,10 @@ public class RoomInfo extends IdHolder {
         housingId = new SimpleIntegerProperty(Integer.MIN_VALUE);
         this.isUsed = new SimpleBooleanProperty(true);
         this.notUsedReason = new SimpleStringProperty(null);
+    }
+
+    public void setiIUsed(int id) {
+        super.setId(id);
     }
 
     public String getNumber() {
@@ -38,6 +43,7 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Setter for room number
+     *
      * @param number number of room, not null, must be whole word and visible on screen
      */
     public void setNumber(String number) {
@@ -50,10 +56,11 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Returns id of housing object in which this room located
+     *
      * @return if room located in some housing returns its id otherwise returns null
      */
     public Integer getHousingId() {
-        if(housingId.get() == Integer.MIN_VALUE) {
+        if (housingId.get() == Integer.MIN_VALUE) {
             return null;
         }
         return housingId.get();
@@ -61,6 +68,7 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Setter for id of housing object
+     *
      * @param housingId id of housing object
      */
     public void setHousingId(Integer housingId) {
@@ -85,6 +93,7 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Getter for reason if room can't be used
+     *
      * @return if room can't be used returns reason otherwise returns empty string
      */
     public String getNotUsedReason() {
@@ -101,6 +110,7 @@ public class RoomInfo extends IdHolder {
 
     /**
      * Sets that room can't be used for some reason
+     *
      * @param notUsedReason the reason why room is not used, not null, must be visible on screen
      */
     public void setNotUsedReason(String notUsedReason) {
@@ -114,12 +124,58 @@ public class RoomInfo extends IdHolder {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public RoomInfo clone() throws CloneNotSupportedException {
+        RoomInfo newRoomInfo = (RoomInfo) super.clone();
+
+        newRoomInfo.setHousingId(this.housingId.get());
+        newRoomInfo.setNumber(this.number.get());
+
+        if (!this.isUsed()) {
+            newRoomInfo.setNotUsedReason(this.getNotUsedReason());
+        } else {
+            newRoomInfo.setUsed();
+        }
+
+        return newRoomInfo;
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public String toString() {
+        String result = "";
+
+        if (getNumber() != null) {
+            result += "number - " + isUsed() + ", ";
+        }
+        if (getHousingId() != null) {
+            result += "housingId - " + isUsed() + ", ";
+        }
+
+        result += "isUsed - " + isUsed() + ", ";
+
+        if (getNotUsedReason() != null) {
+            result += "notUsedReason - " + isUsed() + ". ";
+        }
+
+        return result += super.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof RoomInfo)) {
+            return false;
+        }
+        if (!(super.equals(obj))) {
+            return false;
+        }
+
+        RoomInfo guest = (RoomInfo) obj;
+        return (number.get().equals(guest.getNumber()) && housingId.get() == guest.getHousingId()
+                && isUsed.get() == guest.isUsed() && notUsedReason.get().equals(guest.getNotUsedReason()));
     }
 }
