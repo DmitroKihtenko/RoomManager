@@ -3,50 +3,48 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.text.Font?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
-<AnchorPane xmlns="http://javafx.com/javafx"
+<Pane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="rm.controller.RoomsTableController"
-            prefHeight="400.0" prefWidth="600.0">
-    <Pane layoutY="21.0" prefHeight="545.0" prefWidth="1024.0">
-        <children>
-            <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
-                <children>
-                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
-                        <graphic>
-                            <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" />
-                        </graphic>
-                    </Label>
-                    <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS">
-                        <font>
-                            <Font size="14.0" />
-                        </font>
-                    </TextField>
-                </children>
-            </HBox>
-            <TableView fx:id="roomsTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
-                <columns>
-                    <TableColumn fx:id="roomHousingCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Housing" />
-                    <TableColumn fx:id="roomNameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Number" />
-                </columns>
-            </TableView>
-            <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
-                <children>
-                    <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#getAddView" size="20">
-                        <HBox.margin>
-                            <Insets right="10.0" />
-                        </HBox.margin>
-                    </FontAwesomeIcon>
-                </children>
-            </HBox>
-            <JFXButton buttonType="RAISED" layoutX="472.0" layoutY="474.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#addNewName" prefHeight="45.0" prefWidth="250.0" ripplerFill="WHITE" styleClass="login-btn" text="Add ">
-                <font>
-                    <Font name="Microsoft Sans Serif" size="15.0" />
-                </font>
-            </JFXButton>
-        </children>
-    </Pane>
-</AnchorPane>
+            fx:controller="rm.controller.RoomsTableController">
+    <children>
+        <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
+                    <graphic>
+                        <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" />
+                    </graphic>
+                </Label>
+                <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+            </children>
+        </HBox>
+        <TableView fx:id="roomsTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
+            <columns>
+                <TableColumn fx:id="roomHousingCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Housing" />
+                <TableColumn fx:id="roomNameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Number" />
+            </columns>
+        </TableView>
+        <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
+            <children>
+                <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#newRoom" size="20">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </FontAwesomeIcon>
+            </children>
+            <children>
+                <FontAwesomeIcon iconName="MINUS" onMouseClicked="#deleteRoom" size="20">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </FontAwesomeIcon>
+            </children>
+        </HBox>
+    </children>
+</Pane>

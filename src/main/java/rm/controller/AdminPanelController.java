@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import rm.Main;
+import rm.bean.FastMutableConnections;
 import rm.bean.HousingInfo;
 import rm.bean.RoomInfo;
+import rm.bean.TeacherInfo;
 import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
 
@@ -16,6 +18,8 @@ public class AdminPanelController {
     private AnchorPane parent;
     @FXML
     private RoomsTableController roomsTableController;
+    @FXML
+    private TeachersTableController teachersTableController;
 
     private RTModifySQL getSql;
     private double xOffSet;
@@ -53,10 +57,15 @@ public class AdminPanelController {
         try {
             HashMap<Integer, HousingInfo> housings = new HashMap<>();
             HashMap<Integer, RoomInfo> rooms = new HashMap<>();
+            HashMap<Integer, TeacherInfo> teachers = new HashMap<>();
+            FastMutableConnections rtAccess = new FastMutableConnections();
             getSql.getHousings(housings);
             getSql.getRooms(rooms, null);
+            getSql.getTeachers(teachers);
+            getSql.getRtAccess(rtAccess);
 
-            roomsTableController.setRooms(rooms, housings);
+            roomsTableController.setRooms(rooms, housings, rtAccess);
+            teachersTableController.setTeachers(teachers, rtAccess);
         } catch (Exception e) {
             e.printStackTrace();
         }
