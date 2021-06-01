@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" prefHeight="900" prefWidth="1600.0" styleClass="parent" stylesheets="@../java/rm/css/Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminPanelController">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1360.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminPanelController">
     <children>
-        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="1024.0">
+        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="1360.0">
             <children>
                 <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <children>
@@ -36,12 +36,12 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </HBox>
-        <Pane layoutY="21.0" prefHeight="545.0" prefWidth="1024.0">
-            <HBox>
-                <fx:include source="roomsTable.fxml" fx:id="roomsTable" />
-                <fx:include source="teachersTable.fxml" fx:id="teachersTable" />
-                <fx:include source="housingsTable.fxml" fx:id="housingsTable" />
-                <fx:include source="edit.fxml" fx:id="edit"/>
+        <Pane layoutY="35.0" prefHeight="696.0" prefWidth="1360.0">
+            <HBox prefHeight="696.0" prefWidth="1360.0">
+                <fx:include fx:id="roomsTable" source="roomsTable.fxml" />
+                <fx:include fx:id="teachersTable" source="teachersTable.fxml" />
+                <fx:include fx:id="housingsTable" source="housingsTable.fxml" />
+                <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
         </Pane>
         <FontAwesomeIcon iconName="REFRESH" layoutX="10.0" layoutY="67.0" onMouseClicked="#reloadData" size="20" />

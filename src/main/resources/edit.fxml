@@ -1,33 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="parent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" styleClass="parent" stylesheets="@../java/rm/css/Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.EditController">
-    <VBox layoutX="23.0" layoutY="55.0" prefHeight="200.0" prefWidth="204.0">
+<AnchorPane fx:id="parent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="400.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.EditController">
+    <VBox layoutX="22.0" layoutY="31.0" prefHeight="151.0" prefWidth="235.0" stylesheets="@Stylesheet.css" AnchorPane.topAnchor="50.0">
         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-            <TextField fx:id="nameTextField" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" />
-            <TextField fx:id="surnameTextField" />
-            <Text layoutX="10.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patronymic:" />
-            <TextField fx:id="patronymicTextField" layoutX="10.0" layoutY="69.0" />
+            <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+            <font>
+               <Font name="Microsoft Sans Serif" size="15.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="7.0" right="7.0" top="7.0" />
+            </VBox.margin></Text>
+            <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="20.0" />
+            </VBox.margin></TextField>
+            <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:">
+            <VBox.margin>
+               <Insets left="7.0" right="7.0" top="5.0" />
+            </VBox.margin>
+            <font>
+               <Font name="Microsoft Sans Serif" size="15.0" />
+            </font></Text>
+            <TextField fx:id="surnameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+            <font>
+               <Font name="Microsoft Sans Serif" size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="20.0" />
+            </VBox.margin></TextField>
+            <Text fill="#c4a5a5" layoutX="10.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patronymic:">
+            <font>
+               <Font name="Microsoft Sans Serif" size="15.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="7.0" right="7.0" top="5.0" />
+            </VBox.margin></Text>
+            <TextField fx:id="patronymicTextField" layoutX="10.0" layoutY="69.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+            <font>
+               <Font name="Microsoft Sans Serif" size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="20.0" />
+            </VBox.margin></TextField>
         </children>
+      <styleClass>
+         <String fx:value="txtfield" />
+         <String fx:value="table-radius" />
+      </styleClass>
     </VBox>
-   <VBox layoutX="23.0" layoutY="297.0" prefHeight="63.0" prefWidth="204.0">
+   <VBox layoutX="23.0" layoutY="233.0" prefHeight="151.0" prefWidth="235.0" AnchorPane.topAnchor="250.0">
       <children>
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number:" />
-         <TextField fx:id="numberTextField" />
+         <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Number:">
+            <font>
+               <Font name="Microsoft Sans Serif" size="15.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="7.0" right="7.0" top="7.0" />
+            </VBox.margin></Text>
+         <TextField fx:id="numberTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="180.0" styleClass="txtfield">
+            <font>
+               <Font name="Microsoft Sans Serif" size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="40.0" />
+            </VBox.margin></TextField>
+         <TextArea fx:id="notUsedHousing" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #3B4148;" styleClass="txtfield" stylesheets="@Stylesheet.css">
+            <font>
+               <Font name="Microsoft Sans Serif" size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="10.0" top="15.0" />
+            </VBox.margin>
+         </TextArea>
       </children>
+      <styleClass>
+         <String fx:value="txtfield" />
+         <String fx:value="table-radius" />
+      </styleClass>
    </VBox>
-   <VBox layoutX="23.0" layoutY="377.0" prefHeight="63.0" prefWidth="204.0">
+   <VBox layoutX="23.0" layoutY="377.0" prefHeight="151.0" prefWidth="235.0" AnchorPane.topAnchor="450.0">
       <children>
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Housing:" />
-         <TextField fx:id="housingTextField" />
+         <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Housing:">
+            <font>
+               <Font name="Microsoft Sans Serif" size="15.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="7.0" right="7.0" top="7.0" />
+            </VBox.margin></Text>
+         <TextField fx:id="housingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="180.0" styleClass="txtfield">
+            <VBox.margin>
+               <Insets left="40.0" />
+            </VBox.margin>
+            <font>
+               <Font name="Microsoft Sans Serif" size="16.0" />
+            </font></TextField>
       </children>
+      <styleClass>
+         <String fx:value="txtfield" />
+         <String fx:value="table-radius" />
+      </styleClass>
    </VBox>
+   <ChoiceBox fx:id="numberChoiceBox" layoutX="200.0" layoutY="641.0" prefWidth="150.0" />
 
 
 </AnchorPane>

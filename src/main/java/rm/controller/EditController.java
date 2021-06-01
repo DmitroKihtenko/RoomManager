@@ -31,6 +31,12 @@ public class EditController {
     @FXML
     private  TextField housingTextField;
 
+    @FXML
+    private TextArea notUsedHousing;
+
+    @FXML
+    private ChoiceBox<String> numberChoiceBox;
+
     private ConnectionsList rtAccess;
     ObjectProperty<TeacherInfo> selectedTeacher;
     ObjectProperty<RoomInfo> selectedRoom;
@@ -85,9 +91,16 @@ public class EditController {
                                     RoomInfo roomInfo, RoomInfo t1) {
                     if (t1 != null && !t1.equals(roomInfo)) {
                         numberTextField.setText(t1.getNumber());
+                        if (t1.getNotUsedReason() == null) {
+                            notUsedHousing.setText("text");
+                        }
+
+                        numberChoiceBox.getItems().clear();
+                        numberChoiceBox.getItems().addAll("hello");
                     }
                 }
             });
+
             numberTextField.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
