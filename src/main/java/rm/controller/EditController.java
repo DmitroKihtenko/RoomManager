@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 import rm.service.Assertions;
 import rm.service.Beans;
 
+import java.util.Objects;
+
 public class EditController {
     private static final Logger logger =
             Logger.getLogger(AdminController.class);
@@ -51,16 +53,17 @@ public class EditController {
                 public void changed(ObservableValue<? extends TeacherInfo> observableValue,
                                     TeacherInfo teacherInfo, TeacherInfo t1) {
                     if (t1 != null && !t1.equals(teacherInfo)) {
-                        nameTextField.setText(t1.getName());
+
+                        nameTextField.setText(Objects.requireNonNullElse(t1.getName(), ""));
                         surnameTextField.setText(t1.getSurname());
-                        patronymicTextField.setText(t1.getPatronymic());
+                        patronymicTextField.setText(Objects.requireNonNullElse(t1.getPatronymic(), ""));
                     }
                 }
             });
             nameTextField.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                    if (!t1.equals(s)) {
+                    if  (!t1.equals(selectedTeacher.get().getName())) {
                         selectedTeacher.get().setName(t1);
                     }
                 }
@@ -91,8 +94,8 @@ public class EditController {
                                     RoomInfo roomInfo, RoomInfo t1) {
                     if (t1 != null && !t1.equals(roomInfo)) {
                         numberTextField.setText(t1.getNumber());
-                        if (t1.getNotUsedReason() == null) {
-                            notUsedHousing.setText("text");
+                        if (t1.getNotUsedReason() != null) {
+                            notUsedHousing.setText(t1.getNotUsedReason());
                         }
 
                         numberChoiceBox.getItems().clear();

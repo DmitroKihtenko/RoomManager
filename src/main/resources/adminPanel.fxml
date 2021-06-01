@@ -38,6 +38,11 @@
         </HBox>
         <Pane layoutY="35.0" prefHeight="696.0" prefWidth="1360.0">
             <HBox prefHeight="696.0" prefWidth="1360.0">
+            <FontAwesomeIcon onMouseClicked="#saveData">
+               <HBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </HBox.margin>
+            </FontAwesomeIcon>
                 <fx:include fx:id="roomsTable" source="roomsTable.fxml" />
                 <fx:include fx:id="teachersTable" source="teachersTable.fxml" />
                 <fx:include fx:id="housingsTable" source="housingsTable.fxml" />
