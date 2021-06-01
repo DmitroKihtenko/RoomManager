@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import rm.Main;
 import rm.bean.User;
 import rm.database.mySql.RTModifySQL;
@@ -37,6 +38,8 @@ public class LoginController {
     private TextField login;
     @FXML
     private PasswordField password;
+
+    public static Stage stage = null;
 
     private RTModifySQL getSql;
     private double xOffSet = 0;
@@ -88,11 +91,22 @@ public class LoginController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
+        //stage.setMaximized(true);
+        //stage.setMaxHeight(760);
+        //stage.setMaxWidth(1360);
+        stage.setWidth(1360);
+        stage.setHeight(760);
         Scene scene = stage.getScene();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().
                 getResource("/adminPanel.fxml"));
         scene.setRoot(fxmlLoader.load());
+
+
+
+
     }
 }

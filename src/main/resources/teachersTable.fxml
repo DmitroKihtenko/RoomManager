@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<Pane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="rm.controller.TeachersTableController">
+
+<Pane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.TeachersTableController">
     <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
         <children>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
                 <graphic>
-                    <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" size="1.5em" onMouseClicked="#searchTeachers"/>
+                    <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="SEARCH" onMouseClicked="#searchTeachers" size="1.5em" />
                 </graphic>
             </Label>
-            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="searchField">
+            <TextField fx:id="searchField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS">
                 <font>
                     <Font size="14.0" />
                 </font>
             </TextField>
         </children>
     </HBox>
-    <TableView fx:id="teachersTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
+    <TableView fx:id="teachersTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" stylesheets="@Stylesheet.css">
         <columns>
             <TableColumn fx:id="teacherSurnameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Name" />
             <TableColumn fx:id="teacherInitialsCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Initials" />
