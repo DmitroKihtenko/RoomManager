@@ -30,9 +30,7 @@ public class TeachersTableController {
     @FXML
     private TableView<TeacherInfo> teachersTable;
     @FXML
-    private TableColumn<TeacherInfo, String> teacherSurnameCol;
-    @FXML
-    private TableColumn<TeacherInfo, String> teacherInitialsCol;
+    private TableColumn<TeacherInfo, String> teacherNameCol;
 
     private ObjectProperty<TeacherInfo> selectedTeacher;
     private ConnectionsList rtAccess;
@@ -95,10 +93,8 @@ public class TeachersTableController {
                             selectedTeacher.set(t1);
                         }
                     });
-            teacherSurnameCol.setCellValueFactory(teacherFeatures
-                    -> teacherFeatures.getValue().surnameProperty());
-            teacherInitialsCol.setCellValueFactory(teacherFeatures ->
-                new SimpleStringProperty(getInitials(
+            teacherNameCol.setCellValueFactory(teacherFeatures ->
+                new SimpleStringProperty(getShortName(
                         teacherFeatures.getValue())));
             searchField.textProperty().addListener((observableValue,
                                                     oldValue,
@@ -134,19 +130,22 @@ public class TeachersTableController {
         }
     }
 
-    private String getInitials(TeacherInfo teacher) {
-        String initials = NO_INIT_SYMBOL + ".";
+    private String getShortName(TeacherInfo teacher) {
+        String name = teacher.getSurname() + " ";
         if(teacher.getName() != null) {
-            initials = String.valueOf(teacher.getName().charAt(0)).
+            name += String.valueOf(teacher.getName().charAt(0)).
                     toUpperCase(Locale.ROOT) + ".";
+        } else {
+            name += NO_INIT_SYMBOL + ".";
         }
+        name += " ";
         if(teacher.getPatronymic() != null) {
-            initials += String.valueOf(teacher.getPatronymic().
+            name += String.valueOf(teacher.getPatronymic().
                     charAt(0)).toUpperCase(Locale.ROOT) + ".";
         } else {
-            initials += NO_INIT_SYMBOL + ".";
+            name += NO_INIT_SYMBOL + ".";
         }
-        return initials;
+        return name;
     }
 
     public void searchTeachers() {

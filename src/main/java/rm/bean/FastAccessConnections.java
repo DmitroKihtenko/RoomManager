@@ -18,4 +18,16 @@ public class FastAccessConnections extends ConnectionsList {
     protected Map<Integer, Set<Integer>> createMap(int capacity) {
         return new HashMap<>(capacity);
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        ConnectionsList value = (FastAccessConnections) super.clone();
+
+        for(Integer firstId : getFirstIds()) {
+            for (Integer secondId : getFirstConnections(firstId)) {
+                value.setConnection(firstId, secondId);
+            }
+        }
+        return value;
+    }
 }

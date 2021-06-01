@@ -17,6 +17,7 @@ import rm.service.Assertions;
 import rm.service.Beans;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -24,13 +25,11 @@ public class RoomsTableController {
     private static final Logger logger =
             Logger.getLogger(RoomsTableController.class);
     private static final String DEF_ROOM_NAME = "0";
-    private static final String NO_HOUSING_SYMBOL = "-";
+    private static final String SEPARATOR = "-";
     @FXML
     private TableView<RoomInfo> roomsTable;
     @FXML
     private TableColumn<RoomInfo, String> roomNameCol;
-    @FXML
-    private TableColumn<RoomInfo, String> roomHousingCol;
     @FXML
     private TextField searchField;
     private HashMap<Integer, RoomInfo> rooms;
@@ -67,12 +66,27 @@ public class RoomsTableController {
                     <RoomInfo>) change -> {
                 while(change.next()) {
                     if(change.wasAdded()) {
+                        HashSet<Integer> usedHousings =
+                                new HashSet<>(housings.size());
                         for (RoomInfo room : change.
                                 getAddedSubList()) {
                             room.numberProperty().
                                     addListener(refreshListener);
-                            room.housingIdProperty().
-                                    addListener(refreshListener);
+                            HousingInfo housing =
+                                    housings.get(room.getHousingId());
+                            if(housing != null) {
+                                if(!usedHousings.contains(
+                                        housing.
+                                                getId())) {
+                                    usedHousings.add(housing.getId());
+                                    room.housingIdProperty().
+                                            addListener(
+                                                    refreshListener);
+                                    housing.nameProperty().
+                                            addListener(
+                                                    refreshListener);
+                                }
+                            }
                         }
                     } else if(change.wasRemoved()) {
                         for (RoomInfo room : change.getRemoved()) {
@@ -80,6 +94,12 @@ public class RoomsTableController {
                                     removeListener(refreshListener);
                             room.housingIdProperty().
                                     removeListener(refreshListener);
+                            HousingInfo housing =
+                                    housings.get(room.getHousingId());
+                            if(housing != null) {
+                                housing.nameProperty().removeListener(
+                                        refreshListener);
+                            }
                         }
                     }
                 }
@@ -94,25 +114,8 @@ public class RoomsTableController {
                 }
             });
             roomNameCol.setCellValueFactory(roomFeatures
-                    -> roomFeatures.getValue().numberProperty());
-            roomHousingCol.setCellValueFactory(roomFeatures -> {
-                Integer housing = roomFeatures.getValue().
-                        getHousingId();
-                HousingInfo object;
-                SimpleStringProperty property = new
-                        SimpleStringProperty(null);
-                if(housing != null) {
-                    object = housings.get(housing);
-                    if(object != null) {
-                        property.set(object.getName());
-                    } else {
-                        property.set(NO_HOUSING_SYMBOL);
-                    }
-                } else {
-                    property.set(NO_HOUSING_SYMBOL);
-                }
-                return property;
-            });
+                    -> new SimpleStringProperty(getRoomString
+                    (roomFeatures.getValue())));
             searchField.textProperty().addListener((observableValue,
                                                     oldValue,
                                                     newValue) -> {
@@ -153,25 +156,23 @@ public class RoomsTableController {
             if(text.length() == 0) {
                 roomsList.add(room);
             } else {
-                StringBuilder summaryValue =
-                        new StringBuilder();
-                HousingInfo housing = housings.get(room.
-                        getHousingId());
-                if(housing != null) {
-                    summaryValue.append(housing.getName());
-                } else {
-                    summaryValue.append(NO_HOUSING_SYMBOL);
-                }
-                summaryValue.append(room.getNumber());
-                if(room.getNotUsedReason() != null) {
-                    summaryValue.append(room.getNotUsedReason());
-                }
+                String summary = getRoomString(room);
                 Pattern pattern = Pattern.compile(".*" + text + ".*");
-                if(pattern.matcher(summaryValue.toString().
-                        toLowerCase(Locale.ROOT)).matches()) {
+                if(pattern.matcher(summary.toLowerCase(Locale.ROOT)).
+                        matches()) {
                     roomsList.add(room);
                 }
             }
         }
+    }
+
+    private String getRoomString(RoomInfo room) {
+        String value = "";
+        HousingInfo housing = housings.get(room.getHousingId());
+        if(housing != null) {
+            value += housing.getName() + SEPARATOR;
+        }
+        value += room.getNumber();
+        return value;
     }
 }

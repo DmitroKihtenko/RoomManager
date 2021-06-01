@@ -25,8 +25,7 @@
     </HBox>
     <TableView fx:id="teachersTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" styleClass="txtfield">
         <columns>
-            <TableColumn fx:id="teacherSurnameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Name" />
-            <TableColumn fx:id="teacherInitialsCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Initials" />
+            <TableColumn fx:id="teacherNameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Teacher" />
         </columns>
     </TableView>
     <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
