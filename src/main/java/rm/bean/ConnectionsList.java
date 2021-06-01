@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class ConnectionsList {
+public abstract class ConnectionsList implements Cloneable {
     private static final Logger logger =
             Logger.getLogger(ConnectionsList.class);
 
@@ -191,6 +191,30 @@ public abstract class ConnectionsList {
         return changed;
     }
 
+    public void differences(ConnectionsList another,
+                            ConnectionsList added,
+                            ConnectionsList removed) {
+        Assertions.isNotNull(another, "Another connections", logger);
+        Assertions.isNotNull(another, "Added connections", logger);
+        Assertions.isNotNull(another, "Removed connections", logger);
+
+        for(Integer firstId : getFirstIds()) {
+            for(Integer secondsId : getFirstConnections(firstId)) {
+                if(!another.existsConnection(firstId, secondsId)) {
+                    removed.setConnection(firstId, secondsId);
+                }
+            }
+        }
+        for(Integer firstId : another.getFirstIds()) {
+            for(Integer secondsId : another.
+                    getFirstConnections(firstId)) {
+                if(!existsConnection(firstId, secondsId)) {
+                    added.setConnection(firstId, secondsId);
+                }
+            }
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder stringValue = new StringBuilder();
@@ -216,5 +240,10 @@ public abstract class ConnectionsList {
     @Override
     public int hashCode() {
         return Objects.hash(firstConnections);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

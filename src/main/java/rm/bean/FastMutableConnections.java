@@ -18,4 +18,15 @@ public class FastMutableConnections extends ConnectionsList {
     protected Map<Integer, Set<Integer>> createMap(int capacity) {
         return new TreeMap<>();
     }
+
+    public Object clone() throws CloneNotSupportedException {
+        ConnectionsList value = (FastMutableConnections) super.clone();
+
+        for(Integer firstId : getFirstIds()) {
+            for (Integer secondId : getFirstConnections(firstId)) {
+                value.setConnection(firstId, secondId);
+            }
+        }
+        return value;
+    }
 }

@@ -78,7 +78,6 @@ public class StringLogic {
         for (int i = 0; i < parameter.length(); i++) {
             if (Character.isLetter(parameter.charAt(i))) {
                 checkFlag = false;
-                System.out.println(parameter.charAt(i));
                 break;
             }
         }

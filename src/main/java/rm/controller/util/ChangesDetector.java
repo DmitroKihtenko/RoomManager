@@ -4,37 +4,47 @@ import org.apache.log4j.Logger;
 import rm.service.Assertions;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ChangesDetector<T> {
     private static final Logger logger =
             Logger.getLogger(ChangesDetector.class);
-    private HashMap<Integer, T> original;
 
-    public ChangesDetector(HashMap<Integer, T> original) {
-        setOriginal(original);
+    private Map<Integer, T> original;
+    private Map<Integer, T> changed;
+    private final TreeMap<Integer, T> added;
+    private final TreeMap<Integer, T> removed;
+    private final TreeMap<Integer, T> updated;
+
+    public ChangesDetector() {
+        setOriginal(new HashMap<>());
+        setChanged(new HashMap<>());
+        added = new TreeMap<>();
+        removed = new TreeMap<>();
+        updated = new TreeMap<>();
     }
 
-    public void setOriginal(HashMap<Integer, T> original) {
+    public void setOriginal(Map<Integer, T> original) {
         Assertions.isNotNull(original, "Original map for changes",
                 logger);
 
         this.original = original;
     }
 
-    public void findChanges(HashMap<Integer, T> changed,
-                            HashMap<Integer, T> removed,
-                            HashMap<Integer, T> added,
-                            HashMap<Integer, T> updated) {
+    public void setChanged(Map<Integer, T> changed) {
+        Assertions.isNotNull(changed, "Changed map",
+                logger);
+
+        this.changed = changed;
+    }
+
+    public void findChanges() {
         logger.debug("Searching changes for objects");
 
-        Assertions.isNotNull(changed, "Changed map for changes",
-                logger);
-        Assertions.isNotNull(removed, "Added elements for changes",
-                logger);
-        Assertions.isNotNull(added, "Removed elements for changes",
-                logger);
-        Assertions.isNotNull(updated, "Updated elements for changes",
-                logger);
+        added.clear();
+        removed.clear();
+        updated.clear();
 
         T object;
         for(Integer key : original.keySet()) {
@@ -57,5 +67,31 @@ public class ChangesDetector<T> {
                 }
             }
         }
+    }
+
+    public void discardFound() {
+        added.clear();
+        removed.clear();
+        updated.clear();
+    }
+
+    public Map<Integer, T> getOriginal() {
+        return original;
+    }
+
+    public Map<Integer, T> getChanged() {
+        return changed;
+    }
+
+    public Map<Integer, T> getAdded() {
+        return added;
+    }
+
+    public Map<Integer, T> getRemoved() {
+        return removed;
+    }
+
+    public Map<Integer, T> getUpdated() {
+        return updated;
     }
 }
