@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1360.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminPanelController">
@@ -38,17 +39,25 @@
         </HBox>
         <Pane layoutY="35.0" prefHeight="696.0" prefWidth="1360.0">
             <HBox prefHeight="696.0" prefWidth="1360.0">
-            <FontAwesomeIcon onMouseClicked="#saveData">
-               <HBox.margin>
-                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
-               </HBox.margin>
-            </FontAwesomeIcon>
+            <VBox alignment="TOP_CENTER" prefHeight="696.0" prefWidth="68.0">
+               <children>
+                    <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon iconName="SAVE" onMouseClicked="#saveData" size="20">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+            </VBox>
                 <fx:include fx:id="roomsTable" source="roomsTable.fxml" />
                 <fx:include fx:id="teachersTable" source="teachersTable.fxml" />
                 <fx:include fx:id="housingsTable" source="housingsTable.fxml" />
                 <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
         </Pane>
-        <FontAwesomeIcon iconName="REFRESH" layoutX="10.0" layoutY="67.0" onMouseClicked="#reloadData" size="20" />
     </children>
 </AnchorPane>
