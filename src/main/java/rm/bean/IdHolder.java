@@ -15,7 +15,6 @@ public abstract class IdHolder implements Comparable<IdHolder>, Replicable {
 
     /**
      * Sets custom id value
-     *
      * @param id id value
      */
     public void setId(int id) {
@@ -39,7 +38,6 @@ public abstract class IdHolder implements Comparable<IdHolder>, Replicable {
 
     /**
      * Gets id value
-     *
      * @return id value
      */
     public int getId() {
@@ -87,4 +85,7 @@ public abstract class IdHolder implements Comparable<IdHolder>, Replicable {
         IdHolder guest = (IdHolder) obj;
         return (id == guest.getId());
     }
+
+    @Override
+    public abstract Object clone() throws CloneNotSupportedException;
 }

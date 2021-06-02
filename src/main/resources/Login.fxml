@@ -48,7 +48,7 @@
                         <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="USER" size="1.5em" />
                      </graphic>
                   </Label>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS">
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="usernameField">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="LOCK" size="1.5em" />
                      </graphic>
                   </Label>
-                  <PasswordField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Password" styleClass="txtfield" HBox.hgrow="ALWAYS">
+                  <PasswordField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Password" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="passwordField">
                      <font>
                         <Font size="14.0" />
                      </font>

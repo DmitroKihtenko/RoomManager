@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class ConnectionsList implements Cloneable {
+/**
+ * Class used for describing logic of logical connections between two types of objects
+ */
+public abstract class ConnectionsList implements Replicable {
     private static final Logger logger =
             Logger.getLogger(ConnectionsList.class);
 
@@ -99,6 +102,10 @@ public abstract class ConnectionsList implements Cloneable {
         changed.set(!changed.get());
     }
 
+    /**
+     * Removes all connections for specified id of first object
+     * @param firstId id of first object
+     */
     public void removeFirstConnections(int firstId) {
         if(firstConnections.containsKey(firstId)) {
             firstConnections.remove(firstId);
@@ -108,6 +115,10 @@ public abstract class ConnectionsList implements Cloneable {
         }
     }
 
+    /**
+     * Removes all connections for specified id of second object
+     * @param secondId id of first object
+     */
     public void removeSecondConnections(int secondId) {
         if(firstConnections.containsKey(secondId)) {
             secondConnections.remove(secondId);
@@ -242,8 +253,22 @@ public abstract class ConnectionsList implements Cloneable {
         return Objects.hash(firstConnections);
     }
 
+    /**
+     * Copies all data of this object into specified object
+     * @param object object that is instance if this class
+     * @return specified object with data copied from this object
+     */
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Replicable replicate(Replicable object) {
+        ConnectionsList value = (ConnectionsList) object;
+        for(Integer firstId : getFirstIds()) {
+            for(Integer secondId : getFirstConnections(firstId)) {
+                value.setConnection(firstId, secondId);
+            }
+        }
+        return value;
     }
+
+    @Override
+    public abstract Object clone() throws CloneNotSupportedException;
 }

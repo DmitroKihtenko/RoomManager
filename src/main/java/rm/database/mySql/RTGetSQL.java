@@ -3,6 +3,7 @@ package rm.database.mySql;
 import rm.bean.*;
 import rm.database.QueryExecutor;
 import org.apache.log4j.Logger;
+import rm.service.Assertions;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,48 @@ import java.util.Map;
 public class RTGetSQL extends QueryExecutor {
     private static final Logger logger =
             Logger.getLogger(RTGetSQL.class);
+    private HousingInfo defaultHousing;
+    private RoomInfo defaultRoom;
+    private TeacherInfo defaultTeacher;
+
+    public void setDefaultHousing(HousingInfo defaultHousing) {
+        Assertions.isNotNull(defaultHousing, "Default housing",
+                logger);
+        this.defaultHousing = defaultHousing;
+    }
+
+    public void setDefaultRoom(RoomInfo defaultRoom) {
+        Assertions.isNotNull(defaultRoom, "Default room",
+                logger);
+        this.defaultRoom = defaultRoom;
+    }
+
+    public void setDefaultTeacher(TeacherInfo defaultTeacher) {
+        Assertions.isNotNull(defaultTeacher, "Default teacher",
+                logger);
+        this.defaultTeacher = defaultTeacher;
+    }
+
+    protected TeacherInfo newTeacher() {
+        if(defaultTeacher == null) {
+            return new TeacherInfo("Teacher");
+        }
+        return (TeacherInfo) defaultTeacher.clone();
+    }
+
+    protected RoomInfo newRoom() {
+        if(defaultRoom == null) {
+            return new RoomInfo("0");
+        }
+        return (RoomInfo) defaultRoom.clone();
+    }
+
+    protected HousingInfo newHousing() {
+        if(defaultHousing == null) {
+            return new HousingInfo("Teacher");
+        }
+        return (HousingInfo) defaultHousing.clone();
+    }
 
     /**
      * Gets data about database edit version
@@ -41,7 +84,8 @@ public class RTGetSQL extends QueryExecutor {
         while (resultSet.next()) {
             int key = resultSet.getInt("Id");
 
-            HousingInfo value = new HousingInfo(resultSet.getString(
+            HousingInfo value = newHousing();
+            value.setName(resultSet.getString(
                     "Name"));
             value.setId(key);
 
@@ -62,7 +106,8 @@ public class RTGetSQL extends QueryExecutor {
         while (resultSet.next()) {
             int key = resultSet.getInt("Id");
 
-            TeacherInfo value = new TeacherInfo(resultSet.getString("Surname"));
+            TeacherInfo value = newTeacher();
+            value.setSurname(resultSet.getString("Surname"));
             value.setName(resultSet.getString("Name"));
             value.setPatronymic(resultSet.getString("Patronymic"));
             value.setId(key);
@@ -90,7 +135,8 @@ public class RTGetSQL extends QueryExecutor {
         while (resultSet.next()) {
             int key = resultSet.getInt("Id");
 
-            RoomInfo value = new RoomInfo(resultSet.getString("Number"));
+            RoomInfo value = newRoom();
+            value.setNumber(resultSet.getString("Number"));
             value.setHousingId(resultSet.getInt("HousingId"));
             temp = resultSet.getString("NotUsedReason");
             if(temp != null) {

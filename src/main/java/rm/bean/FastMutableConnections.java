@@ -19,14 +19,8 @@ public class FastMutableConnections extends ConnectionsList {
         return new TreeMap<>();
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
-        ConnectionsList value = (FastMutableConnections) super.clone();
-
-        for(Integer firstId : getFirstIds()) {
-            for (Integer secondId : getFirstConnections(firstId)) {
-                value.setConnection(firstId, secondId);
-            }
-        }
-        return value;
+        return replicate(new FastMutableConnections());
     }
 }
