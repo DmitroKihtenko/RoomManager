@@ -50,16 +50,20 @@ public class Teacher extends TeacherInfo implements Cloneable {
     }
 
     @Override
-    public Teacher clone() throws CloneNotSupportedException {
-        Teacher newTeacher = (Teacher) super.clone();
-
+    public Replicable replicate(Replicable object) {
+        Teacher teacher = (Teacher) object;
         if (this.usesRoom()) {
-            newTeacher.setUsedRoom(this.usedRoomId.get());
+            teacher.setUsedRoom(getUsedRoomId());
         } else {
-            newTeacher.setNotUsedRoom();
+            teacher.setNotUsedRoom();
         }
+        super.replicate(teacher);
+        return teacher;
+    }
 
-        return newTeacher;
+    @Override
+    public Object clone() {
+        return replicate(new Teacher("surname"));
     }
 
     @Override

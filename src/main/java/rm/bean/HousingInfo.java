@@ -36,12 +36,16 @@ public class HousingInfo extends IdHolder implements Cloneable {
     }
 
     @Override
-    public HousingInfo clone() throws CloneNotSupportedException {
-        HousingInfo newHousingInfo = (HousingInfo) super.clone();
+    public Replicable replicate(Replicable object) {
+        HousingInfo housing = (HousingInfo) object;
+        housing.setName(getName());
+        super.replicate(housing);
+        return housing;
+    }
 
-        newHousingInfo.setName(this.name.get());
-
-        return newHousingInfo;
+    @Override
+    public Object clone() {
+        return replicate(new HousingInfo("Name"));
     }
 
     @Override

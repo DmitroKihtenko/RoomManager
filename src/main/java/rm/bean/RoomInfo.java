@@ -29,7 +29,7 @@ public class RoomInfo extends IdHolder implements Cloneable {
         this.notUsedReason = new SimpleStringProperty(null);
     }
 
-    public void setiIUsed(int id) {
+    public void setIsUsed(int id) {
         super.setId(id);
     }
 
@@ -114,29 +114,33 @@ public class RoomInfo extends IdHolder implements Cloneable {
      * @param notUsedReason the reason why room is not used, not null, must be visible on screen
      */
     public void setNotUsedReason(String notUsedReason) {
-        Assertions.isNotNull(notUsedReason, "Not used reason", logger);
-        StringLogic.isVisible(notUsedReason, "Not used reason", logger);
-        StringLogic.isWholeWord(notUsedReason, "Not used reason",
-                logger);
-
-        this.isUsed.set(false);
-        this.notUsedReason.set(notUsedReason);
+        if(notUsedReason != null) {
+            StringLogic.isVisible(notUsedReason,
+                    "Not used reason", logger);
+            this.isUsed.set(false);
+            this.notUsedReason.set(notUsedReason);
+        } else {
+            setUsed();
+        }
     }
 
     @Override
-    public RoomInfo clone() throws CloneNotSupportedException {
-        RoomInfo newRoomInfo = (RoomInfo) super.clone();
-
+    public Replicable replicate(Replicable object) {
+        RoomInfo newRoomInfo = (RoomInfo) object;
+        newRoomInfo.setNumber(getNumber());
         newRoomInfo.setHousingId(this.housingId.get());
-        newRoomInfo.setNumber(this.number.get());
-
         if (!this.isUsed()) {
             newRoomInfo.setNotUsedReason(this.getNotUsedReason());
         } else {
             newRoomInfo.setUsed();
         }
-
+        super.replicate(newRoomInfo);
         return newRoomInfo;
+    }
+
+    @Override
+    public Object clone() {
+        return replicate(new RoomInfo("number"));
     }
 
     @Override
