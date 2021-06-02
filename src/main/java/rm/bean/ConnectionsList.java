@@ -83,7 +83,7 @@ public abstract class ConnectionsList implements Cloneable {
      * @param secondId id of second object
      * @throws ConnectionDoesNotExistException if this list does not contain such connection
      */
-    void removeConnection(int firstId, int secondId) {
+    public void removeConnection(int firstId, int secondId) {
         if(!firstConnections.containsKey(firstId)) {
             logger.error("Attempt to remove connections that does" +
                     "not exist");

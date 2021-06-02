@@ -95,7 +95,7 @@ public class AdminPanelController {
                     originalAccess);
             housingsTableController.setHousings(clonedHousings,
                     clonedRooms);
-            editController.setEditTeachers(clonedAccess);
+            editController.setEditTeachers(clonedAccess, clonedHousings);
 
             housingsDetector.setOriginal(housings);
             roomsDetector.setOriginal(rooms);
@@ -186,7 +186,7 @@ public class AdminPanelController {
                     originalAccess);
             housingsTableController.setHousings(clonedHousings,
                     clonedRooms);
-            editController.setEditTeachers(clonedAccess);
+            editController.setEditTeachers(clonedAccess, clonedHousings);
 
             housingsDetector.setOriginal(housings);
             roomsDetector.setOriginal(rooms);

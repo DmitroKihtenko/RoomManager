@@ -38,7 +38,7 @@
             </padding>
         </HBox>
         <Pane layoutY="35.0" prefHeight="696.0" prefWidth="1360.0">
-            <HBox prefHeight="696.0" prefWidth="1360.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="1360.0">
             <VBox alignment="TOP_CENTER" prefHeight="696.0" prefWidth="68.0">
                <children>
                     <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
@@ -58,6 +58,9 @@
                 <fx:include fx:id="housingsTable" source="housingsTable.fxml" />
                 <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
+         <HBox layoutX="192.0" layoutY="513.0" prefHeight="160.0" prefWidth="650.0">
+             <fx:include fx:id="notifications" source="notifications.fxml" />
+         </HBox>
         </Pane>
     </children>
 </AnchorPane>

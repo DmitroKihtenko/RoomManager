@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.TeachersTableController">
-    <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.TeachersTableController">
+    <HBox alignment="CENTER_LEFT" layoutX="50.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="200.0">
         <children>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
                 <graphic>
@@ -25,12 +25,12 @@
             </TextField>
         </children>
     </HBox>
-    <TableView fx:id="teachersTable" layoutX="89.0" layoutY="115.0" prefHeight="344.0" prefWidth="250.0" style="-fx-alignment: center;" stylesheets="@Stylesheet.css">
+    <TableView fx:id="teachersTable" layoutX="50.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="200.0" style="-fx-alignment: center;" stylesheets="@Stylesheet.css">
         <columns>
-            <TableColumn fx:id="teacherNameCol" maxWidth="128.0000114440918" prefWidth="88.79998397827148" text="Teacher" />
+            <TableColumn fx:id="teacherNameCol" maxWidth="200.0" minWidth="198.0" prefWidth="198.0" text="Teacher" />
         </columns>
     </TableView>
-    <HBox alignment="CENTER_LEFT" layoutX="175.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
+    <HBox alignment="CENTER_LEFT" layoutX="119.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
         <children>
             <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#newTeacher" size="20">
                 <HBox.margin>
