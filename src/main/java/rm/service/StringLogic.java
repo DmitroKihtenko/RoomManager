@@ -27,7 +27,7 @@ public class StringLogic {
         }
 
         if (checkFlag1 || !checkFlag2 || !checkFlag3 || parameter.isEmpty()) {
-            logger.error("The string contains characters that cannot be seen on the screen");
+            logger.warn("The string contains characters that cannot be seen on the screen");
 
             throw new IllegalArgumentException(
                     "The name of a string that contains characters that cannot be seen on the screen " + name
@@ -58,7 +58,7 @@ public class StringLogic {
         }
 
         if (!checkFlag1 || !checkFlag2 || !checkFlag3 || parameter.isEmpty()) {
-            logger.error("A string does not consist of a single whole word");
+            logger.warn("A string does not consist of a single whole word");
 
             throw new IllegalArgumentException(
                     "A string that does not consist of a single whole word " + name
@@ -83,7 +83,7 @@ public class StringLogic {
         }
 
         if (checkFlag) {
-            logger.error("String has no letters");
+            logger.warn("String has no letters");
 
             throw new IllegalArgumentException(
                     "A string that contains no letters " + name

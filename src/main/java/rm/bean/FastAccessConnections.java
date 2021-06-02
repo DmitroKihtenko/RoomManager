@@ -21,13 +21,6 @@ public class FastAccessConnections extends ConnectionsList {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        ConnectionsList value = (FastAccessConnections) super.clone();
-
-        for(Integer firstId : getFirstIds()) {
-            for (Integer secondId : getFirstConnections(firstId)) {
-                value.setConnection(firstId, secondId);
-            }
-        }
-        return value;
+        return replicate(new FastAccessConnections());
     }
 }

@@ -3,6 +3,7 @@ package rm.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +13,6 @@ import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import rm.bean.ConnectionsList;
 import rm.bean.HousingInfo;
-import rm.bean.Notifications;
 import rm.bean.RoomInfo;
 import rm.service.Assertions;
 import rm.service.Beans;
@@ -38,10 +38,81 @@ public class RoomsTableController {
     private ObjectProperty<RoomInfo> selectedRoom;
 
     private final ChangeListener<Object> refreshListener;
+    private final ChangeListener<Number> housingsId;
+    private final HashMap<Integer, Integer> roomsForHousings;
 
     public RoomsTableController() {
         refreshListener = (observableValue, o, t1) ->
                 roomsTable.refresh();
+        housingsId = new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Number>
+                                        observableValue,
+                                Number oldV,
+                                Number newV) {
+                Integer integer = oldV.intValue();
+                Integer t1 = newV.intValue();
+                if(integer == Integer.MIN_VALUE) {
+                    integer = null;
+                }
+                if(t1 == Integer.MIN_VALUE) {
+                    t1 = null;
+                }
+
+                HousingInfo housing;
+                if(integer == null && t1 != null) {
+                    housing = housings.get(t1);
+                    if(housing != null) {
+                        if(!roomsForHousings.containsKey(t1)) {
+                            roomsForHousings.put(t1, 1);
+                        } else {
+                            roomsForHousings.put(t1,
+                                    roomsForHousings.get(t1) + 1);
+                        }
+                        housing.nameProperty().
+                                removeListener(refreshListener);
+                        housing.nameProperty().
+                                addListener(refreshListener);
+                    }
+                } else if(integer != null && t1 == null) {
+                    housing = housings.get(integer);
+                    if(housing != null) {
+                        if(roomsForHousings.get(t1) <= 0) {
+                            housing.nameProperty().
+                                    removeListener(refreshListener);
+                        } else {
+                            roomsForHousings.put(t1,
+                                    roomsForHousings.get(t1) - 1);
+                        }
+                    }
+                } else if(t1 != null) {
+                    housing = housings.get(integer);
+                    if(housing != null) {
+                        if(roomsForHousings.get(t1) <= 0) {
+                            housing.nameProperty().
+                                    removeListener(refreshListener);
+                        } else {
+                            roomsForHousings.put(t1,
+                                    roomsForHousings.get(t1) - 1);
+                        }
+                    }
+                    housing = housings.get(t1);
+                    if(housing != null) {
+                        if(!roomsForHousings.containsKey(t1)) {
+                            roomsForHousings.put(t1, 1);
+                        } else {
+                            roomsForHousings.put(t1,
+                                    roomsForHousings.get(t1) + 1);
+                        }
+                        housing.nameProperty().
+                                removeListener(refreshListener);
+                        housing.nameProperty().
+                                addListener(refreshListener);
+                    }
+                }
+            }
+        };
+        roomsForHousings = new HashMap<>();
     }
 
     public void setRooms(HashMap<Integer, RoomInfo> rooms,
@@ -67,24 +138,37 @@ public class RoomsTableController {
                     Beans.context().get("selectedRoom");
             roomsTable.getItems().addListener((ListChangeListener
                     <RoomInfo>) change -> {
+                Integer housingId;
+                HousingInfo housing;
                 while(change.next()) {
                     if(change.wasAdded()) {
                         for (RoomInfo room : change.
                                 getAddedSubList()) {
                             room.numberProperty().
                                     addListener(refreshListener);
-                            HousingInfo housing =
+                            room.housingIdProperty().
+                                    addListener(refreshListener);
+                            housing =
                                     housings.get(room.getHousingId());
                             if(housing != null) {
-                                room.housingIdProperty().
-                                        addListener(
-                                                refreshListener);
+                                housingId = room.getHousingId();
                                 housing.nameProperty().
                                         removeListener(
                                                 refreshListener);
                                 housing.nameProperty().
                                         addListener(
                                                 refreshListener);
+                                if(!roomsForHousings.containsKey(
+                                        housingId)) {
+                                    roomsForHousings.put(housingId,
+                                            1);
+                                    room.housingIdProperty().
+                                            addListener(housingsId);
+                                } else {
+                                    roomsForHousings.put(housingId,
+                                            roomsForHousings.get(
+                                                    housingId) + 1);
+                                }
                             }
                         }
                     } else if(change.wasRemoved()) {
@@ -93,11 +177,26 @@ public class RoomsTableController {
                                     removeListener(refreshListener);
                             room.housingIdProperty().
                                     removeListener(refreshListener);
-                            HousingInfo housing =
-                                    housings.get(room.getHousingId());
+                            housingId = room.getHousingId();
+                            housing =
+                                    housings.get(housingId);
                             if(housing != null) {
                                 housing.nameProperty().removeListener(
                                         refreshListener);
+                                if(!roomsForHousings.containsKey(
+                                        housingId)) {
+                                    roomsForHousings.put(housingId,
+                                            roomsForHousings.get(
+                                                    housingId) - 1);
+                                    if(roomsForHousings.get(housingId)
+                                            <= 0) {
+                                        room.housingIdProperty().
+                                                removeListener(
+                                                refreshListener);
+                                        roomsForHousings.remove(
+                                                housingId);
+                                    }
+                                }
                             }
                         }
                     }
@@ -133,8 +232,6 @@ public class RoomsTableController {
         roomsList.add(newRoom);
         rooms.put(newRoom.getId(), newRoom);
         roomsTable.getSelectionModel().select(newRoom);
-
-        ((Notifications) Beans.context().get("notifications")).push("added Room");
     }
 
     @FXML
