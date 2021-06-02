@@ -2,78 +2,59 @@ package rm.bean;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import org.apache.log4j.Logger;
 
-import java.util.Stack;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Notifications {
-    private static final Logger logger =
-            Logger.getLogger(Notifications.class);
-    private final Stack<String> notifications;
-    private final BooleanProperty changes;
-    private final ReentrantLock lock;
+    private final ConcurrentLinkedDeque<String> notifications;
+    private final BooleanProperty pushed;
+    private final BooleanProperty removed;
 
     public Notifications() {
-        notifications = new Stack<>();
-        changes = new SimpleBooleanProperty();
-        lock = new ReentrantLock();
+        notifications = new ConcurrentLinkedDeque<>();
+        pushed = new SimpleBooleanProperty();
+        removed = new SimpleBooleanProperty();
     }
 
     public void push(String notification) {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
         notifications.push(notification);
-        lock.unlock();
+        pushed.set(!pushed.get());
     }
 
     public void removeLast() {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
-        if(!notifications.empty()) {
+        if(!notifications.isEmpty()) {
             notifications.pop();
+            removed.set(!removed.get());
         }
-        lock.unlock();
     }
 
     public String getLast() {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
         String message = null;
-        if(!notifications.empty()) {
+        if(!notifications.isEmpty()) {
             message = notifications.peek();
         }
-        lock.unlock();
         return message;
     }
 
     public int size() {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
         return notifications.size();
     }
 
     public void clear() {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
         notifications.clear();
+        removed.set(!removed.get());
     }
 
     public Iterable<String> getAll() {
-        if(!lock.isHeldByCurrentThread()) {
-            lock.lock();
-        }
-        Iterable<String> values = (Iterable<String>) notifications.clone();
-        lock.unlock();
-        return values;
+        return new ArrayList<>(notifications);
     }
 
-    public BooleanProperty changesProperty() {
-        return changes;
+    public BooleanProperty pushedProperty() {
+        return pushed;
+    }
+
+    public BooleanProperty removedProperty() {
+        return removed;
     }
 }
