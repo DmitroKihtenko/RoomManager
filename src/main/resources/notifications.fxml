@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="rm.controller.NotificationsController"
+            fx:id="space"
+            prefHeight="400.0" prefWidth="600.0">
+    <HBox>
+        <Label fx:id="notificationText" />
+        <FontAwesomeIcon iconName="MINUS" onMouseClicked="#close">
+            <HBox.margin>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </HBox.margin>
+        </FontAwesomeIcon>
+        <FontAwesomeIcon iconName="CLOSE" onMouseClicked="#closeAll">
+            <HBox.margin>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </HBox.margin>
+        </FontAwesomeIcon>
+    </HBox>
+</AnchorPane>
