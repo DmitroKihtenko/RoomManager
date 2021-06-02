@@ -80,13 +80,13 @@ public class AdminPanelController {
             clonedAccess = (ConnectionsList)
                     originalAccess.clone();
             for (HousingInfo housing : housings.values()) {
-                clonedHousings.put(housing.getId(), housing.clone());
+                clonedHousings.put(housing.getId(), (HousingInfo) housing.clone());
             }
             for (RoomInfo room : rooms.values()) {
-                clonedRooms.put(room.getId(), room.clone());
+                clonedRooms.put(room.getId(), (RoomInfo) room.clone());
             }
             for (TeacherInfo teacher : teachers.values()) {
-                clonedTeachers.put(teacher.getId(), teacher.clone());
+                clonedTeachers.put(teacher.getId(), (TeacherInfo) teacher.clone());
             }
 
             roomsTableController.setRooms(clonedRooms, clonedHousings,
@@ -101,9 +101,9 @@ public class AdminPanelController {
             roomsDetector.setOriginal(rooms);
             teachersDetector.setOriginal(teachers);
 
-            housingsDetector.setChanged(housings);
-            roomsDetector.setChanged(rooms);
-            teachersDetector.setChanged(teachers);
+            housingsDetector.setChanged(clonedHousings);
+            roomsDetector.setChanged(clonedRooms);
+            teachersDetector.setChanged(clonedTeachers);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,13 +171,13 @@ public class AdminPanelController {
             clonedAccess = (ConnectionsList)
                     originalAccess.clone();
             for (HousingInfo housing : housings.values()) {
-                clonedHousings.put(housing.getId(), housing.clone());
+                clonedHousings.put(housing.getId(), (HousingInfo) housing.clone());
             }
             for (RoomInfo room : rooms.values()) {
-                clonedRooms.put(room.getId(), room.clone());
+                clonedRooms.put(room.getId(), (RoomInfo) room.clone());
             }
             for (TeacherInfo teacher : teachers.values()) {
-                clonedTeachers.put(teacher.getId(), teacher.clone());
+                clonedTeachers.put(teacher.getId(), (TeacherInfo) teacher.clone());
             }
 
             roomsTableController.setRooms(clonedRooms, clonedHousings,
@@ -192,9 +192,9 @@ public class AdminPanelController {
             roomsDetector.setOriginal(rooms);
             teachersDetector.setOriginal(teachers);
 
-            housingsDetector.setChanged(housings);
-            roomsDetector.setChanged(rooms);
-            teachersDetector.setChanged(teachers);
+            housingsDetector.setChanged(clonedHousings);
+            roomsDetector.setChanged(clonedRooms);
+            teachersDetector.setChanged(clonedTeachers);
         } catch (Exception e) {
             e.printStackTrace();
         }

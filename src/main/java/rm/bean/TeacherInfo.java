@@ -97,14 +97,18 @@ public class TeacherInfo extends IdHolder implements Cloneable {
     }
 
     @Override
-    public TeacherInfo clone() throws CloneNotSupportedException {
-        TeacherInfo newTeacherInfo = (TeacherInfo) super.clone();
-
-        newTeacherInfo.setName(this.name.get());
-        newTeacherInfo.setSurname(this.surname.get());
-        newTeacherInfo.setPatronymic(this.patronymic.get());
-
+    public Replicable replicate(Replicable object) {
+        TeacherInfo newTeacherInfo = (TeacherInfo) object;
+        newTeacherInfo.setName(getName());
+        newTeacherInfo.setSurname(getSurname());
+        newTeacherInfo.setPatronymic(getPatronymic());
+        super.replicate(newTeacherInfo);
         return newTeacherInfo;
+    }
+
+    @Override
+    public Object clone() {
+        return replicate(new TeacherInfo("teacher"));
     }
 
     @Override

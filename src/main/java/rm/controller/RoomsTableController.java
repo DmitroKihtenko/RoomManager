@@ -12,12 +12,12 @@ import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import rm.bean.ConnectionsList;
 import rm.bean.HousingInfo;
+import rm.bean.Notifications;
 import rm.bean.RoomInfo;
 import rm.service.Assertions;
 import rm.service.Beans;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -37,7 +37,12 @@ public class RoomsTableController {
     private ConnectionsList rtAccess;
     private ObjectProperty<RoomInfo> selectedRoom;
 
-    private ChangeListener<Object> refreshListener;
+    private final ChangeListener<Object> refreshListener;
+
+    public RoomsTableController() {
+        refreshListener = (observableValue, o, t1) ->
+                roomsTable.refresh();
+    }
 
     public void setRooms(HashMap<Integer, RoomInfo> rooms,
                          HashMap<Integer, HousingInfo> housings,
@@ -60,14 +65,10 @@ public class RoomsTableController {
         if(selectedRoom == null) {
             selectedRoom = (ObjectProperty<RoomInfo>)
                     Beans.context().get("selectedRoom");
-            refreshListener = (observableValue, o, t1) ->
-                    roomsTable.refresh();
             roomsTable.getItems().addListener((ListChangeListener
                     <RoomInfo>) change -> {
                 while(change.next()) {
                     if(change.wasAdded()) {
-                        HashSet<Integer> usedHousings =
-                                new HashSet<>(housings.size());
                         for (RoomInfo room : change.
                                 getAddedSubList()) {
                             room.numberProperty().
@@ -75,17 +76,15 @@ public class RoomsTableController {
                             HousingInfo housing =
                                     housings.get(room.getHousingId());
                             if(housing != null) {
-                                if(!usedHousings.contains(
-                                        housing.
-                                                getId())) {
-                                    usedHousings.add(housing.getId());
-                                    room.housingIdProperty().
-                                            addListener(
-                                                    refreshListener);
-                                    housing.nameProperty().
-                                            addListener(
-                                                    refreshListener);
-                                }
+                                room.housingIdProperty().
+                                        addListener(
+                                                refreshListener);
+                                housing.nameProperty().
+                                        removeListener(
+                                                refreshListener);
+                                housing.nameProperty().
+                                        addListener(
+                                                refreshListener);
                             }
                         }
                     } else if(change.wasRemoved()) {
@@ -134,6 +133,8 @@ public class RoomsTableController {
         roomsList.add(newRoom);
         rooms.put(newRoom.getId(), newRoom);
         roomsTable.getSelectionModel().select(newRoom);
+
+        ((Notifications) Beans.context().get("notifications")).push("added Room");
     }
 
     @FXML

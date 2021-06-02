@@ -77,7 +77,8 @@ public class QueryProvider {
                     "Prepared statement is not created"
             );
         }
-        return preparedStatement.executeQuery();
+        preparedStatement.execute();
+        return preparedStatement.getResultSet();
     }
 
     public void prepare(String sql) throws SQLException {

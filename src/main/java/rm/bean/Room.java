@@ -47,12 +47,20 @@ public class Room extends RoomInfo implements Cloneable {
     }
 
     @Override
-    public Room clone() throws CloneNotSupportedException {
-        Room newRoom = (Room) super.clone();
+    public Replicable replicate(Replicable object) {
+        Room room = (Room) object;
+        if(getOccupiedBy() != null) {
+            room.setOccupiedBy(getOccupiedBy());
+        } else {
+            room.setNotOccupied();
+        }
+        super.replicate(room);
+        return room;
+    }
 
-        newRoom.setOccupiedBy(this.occupiedBy.get());
-
-        return newRoom;
+    @Override
+    public Object clone() {
+        return replicate(new Room("name"));
     }
 
     @Override

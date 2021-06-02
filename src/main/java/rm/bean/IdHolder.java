@@ -1,7 +1,6 @@
 package rm.bean;
 
-
-public abstract class IdHolder implements Comparable<IdHolder>, Cloneable {
+public abstract class IdHolder implements Comparable<IdHolder>, Replicable {
     public static final int DEFAULT_ID = Integer.MIN_VALUE;
 
     private static int maximalValue = 0;
@@ -53,12 +52,10 @@ public abstract class IdHolder implements Comparable<IdHolder>, Cloneable {
     }
 
     @Override
-    public IdHolder clone() throws CloneNotSupportedException {
-        IdHolder newIdHolder = (IdHolder) super.clone();
-
-        newIdHolder.setId(this.id);
-
-        return newIdHolder;
+    public Replicable replicate(Replicable object) {
+        IdHolder copy = (IdHolder) object;
+        copy.setId(getId());
+        return copy;
     }
 
     @Override

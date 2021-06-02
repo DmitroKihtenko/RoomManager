@@ -46,25 +46,24 @@ public class ChangesDetector<T> {
         removed.clear();
         updated.clear();
 
-        T object;
+        T object1;
+        T object2;
         for(Integer key : original.keySet()) {
-            object = original.get(key);
+            object1 = original.get(key);
             if(changed.containsKey(key)) {
-                if(object != null &&
-                        !object.equals(changed.get(key))) {
-                    updated.put(key, object);
+                object2 = changed.get(key);
+                if(object1 != null &&
+                        !object1.equals(object2)) {
+                    updated.put(key, object2);
                 }
             } else {
-                removed.put(key, object);
+                removed.put(key, object1);
             }
         }
         for(Integer key : changed.keySet()) {
-            object = changed.get(key);
+            object1 = changed.get(key);
             if(!original.containsKey(key)) {
-                if(object != null &&
-                        !object.equals(changed.get(key))) {
-                    added.put(key, object);
-                }
+                added.put(key, object1);
             }
         }
     }
