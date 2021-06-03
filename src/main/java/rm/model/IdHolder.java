@@ -50,10 +50,9 @@ public abstract class IdHolder implements Comparable<IdHolder>, Replicable {
     }
 
     @Override
-    public Replicable replicate(Replicable object) {
+    public void replicate(Replicable object) {
         IdHolder copy = (IdHolder) object;
         copy.setId(getId());
-        return copy;
     }
 
     @Override
@@ -63,11 +62,7 @@ public abstract class IdHolder implements Comparable<IdHolder>, Replicable {
 
     @Override
     public String toString() {
-        String result = "";
-
-        result += "id - " + getId() + ".";
-
-        return result;
+        return "Id: " + getId();
     }
 
     @Override

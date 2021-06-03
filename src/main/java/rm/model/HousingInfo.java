@@ -8,25 +8,44 @@ import org.apache.log4j.Logger;
 
 import java.util.Objects;
 
+/**
+ * Class that contains data about housing in university
+ */
 public class HousingInfo extends IdHolder implements Cloneable {
     private static final Logger logger =
             Logger.getLogger(HousingInfo.class);
 
     private final StringProperty name;
 
+    /**
+     * Constructor that sets housing name as default
+     * @param name housing name
+     */
     public HousingInfo(String name) {
         this.name = new SimpleStringProperty();
         setName(name);
     }
 
+    /**
+     * Getter for housing name
+     * @return housing name
+     */
     public String getName() {
         return name.get();
     }
 
+    /**
+     * Used to track name property changes
+     * @return string property for java fx mvc
+     */
     public StringProperty nameProperty() {
         return name;
     }
 
+    /**
+     * Setter for housing name
+     * @param name string value of name, not null
+     */
     public void setName(String name) {
         Assertions.isNotNull(name, "Housing name", logger);
         StringLogic.isVisible(name, "Housing name", logger);
@@ -36,27 +55,23 @@ public class HousingInfo extends IdHolder implements Cloneable {
     }
 
     @Override
-    public Replicable replicate(Replicable object) {
+    public void replicate(Replicable object) {
         HousingInfo housing = (HousingInfo) object;
         housing.setName(getName());
         super.replicate(housing);
-        return housing;
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return replicate(new HousingInfo("Name"));
+        HousingInfo object = new HousingInfo("Name");
+        replicate(object);
+        return object;
     }
 
     @Override
     public String toString() {
-        String result = "";
-
-        if (getName() != null) {
-            result += "name - " + getName() + ". ";
-        }
-
-        return result += super.toString();
+        String result =  "Name: " + getName();
+        return super.toString() + ", " + result;
     }
 
     @Override
@@ -75,15 +90,6 @@ public class HousingInfo extends IdHolder implements Cloneable {
         }
 
         HousingInfo guest = (HousingInfo) obj;
-        Object s1 = Objects.requireNonNullElse(
-                getName(), "");
-        Object s2 = Objects.requireNonNullElse(guest.
-                getName(), "");
-
-        if (!s1.equals(s2)) {
-            return false;
-        }
-
-        return true;
+        return getName().equals(guest.getName());
     }
 }

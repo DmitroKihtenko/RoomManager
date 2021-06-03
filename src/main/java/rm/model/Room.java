@@ -5,18 +5,29 @@ import org.apache.log4j.Logger;
 
 import java.util.Objects;
 
+/**
+ * Class successor of class {@link RoomInfo} that contains info about owner of room
+ */
 public class Room extends RoomInfo implements Cloneable {
     private final static Logger logger = Logger.getLogger(Room.class);
 
     private final BooleanProperty isAvailable;
     private final IntegerProperty occupiedBy;
 
+    /**
+     * Constructor, sets number of room as the default
+     * @param number number of room
+     */
     public Room(String number) {
         super(number);
         this.isAvailable = new SimpleBooleanProperty(true);
         this.occupiedBy = new SimpleIntegerProperty(0);
     }
 
+    /**
+     * Indicates whether the room is occupied by any teacher
+     * @return true if room is occupied vy any teacher
+     */
     public boolean isAvailable() {
         return isAvailable.get();
     }
@@ -25,29 +36,47 @@ public class Room extends RoomInfo implements Cloneable {
         return isAvailable;
     }
 
+    /**
+     * Getter for id of teacher that occupies room
+     * @return id of teacher if room is occupied by teacher, otherwise returns null
+     */
     public Integer getOccupiedBy() {
         if (!this.isAvailable.get()) {
+            return null;
+        }
+        if(this.occupiedBy.get() == IdHolder.DEFAULT_ID) {
             return null;
         }
         return this.occupiedBy.get();
     }
 
+    /**
+     * Used to track id property changes of teacher that occupies room
+     * @return int property for java fx mvc
+     */
     public IntegerProperty occupiedByProperty() {
         return occupiedBy;
     }
 
+    /**
+     * Sets that room is not occupied by any teacher
+     */
     public void setNotOccupied() {
         this.isAvailable.set(true);
-        this.occupiedBy.set(0);
+        this.occupiedBy.set(IdHolder.DEFAULT_ID);
     }
 
+    /**
+     * Setter for id of teacher that occupies room
+     * @param teacherId id of teacher that occupies room
+     */
     public void setOccupiedBy(int teacherId) {
         this.isAvailable.set(false);
         this.occupiedBy.set(teacherId);
     }
 
     @Override
-    public Replicable replicate(Replicable object) {
+    public void replicate(Replicable object) {
         Room room = (Room) object;
         if(getOccupiedBy() != null) {
             room.setOccupiedBy(getOccupiedBy());
@@ -55,52 +84,21 @@ public class Room extends RoomInfo implements Cloneable {
             room.setNotOccupied();
         }
         super.replicate(room);
-        return room;
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return replicate(new Room("name"));
+        Room room = new Room("0");
+        replicate(room);
+        return room;
     }
 
     @Override
     public String toString() {
-        String result = "";
-
-        result += "isAvailable - " + isAvailable() + ", ";
-
+        String result = "IsAvailable: " + isAvailable() + ", ";
         if (getOccupiedBy() != null) {
-            result += "occupiedBy - " + getOccupiedBy() + ". ";
+            result += "OccupiedBy: " + getOccupiedBy();
         }
-
-        return result += super.toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof Room)) {
-            return false;
-        }
-        if (!(super.equals(obj))) {
-            return false;
-        }
-
-        Room guest = (Room) obj;
-        Object s1 = Objects.requireNonNullElse(
-                getOccupiedBy(), Boolean.FALSE);
-        Object s2 = Objects.requireNonNullElse(guest.
-                getOccupiedBy(), Boolean.FALSE);
-
-        if (!s1.equals(s2)) {
-            return false;
-        }
-
-        return true;
+        return super.toString() + ", " + result;
     }
 }

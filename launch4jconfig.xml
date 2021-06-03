@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>target\RoomManager-1.0-SNAPSHOT-shaded.jar</jar>
+  <jar>E:\Data\Projects\Java\IntelliJIDEA\RoomManager\target\RoomManager-1.0-SNAPSHOT-shaded.jar</jar>
   <outfile>RoomManager.exe</outfile>
   <errTitle>This application required additional program. Please download JDK 11 or later</errTitle>
   <cmdLine></cmdLine>
@@ -22,7 +22,7 @@
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
     <bundledJreAsFallback>false</bundledJreAsFallback>
-    <minVersion>11</minVersion>
+    <minVersion>11.0.2</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
     <runtimeBits>64/32</runtimeBits>
@@ -38,9 +38,9 @@
     <copyright>2021, Sumy State University</copyright>
     <productVersion>1.0.0.0</productVersion>
     <txtProductVersion>1.0-SNAPSHOT</txtProductVersion>
-    <productName>main.java.rm.model.Room Manager</productName>
+    <productName>RoomManager</productName>
     <companyName>Sumy State University</companyName>
-    <internalName>main.java.rm.model.Room Manager</internalName>
+    <internalName>RoomManager</internalName>
     <originalFilename>RoomManager.exe</originalFilename>
     <trademarks></trademarks>
     <language>ENGLISH_US</language>

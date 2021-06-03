@@ -21,6 +21,8 @@ public class FastAccessConnections extends ConnectionsList {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return replicate(new FastAccessConnections());
+        FastAccessConnections object = new FastAccessConnections();
+        replicate(object);
+        return object;
     }
 }

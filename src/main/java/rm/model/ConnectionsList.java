@@ -253,20 +253,14 @@ public abstract class ConnectionsList implements Replicable {
         return Objects.hash(firstConnections);
     }
 
-    /**
-     * Copies all data of this object into specified object
-     * @param object object that is instance if this class
-     * @return specified object with data copied from this object
-     */
     @Override
-    public Replicable replicate(Replicable object) {
+    public void replicate(Replicable object) {
         ConnectionsList value = (ConnectionsList) object;
         for(Integer firstId : getFirstIds()) {
             for(Integer secondId : getFirstConnections(firstId)) {
                 value.setConnection(firstId, secondId);
             }
         }
-        return value;
     }
 
     @Override

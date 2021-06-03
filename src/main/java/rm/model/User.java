@@ -6,6 +6,9 @@ import rm.service.Assertions;
 import rm.service.StringLogic;
 import org.apache.log4j.Logger;
 
+/**
+ * Class that contains information about user for connecting to database
+ */
 public class User {
     private static final Logger logger =
             Logger.getLogger(Datasource.class);
@@ -13,12 +16,19 @@ public class User {
     private final StringProperty name;
     private String password;
 
+    /**
+     * Default constructor that sets default username as root
+     */
     public User() {
         name = new SimpleStringProperty();
-        setName("unidentified");
-        password = "";
+        setName("root");
+        password = null;
     }
 
+    /**
+     * Setter for username
+     * @param name username value, not null
+     */
     public void setName(String name) {
         Assertions.isNotNull(name, "User name", logger);
         StringLogic.isWholeWord(name, "User name", logger);
@@ -27,36 +37,48 @@ public class User {
         this.name.set(name);
     }
 
+    /**
+     * Setter for user password
+     * @param password user password value, can be null
+     */
     public void setPassword(String password) {
-        Assertions.isNotNull(password, "User password", logger);
-        StringLogic.isVisible(password, "User password", logger);
-        StringLogic.isWholeWord(password, "User password", logger);
+        if(password != null) {
+            StringLogic.isVisible(password, "User password", logger);
+            StringLogic.isWholeWord(password, "User password", logger);
+        }
 
         this.password = password;
     }
 
+    /**
+     * Getter for username
+     * @return username value, not null
+     */
     public String getName() {
         return name.get();
     }
 
+    /**
+     * Used to track username property changes
+     * @return string property for java fx mvc
+     */
     public StringProperty nameProperty() {
         return name;
     }
 
+    /**
+     * Getter for user password
+     * @return user password value, can be null
+     */
     public String getPassword() {
         return password;
     }
 
     @Override
     public String toString() {
-        String result = "";
-
-        if (getName() != null)
-            result += "name - " + getName() + ", ";
-        if (getPassword() != null)
-            result += "password - " + getPassword() + ".";
-
-        return result;
+        String result = "Name: " + getName() + ", ";
+        result += "Password: " + getPassword();
+        return super.toString() + ", " + result;
     }
 
     @Override

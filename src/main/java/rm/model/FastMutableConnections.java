@@ -21,6 +21,8 @@ public class FastMutableConnections extends ConnectionsList {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return replicate(new FastMutableConnections());
+        FastMutableConnections object = new FastMutableConnections();
+        replicate(object);
+        return object;
     }
 }
