@@ -33,14 +33,14 @@
         </TableView>
         <HBox alignment="CENTER_LEFT" layoutX="119.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
             <children>
-                <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#newRoom" size="20">
+                <FontAwesomeIcon iconName="PLUS" onMouseClicked="#newRoom" size="20">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>
                 </FontAwesomeIcon>
             </children>
             <children>
-                <FontAwesomeIcon iconName="MINUS" onMouseClicked="#deleteRoom" size="20">
+                <FontAwesomeIcon iconName="TRASH_ALT" onMouseClicked="#deleteRoom" size="20">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>

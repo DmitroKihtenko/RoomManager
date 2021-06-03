@@ -43,7 +43,7 @@
                <children>
                     <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets />
                      </VBox.margin>
                   </FontAwesomeIcon>
                   <FontAwesomeIcon iconName="SAVE" onMouseClicked="#saveData" size="20">
@@ -52,6 +52,9 @@
                      </VBox.margin>
                   </FontAwesomeIcon>
                </children>
+               <HBox.margin>
+                  <Insets top="35.0" />
+               </HBox.margin>
             </VBox>
                 <fx:include fx:id="roomsTable" source="roomsTable.fxml" />
                 <fx:include fx:id="teachersTable" source="teachersTable.fxml" />
@@ -59,7 +62,7 @@
                 <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
         </Pane>
-      <HBox layoutX="145.0" layoutY="564.0" prefHeight="160.0" prefWidth="650.0">
+      <HBox layoutX="112.0" layoutY="589.0" prefHeight="35.0" prefWidth="650.0">
          <fx:include source="notifications.fxml" />
       </HBox>
     </children>

@@ -16,6 +16,14 @@
     -fx-background-color: #171717;
 }
 
+>FontAwesomeIcon {
+    -fx-background-color: transparent;
+}
+
+>FontAwesomeIcon:hover {
+    -fx-background-color: #171717;
+}
+
 .txtfield {
     -fx-background-color: #3B4148;
     -fx-background-radius: 0px;
@@ -46,6 +54,9 @@
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
 }
+.table-view .table-cell{
+    -fx-font-size:15px;
+}
 
 .table-view .column-header-background {
     -fx-background-color: transparent;
@@ -64,7 +75,7 @@
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 20pt;
+    -fx-font-size: 18pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-background-color: transparent;

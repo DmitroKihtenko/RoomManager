@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="parent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="400.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.EditController">
-    <VBox layoutX="22.0" layoutY="31.0" prefHeight="151.0" prefWidth="235.0" stylesheets="@Stylesheet.css" AnchorPane.topAnchor="60.0">
+    <VBox layoutX="82.0" layoutY="45.0" prefHeight="151.0" prefWidth="235.0" stylesheets="@Stylesheet.css" AnchorPane.topAnchor="35.0">
         <children>
             <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
             <font>
@@ -23,9 +23,9 @@
             <VBox.margin>
                <Insets left="7.0" right="7.0" top="7.0" />
             </VBox.margin></Text>
-            <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+            <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0" styleClass="txtfield">
             <font>
-               <Font size="16.0" />
+               <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
                <Insets left="20.0" />
@@ -37,9 +37,9 @@
             <font>
                <Font name="Microsoft Sans Serif" size="15.0" />
             </font></Text>
-            <TextField fx:id="surnameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+            <TextField fx:id="surnameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0" styleClass="txtfield">
             <font>
-               <Font name="Microsoft Sans Serif" size="16.0" />
+               <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
                <Insets left="20.0" />
@@ -51,9 +51,9 @@
             <VBox.margin>
                <Insets left="7.0" right="7.0" top="5.0" />
             </VBox.margin></Text>
-            <TextField fx:id="patronymicTextField" layoutX="10.0" layoutY="69.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+            <TextField fx:id="patronymicTextField" layoutX="10.0" layoutY="69.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0" styleClass="txtfield">
             <font>
-               <Font name="Microsoft Sans Serif" size="16.0" />
+               <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
                <Insets left="20.0" />
@@ -64,7 +64,7 @@
          <String fx:value="table-radius" />
       </styleClass>
     </VBox>
-   <VBox layoutX="23.0" layoutY="233.0" prefHeight="151.0" prefWidth="235.0" AnchorPane.topAnchor="260.0">
+   <VBox layoutX="82.0" layoutY="247.0" prefHeight="151.0" prefWidth="235.0" AnchorPane.topAnchor="221.0">
       <children>
          <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Room:">
             <font>
@@ -73,9 +73,9 @@
             <VBox.margin>
                <Insets left="7.0" right="7.0" top="7.0" />
             </VBox.margin></Text>
-         <TextField fx:id="numberTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
+         <TextField fx:id="numberTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0" styleClass="txtfield">
             <font>
-               <Font name="Microsoft Sans Serif" size="16.0" />
+               <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
                <Insets left="20.0" />
@@ -88,26 +88,33 @@
                <Insets left="7.0" right="7.0" top="5.0" />
             </VBox.margin>
          </Text>
-         <Label fx:id="roomHousingIdLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="90.0" textFill="WHITE">
+         <Label fx:id="roomHousingIdLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="90.0" textFill="WHITE">
             <font>
-               <Font name="Microsoft Sans Serif" size="16.0" />
+               <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
                <Insets left="35.0" />
             </VBox.margin>
          </Label>
-         <Text fill="#c4a5a5" layoutX="17.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info about room:">
+         <Text fill="#c4a5a5" layoutX="17.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reason if not used:">
             <font>
                <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
-               <Insets left="7.0" right="7.0" top="5.0" />
+               <Insets left="7.0" right="7.0" />
             </VBox.margin>
          </Text>
-         <TextField fx:id="notUsedHousingTextField" prefHeight="18.0" prefWidth="235.0" styleClass="txtfield">
+         <TextField fx:id="notUsedHousingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0">
             <font>
-               <Font name="Microsoft Sans Serif" size="16.0" />
+               <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
+            <styleClass>
+               <String fx:value="txtfield" />
+               <String fx:value="table-radius" />
+            </styleClass>
+            <VBox.margin>
+               <Insets left="20.0" />
+            </VBox.margin>
          </TextField>
       </children>
       <styleClass>
@@ -115,7 +122,7 @@
          <String fx:value="table-radius" />
       </styleClass>
    </VBox>
-   <VBox layoutX="23.0" layoutY="377.0" prefHeight="70.0" prefWidth="235.0" AnchorPane.topAnchor="460.0">
+   <VBox layoutX="82.0" layoutY="460.0" prefHeight="70.0" prefWidth="235.0" AnchorPane.topAnchor="407.0">
       <children>
          <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Housing:">
             <font>
@@ -137,12 +144,12 @@
          <String fx:value="table-radius" />
       </styleClass>
    </VBox>
-   <Label fx:id="infoAboutConnectRoomAndTeacherLabel" layoutX="169.0" layoutY="222.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" textFill="WHITE">
+   <Label fx:id="infoAboutConnectRoomAndTeacherLabel" layoutX="210.0" layoutY="194.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" textFill="WHITE">
       <font>
-         <Font name="Microsoft Sans Serif" size="16.0" />
+         <Font name="Microsoft Sans Serif" size="15.0" />
       </font>
    </Label>
-   <HBox layoutX="23.0" layoutY="557.0" prefHeight="70.0" prefWidth="320.0">
+   <HBox layoutX="-3.0" layoutY="558.0" prefHeight="70.0" prefWidth="320.0" AnchorPane.topAnchor="512.0">
       <styleClass>
          <String fx:value="txtfield" />
          <String fx:value="table-radius" />
@@ -160,12 +167,12 @@
                </Text>
                <HBox alignment="CENTER" prefHeight="15.0" prefWidth="150.0">
                   <children>
-                     <FontAwesomeIcon iconName="PLUS" onMouseClicked="#addNewRoomForTeacher" size="20">
+                     <FontAwesomeIcon iconName="UNLOCK" onMouseClicked="#addNewRoomForTeacher" size="20" styleClass="min-btn">
                         <HBox.margin>
                            <Insets right="10.0" />
                         </HBox.margin>
                      </FontAwesomeIcon>
-                     <FontAwesomeIcon iconName="MINUS" onMouseClicked="#removeNewRoomForTeacher" size="20">
+                     <FontAwesomeIcon iconName="LOCK" onMouseClicked="#removeNewRoomForTeacher" size="20">
                         <HBox.margin>
                            <Insets left="10.0" />
                         </HBox.margin>
@@ -200,12 +207,12 @@
                      <Insets top="10.0" />
                   </VBox.margin>
                   <children>
-                     <FontAwesomeIcon iconName="EDIT" onMouseClicked="#setNewHousingIdForRoom" size="20">
+                     <FontAwesomeIcon iconName="LINK" onMouseClicked="#setNewHousingIdForRoom" size="20">
                         <HBox.margin>
                            <Insets right="10.0" />
                         </HBox.margin>
                      </FontAwesomeIcon>
-                     <FontAwesomeIcon iconName="REMOVE" onMouseClicked="#deleteHousingIdForRoom" size="20">
+                     <FontAwesomeIcon iconName="UNLINK" onMouseClicked="#deleteHousingIdForRoom" size="20">
                         <HBox.margin>
                            <Insets left="10.0" />
                         </HBox.margin>

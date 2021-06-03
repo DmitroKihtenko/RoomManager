@@ -25,7 +25,7 @@
             </TextField>
         </children>
     </HBox>
-    <TableView fx:id="teachersTable" layoutX="50.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="200.0" style="-fx-alignment: center;" stylesheets="@Stylesheet.css">
+    <TableView fx:id="teachersTable" layoutX="50.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="200.0" style="-fx-alignment: center;" styleClass="txtfield" stylesheets="@Stylesheet.css">
         <columns>
             <TableColumn fx:id="teacherNameCol" maxWidth="200.0" minWidth="198.0" prefWidth="198.0" text="Teacher" />
         </columns>
@@ -39,7 +39,7 @@
             </FontAwesomeIcon>
         </children>
         <children>
-            <FontAwesomeIcon iconName="MINUS" onMouseClicked="#deleteTeacher" size="20">
+            <FontAwesomeIcon iconName="USER_TIMES" onMouseClicked="#deleteTeacher" size="20">
                 <HBox.margin>
                     <Insets right="10.0" />
                 </HBox.margin>
