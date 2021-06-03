@@ -150,18 +150,11 @@ public class Datasource {
     @Override
     public String toString() {
         String result = "";
-
-        if (getProtocol() != null)
-            result += "protocol - " + getProtocol() + ", ";
-        if (getUrl() != null)
-            result += "url - " + getUrl() + ", ";
-        if (getPort() != null)
-            result += "port - " + getPort() + ", ";
-        if (getSource() != null)
-            result += "source - " + getSource() + ", ";
-        if (getDatabaseName() != null)
-            result += "databaseName - " + getDatabaseName() + ".";
-
+        result += "Protocol: " + getProtocol() + ", ";
+        result += "Url: " + getUrl() + ", ";
+        result += "Port: " + getPort() + ", ";
+        result += "Source: " + getSource() + ", ";
+        result += "DatabaseName: " + getDatabaseName();
         return result;
     }
 

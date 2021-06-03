@@ -5,29 +5,49 @@ import org.apache.log4j.Logger;
 
 import java.util.Objects;
 
+/**
+ * Class successor of class {@link TeacherInfo} that contains data about used by teacher room
+ */
 public class Teacher extends TeacherInfo implements Cloneable {
-    private static final Logger logger = Logger.getLogger(Room.class);
-
     private BooleanProperty usesRoom;
     private IntegerProperty usedRoomId;
 
-    public Teacher(String name) {
-        super(name);
+    /**
+     * Constructor, sets default value of teacher surname
+     * @param surname teacher surname
+     */
+    public Teacher(String surname) {
+        super(surname);
     }
 
+    /**
+     * Indicates whether the teacher used some room
+     * @return true if teacher uses some room, otherwise returns false
+     */
     public boolean usesRoom() {
         return usesRoom.get();
     }
 
+    /**
+     * Used to track property of using bu teacher some room
+     * @return int property for java fx mvc
+     */
     public BooleanProperty usesRoomProperty() {
         return usesRoom;
     }
 
+    /**
+     Getter for room id that teacher is using at the moment
+     * @param roomId room id that teacher is use or null if teacher is not use any room
+     */
     public void setUsedRoom(int roomId) {
         this.usesRoom.set(true);
         this.usedRoomId.set(roomId);
     }
 
+    /**
+     * Sets that teacher is not using any room
+     */
     public void setNotUsedRoom() {
         this.usesRoom.set(false);
         this.usedRoomId.set(0);
@@ -35,7 +55,6 @@ public class Teacher extends TeacherInfo implements Cloneable {
 
     /**
      * Getter for room id that teacher is using at the moment
-     *
      * @return room id that teacher is use or null if teacher is not use any room
      */
     public Integer getUsedRoomId() {
@@ -45,12 +64,16 @@ public class Teacher extends TeacherInfo implements Cloneable {
         return usedRoomId.get();
     }
 
+    /**
+     * Used to track room id property that teacher is using
+     * @return int property for java fx mvc
+     */
     public IntegerProperty usedRoomIdProperty() {
         return usedRoomId;
     }
 
     @Override
-    public Replicable replicate(Replicable object) {
+    public void replicate(Replicable object) {
         Teacher teacher = (Teacher) object;
         if (this.usesRoom()) {
             teacher.setUsedRoom(getUsedRoomId());
@@ -58,60 +81,19 @@ public class Teacher extends TeacherInfo implements Cloneable {
             teacher.setNotUsedRoom();
         }
         super.replicate(teacher);
-        return teacher;
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return replicate(new Teacher("surname"));
+        Teacher object = new Teacher("surname");
+        replicate(object);
+        return object;
     }
 
     @Override
     public String toString() {
-        String result = "";
-
-        result += "usesRoom - " + usesRoom() + ", ";
-
-        if (getUsedRoomId() != null) {
-            result += "usedRoomId - " + getUsedRoomId() + ". ";
-        }
-        return result += super.toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof Teacher)) {
-            return false;
-        }
-        if (!(super.equals(obj))) {
-            return false;
-        }
-
-        Teacher guest = (Teacher) obj;
-        Object s1 = Objects.requireNonNullElse(
-                usesRoom(), Boolean.FALSE);
-        Object s2 = Objects.requireNonNullElse(guest.
-                usesRoom(), Boolean.FALSE);
-
-        if (!s1.equals(s2)) {
-            return false;
-        }
-
-        s1 = Objects.requireNonNullElse(
-                getUsedRoomId(), Integer.MIN_VALUE);
-        s2 = Objects.requireNonNullElse(guest.
-                getUsedRoomId(), Integer.MIN_VALUE);
-
-        if (!s1.equals(s2)) {
-            return false;
-        }
-
-        return true;
+        String result = "UsesRoom: " + usesRoom() + ", ";
+        result += "UsedRoomId: " + getUsedRoomId();
+        return super.toString() + ", " + result;
     }
 }
