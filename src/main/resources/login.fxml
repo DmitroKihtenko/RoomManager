@@ -41,7 +41,7 @@
       </HBox>
       <Pane fx:id="content" layoutY="33.0" prefHeight="545.0" prefWidth="1024.0">
          <children>
-            <HBox alignment="CENTER_LEFT" layoutX="412.0" layoutY="223.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
+            <HBox alignment="CENTER_LEFT" layoutX="387.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
                      <graphic>
@@ -55,7 +55,7 @@
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="412.0" layoutY="273.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
+            <HBox alignment="CENTER_LEFT" layoutX="387.0" layoutY="249.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #363b41;">
                      <graphic>
@@ -69,11 +69,14 @@
                   </PasswordField>
                </children>
             </HBox>
-            <JFXButton buttonType="RAISED" layoutX="412.0" layoutY="326.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleLogin" prefHeight="45.0" prefWidth="250.0" ripplerFill="WHITE" styleClass="login-btn" text="SIGN IN">
+            <JFXButton buttonType="RAISED" layoutX="387.0" layoutY="302.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleLogin" prefHeight="45.0" prefWidth="250.0" ripplerFill="WHITE" styleClass="login-btn" text="SIGN IN">
                <font>
                   <Font name="Microsoft Sans Serif" size="15.0" />
                </font>
             </JFXButton>
+            <HBox alignment="CENTER" layoutX="187.0" layoutY="386.0" prefHeight="160.0" prefWidth="650.0">
+               <fx:include source="notifications.fxml" />
+            </HBox>
          </children>
       </Pane>
    </children>
