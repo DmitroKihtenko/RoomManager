@@ -20,7 +20,7 @@
          <children>
             <HBox HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="Admin" textFill="#c2c2c2">
+                  <Label text="Room Manager" textFill="#c2c2c2">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -48,7 +48,7 @@
                         <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="USER" size="1.5em" />
                      </graphic>
                   </Label>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="usernameField">
+                  <TextField fx:id="usernameField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Username" styleClass="txtfield" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="LOCK" size="1.5em" />
                      </graphic>
                   </Label>
-                  <PasswordField minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Password" styleClass="txtfield" HBox.hgrow="ALWAYS" fx:id="passwordField">
+                  <PasswordField fx:id="passwordField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" promptText="Password" styleClass="txtfield" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>

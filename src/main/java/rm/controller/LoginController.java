@@ -3,6 +3,7 @@ package rm.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -95,7 +96,7 @@ public class LoginController {
 
     @FXML
     private void close_app(MouseEvent event) {
-        System.exit(0);
+        Platform.exit();
     }
 
     @FXML

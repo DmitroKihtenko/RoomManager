@@ -31,11 +31,13 @@ public class EditController {
     @FXML
     private TextField housingTextField;
     @FXML
+    private TextField notUsedHousingTextField;
+    @FXML
     private Label roomHousingIdLabel;
     @FXML
     private Label infoAboutConnectRoomAndTeacherLabel;
-    @FXML
-    private Label notUsedHousingLabel;
+
+    private Notifications notifications;
 
     private ConnectionsList rtAccess;
     private HashMap<Integer, HousingInfo> housings;
@@ -46,6 +48,7 @@ public class EditController {
 
     @FXML
     public void initialize() {
+        notifications = (Notifications) Beans.context().get("notifications");
         if (selectedTeacher == null) {
             selectedTeacher = (ObjectProperty<TeacherInfo>) Beans.context().get("selectedTeacher");
             selectedTeacher.addListener(new ChangeListener<TeacherInfo>() {
@@ -78,7 +81,12 @@ public class EditController {
                     if  (selectedTeacher.get() != null &&
                             !t1.equals(selectedTeacher.get().getName())) {
                         if (!t1.equals("")) {
-                            selectedTeacher.get().setName(t1);
+                            try {
+                                selectedTeacher.get().setName(t1);
+                            } catch (IllegalArgumentException e) {
+                                notifications.push("Username syntax " +
+                                        "error: " + e.getMessage());
+                            }
                         } else {
                             selectedTeacher.get().setName(null);
                         }
@@ -90,10 +98,14 @@ public class EditController {
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                     if  (selectedTeacher.get() != null &&
                             !t1.equals(selectedTeacher.get().getSurname())) {
-                        if (!t1.equals("")) {
-                            selectedTeacher.get().setSurname(t1);
-                        } else {
-                            selectedTeacher.get().setSurname(null);
+                        try {
+                            if (!t1.equals("")) {
+                                selectedTeacher.get().setSurname(t1);
+                            } else {
+                                selectedTeacher.get().setSurname(null);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            notifications.push("Username syntax error: " + e.getMessage());
                         }
                     }
                 }
@@ -122,15 +134,18 @@ public class EditController {
                     roomHousingIdLabel.setText("");
                     if (t1 != null && !t1.equals(roomInfo)) {
                         numberTextField.setText(t1.getNumber());
+                        if (t1.getNotUsedReason() != null) {
+                            notUsedHousingTextField.setText(t1.getNotUsedReason());
+                        } else {
+                            notUsedHousingTextField.setText("");
+                        }
                         if (t1.getHousingId() != null) {
                             roomHousingIdLabel.setText(housings.get(t1.getHousingId()).getName());
-                        }
-                        if (t1.getNotUsedReason() != null) {
-                            notUsedHousingLabel.setText(t1.getNotUsedReason());
                         }
                     } else if (t1 == null) {
                         numberTextField.setText("");
                         roomHousingIdLabel.setText("");
+                        notUsedHousingTextField.setText("");
                     }
                     if (selectedTeacher.get() != null && selectedRoom.get() != null) {
                         if (rtAccess.existsConnection(selectedTeacher.get().getId(), selectedRoom.get().getId())) {
@@ -147,10 +162,26 @@ public class EditController {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                     if  (selectedRoom.get() != null && !t1.equals(selectedRoom.get().getNumber())) {
+                        try {
+                            if (!t1.equals("")) {
+                                selectedRoom.get().setNumber(t1);
+                            } else {
+                                selectedRoom.get().setNumber(null);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            notifications.push("Username syntax error: " + e.getMessage());
+                        }
+                    }
+                }
+            });
+            notUsedHousingTextField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    if (selectedRoom.get() != null && !t1.equals(selectedRoom.get().getNotUsedReason())) {
                         if (!t1.equals("")) {
-                            selectedRoom.get().setNumber(t1);
+                            selectedRoom.get().setNotUsedReason(t1);
                         } else {
-                            selectedRoom.get().setNumber(null);
+                            selectedRoom.get().setNotUsedReason(null);
                         }
                     }
                 }
@@ -165,7 +196,7 @@ public class EditController {
                                     HousingInfo housingInfo, HousingInfo t1) {
                     if (t1 != null && !t1.equals(housingInfo)) {
                         housingTextField.setText(t1.getName());
-                    } else if(t1 == null) {
+                    } else if (t1 == null) {
                         housingTextField.setText("");
                     }
                 }
@@ -210,12 +241,6 @@ public class EditController {
             if (rtAccess.existsConnection(selectedTeacher.get().getId(), selectedRoom.get().getId())) {
                 rtAccess.removeConnection(selectedTeacher.get().getId(), selectedRoom.get().getId());
             }
-        }
-    }
-
-    public void setNotUsedReasonRoom() {
-        if (selectedRoom.get() != null) {
-            selectedRoom.get().setNotUsedReason("Not active");
         }
     }
 
