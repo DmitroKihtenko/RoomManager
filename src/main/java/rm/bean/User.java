@@ -72,26 +72,8 @@ public class User {
         if (!(obj instanceof User)) {
             return false;
         }
-
         User guest = (User) obj;
-        Object s1 = Objects.requireNonNullElse(
-                getName(), "");
-        Object s2 = Objects.requireNonNullElse(guest.
-                getName(), "");
-
-        if (!s1.equals(s2)) {
-            return false;
-        }
-
-        s1 = Objects.requireNonNullElse(
-                getPassword(), "");
-        s2 = Objects.requireNonNullElse(guest.
-                getPassword(), "");
-
-        if (!s1.equals(s2)) {
-            return false;
-        }
-
-        return true;
+        return getName().equals(guest.getName()) &&
+                getPassword().equals(guest.getPassword());
     }
 }

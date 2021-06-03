@@ -34,25 +34,46 @@ public class RTGetSQL extends QueryExecutor {
         this.defaultTeacher = defaultTeacher;
     }
 
-    protected TeacherInfo newTeacher() {
+    protected TeacherInfo newTeacher() throws SQLException {
+        TeacherInfo object;
         if(defaultTeacher == null) {
-            return new TeacherInfo("Teacher");
+            object = new TeacherInfo("Teacher");
+        } else {
+            try {
+                object = (TeacherInfo) defaultTeacher.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new SQLException(e.getMessage());
+            }
         }
-        return (TeacherInfo) defaultTeacher.clone();
+        return object;
     }
 
-    protected RoomInfo newRoom() {
+    protected RoomInfo newRoom() throws SQLException {
+        RoomInfo object;
         if(defaultRoom == null) {
-            return new RoomInfo("0");
+            object = new RoomInfo("0");
+        } else {
+            try {
+                object = (RoomInfo) defaultRoom.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new SQLException(e.getMessage());
+            }
         }
-        return (RoomInfo) defaultRoom.clone();
+        return object;
     }
 
-    protected HousingInfo newHousing() {
+    protected HousingInfo newHousing() throws SQLException {
+        HousingInfo object;
         if(defaultHousing == null) {
-            return new HousingInfo("Teacher");
+            object = new HousingInfo("0");
+        } else {
+            try {
+                object = (HousingInfo) defaultHousing.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new SQLException(e.getMessage());
+            }
         }
-        return (HousingInfo) defaultHousing.clone();
+        return object;
     }
 
     /**
@@ -63,10 +84,16 @@ public class RTGetSQL extends QueryExecutor {
         logger.debug("Getting database version info");
         Integer result = null;
 
-        ResultSet resultSet = getProvider().execute("SELECT FROM " +
-                "info WHERE Data = 'ChangesVersion'");
-        if(resultSet.next()) {
-            result = resultSet.getInt("Value");
+        try {
+            ResultSet resultSet = getProvider().execute("SELECT FROM" +
+                    " info WHERE Data = 'ChangesVersion'");
+            if(resultSet.next()) {
+                result = resultSet.getInt("Value");
+            }
+        } catch (SQLException e) {
+            logger.debug("Get database version info error: " +
+                    e.getMessage());
+            throw e;
         }
         return result;
     }
@@ -79,17 +106,21 @@ public class RTGetSQL extends QueryExecutor {
             throws SQLException {
         logger.debug("Getting housings data from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * FROM housings");
+        try {
+            ResultSet resultSet = getProvider().execute("SELECT * FROM housings");
+            while (resultSet.next()) {
+                int key = resultSet.getInt("Id");
 
-        while (resultSet.next()) {
-            int key = resultSet.getInt("Id");
+                HousingInfo value = newHousing();
+                value.setName(resultSet.getString(
+                        "Name"));
+                value.setId(key);
 
-            HousingInfo value = newHousing();
-            value.setName(resultSet.getString(
-                    "Name"));
-            value.setId(key);
-
-            housings.put(key, value);
+                housings.put(key, value);
+            }
+        } catch (SQLException e) {
+            logger.error("Get housings data error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -101,18 +132,23 @@ public class RTGetSQL extends QueryExecutor {
             throws SQLException {
         logger.debug("Getting teachers data from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * FROM teachers");
+        try {
+            ResultSet resultSet = getProvider().execute("SELECT * " +
+                    "FROM teachers");
+            while (resultSet.next()) {
+                int key = resultSet.getInt("Id");
 
-        while (resultSet.next()) {
-            int key = resultSet.getInt("Id");
+                TeacherInfo value = newTeacher();
+                value.setSurname(resultSet.getString("Surname"));
+                value.setName(resultSet.getString("Name"));
+                value.setPatronymic(resultSet.getString("Patronymic"));
+                value.setId(key);
 
-            TeacherInfo value = newTeacher();
-            value.setSurname(resultSet.getString("Surname"));
-            value.setName(resultSet.getString("Name"));
-            value.setPatronymic(resultSet.getString("Patronymic"));
-            value.setId(key);
-
-            teachers.put(key, value);
+                teachers.put(key, value);
+            }
+        } catch (SQLException e) {
+            logger.error("Get teachers data error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -128,23 +164,26 @@ public class RTGetSQL extends QueryExecutor {
         if(roomsHousing != null) {
             sql += " WHERE HousingId = " + roomsHousing.getId();
         }
+        try {
+            ResultSet resultSet = getProvider().execute(sql);
+            String temp;
+            while (resultSet.next()) {
+                int key = resultSet.getInt("Id");
 
-        ResultSet resultSet = getProvider().execute(sql);
-        String temp;
+                RoomInfo value = newRoom();
+                value.setNumber(resultSet.getString("Number"));
+                value.setHousingId(resultSet.getInt("HousingId"));
+                temp = resultSet.getString("NotUsedReason");
+                if(temp != null) {
+                    value.setNotUsedReason(temp);
+                }
+                value.setId(key);
 
-        while (resultSet.next()) {
-            int key = resultSet.getInt("Id");
-
-            RoomInfo value = newRoom();
-            value.setNumber(resultSet.getString("Number"));
-            value.setHousingId(resultSet.getInt("HousingId"));
-            temp = resultSet.getString("NotUsedReason");
-            if(temp != null) {
-                value.setNotUsedReason(temp);
+                rooms.put(key, value);
             }
-            value.setId(key);
-
-            rooms.put(key, value);
+        } catch (SQLException e) {
+            logger.error("Get rooms data error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -155,12 +194,17 @@ public class RTGetSQL extends QueryExecutor {
     public void getRtAccess(ConnectionsList access) throws SQLException {
         logger.debug("Getting access connections list from database");
 
-        ResultSet resultSet = getProvider().execute("SELECT * " +
-                "FROM rtaccess");
-
-        while (resultSet.next()) {
-            access.setConnection(resultSet.getInt("TeacherId"),
-                    resultSet.getInt("RoomId"));
+        try {
+            ResultSet resultSet = getProvider().execute("SELECT * " +
+                    "FROM rtaccess");
+            while (resultSet.next()) {
+                access.setConnection(resultSet.getInt("TeacherId"),
+                        resultSet.getInt("RoomId"));
+            }
+        } catch (SQLException e) {
+            logger.error("Get access connections data error: " +
+                    e.getMessage());
+            throw e;
         }
     }
 }

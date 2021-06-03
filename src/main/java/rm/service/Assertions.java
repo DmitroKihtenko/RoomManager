@@ -13,7 +13,7 @@ public class Assertions {
     public static void isNotNull(Object object, String parameter,
                                  Logger logger) {
         if (object == null) {
-            logger.error(parameter + " object has null value");
+            logger.warn(parameter + " object has null value");
 
             throw new IllegalArgumentException(
                     parameter + " object has null value"
@@ -30,7 +30,7 @@ public class Assertions {
     public static void isPositive(float number, String parameter,
                                   Logger logger) {
         if (number <= 0) {
-            logger.error(parameter + " has non-positive value " +
+            logger.warn(parameter + " has non-positive value " +
                     number);
 
             throw new IllegalArgumentException(

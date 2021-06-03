@@ -62,7 +62,7 @@ public class Teacher extends TeacherInfo implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         return replicate(new Teacher("surname"));
     }
 

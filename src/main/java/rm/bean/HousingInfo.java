@@ -44,7 +44,7 @@ public class HousingInfo extends IdHolder implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         return replicate(new HousingInfo("Name"));
     }
 
