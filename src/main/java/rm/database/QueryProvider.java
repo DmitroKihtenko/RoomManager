@@ -1,7 +1,7 @@
 package rm.database;
 
-import rm.bean.Datasource;
-import rm.bean.User;
+import rm.model.Datasource;
+import rm.model.User;
 import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
@@ -49,13 +49,17 @@ public class QueryProvider {
         Assertions.isNotNull(password, "Password string", logger);
 
         if(connection != null) {
-            throw new IllegalStateException(
-                    "Connection already exists"
-            );
+            disconnect();
         }
-        connection = DriverManager.getConnection(address,
-                user, password);
-        logger.debug("Connected to " + address);
+        try {
+            connection = DriverManager.getConnection(address,
+                    user, password);
+            logger.debug("Connected to " + address);
+        } catch (SQLException e) {
+            logger.error("Failed connection to " + address +
+                    " with error: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void connect() throws SQLException {
@@ -107,10 +111,6 @@ public class QueryProvider {
         } finally {
             connection = null;
         }
-    }
-
-    public boolean isConnected() {
-        return connection != null;
     }
 
     public static void setDriver(String driverClass)

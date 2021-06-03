@@ -33,7 +33,7 @@ public class Context {
         }
 
         context.put(name, object);
-        logger.info("Added object with name " + name);
+        logger.debug("Added object with name " + name);
     }
 
     /**
@@ -46,7 +46,7 @@ public class Context {
         Assertions.isNotNull(object, "Context object", logger);
 
         context.put(name, object);
-        logger.info("Added object with name " + name);
+        logger.debug("Added object with name " + name);
     }
 
     /**
@@ -57,7 +57,7 @@ public class Context {
         Assertions.isNotNull(name, "Object name", logger);
 
         if(context.remove(name) != null) {
-            logger.info("Removed object with name " + name);
+            logger.debug("Removed object with name " + name);
         }
     }
 

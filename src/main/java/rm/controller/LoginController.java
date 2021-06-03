@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import rm.Main;
-import rm.bean.Notifications;
+import rm.model.Notifications;
 import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
 
@@ -90,17 +90,17 @@ public class LoginController {
     }
 
     @FXML
-    private void minimize_stage(MouseEvent event) {
+    private void minimizeStage(MouseEvent event) {
         Main.stage.setIconified(true);
     }
 
     @FXML
-    private void close_app(MouseEvent event) {
+    private void closeApp(MouseEvent event) {
         Platform.exit();
     }
 
     @FXML
-    private void handle_login(ActionEvent event) throws IOException {
+    private void handleLogin(ActionEvent event) throws IOException {
         try {
             getSql.getProvider().getUser().setName(usernameField.getText());
             getSql.getProvider().getUser().setPassword(passwordField.

@@ -3,7 +3,7 @@ package rm.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import rm.bean.Notifications;
+import rm.model.Notifications;
 import rm.service.Beans;
 
 public class NotificationsController {

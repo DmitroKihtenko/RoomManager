@@ -9,8 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
-import rm.bean.HousingInfo;
-import rm.bean.RoomInfo;
+import rm.model.HousingInfo;
+import rm.model.RoomInfo;
 import rm.service.Assertions;
 import rm.service.Beans;
 
