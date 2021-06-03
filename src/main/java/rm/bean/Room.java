@@ -59,7 +59,7 @@ public class Room extends RoomInfo implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         return replicate(new Room("name"));
     }
 

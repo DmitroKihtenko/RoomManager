@@ -77,23 +77,25 @@ public class RoomsTableController {
                 } else if(integer != null && t1 == null) {
                     housing = housings.get(integer);
                     if(housing != null) {
-                        if(roomsForHousings.get(t1) <= 0) {
+                        if(roomsForHousings.get(integer) <= 1) {
+                            roomsForHousings.remove(integer);
                             housing.nameProperty().
                                     removeListener(refreshListener);
                         } else {
-                            roomsForHousings.put(t1,
-                                    roomsForHousings.get(t1) - 1);
+                            roomsForHousings.put(integer,
+                                    roomsForHousings.get(integer) - 1);
                         }
                     }
                 } else if(t1 != null) {
                     housing = housings.get(integer);
                     if(housing != null) {
-                        if(roomsForHousings.get(t1) <= 0) {
+                        if(roomsForHousings.get(integer) <= 1) {
+                            roomsForHousings.remove(integer);
                             housing.nameProperty().
                                     removeListener(refreshListener);
                         } else {
-                            roomsForHousings.put(t1,
-                                    roomsForHousings.get(t1) - 1);
+                            roomsForHousings.put(integer,
+                                    roomsForHousings.get(integer) - 1);
                         }
                     }
                     housing = housings.get(t1);
@@ -144,14 +146,15 @@ public class RoomsTableController {
                     if(change.wasAdded()) {
                         for (RoomInfo room : change.
                                 getAddedSubList()) {
+                            housingId = room.getHousingId();
                             room.numberProperty().
                                     addListener(refreshListener);
                             room.housingIdProperty().
                                     addListener(refreshListener);
-                            housing =
-                                    housings.get(room.getHousingId());
+                            room.housingIdProperty().
+                                    addListener(housingsId);
+                            housing = housings.get(housingId);
                             if(housing != null) {
-                                housingId = room.getHousingId();
                                 housing.nameProperty().
                                         removeListener(
                                                 refreshListener);
@@ -162,8 +165,6 @@ public class RoomsTableController {
                                         housingId)) {
                                     roomsForHousings.put(housingId,
                                             1);
-                                    room.housingIdProperty().
-                                            addListener(housingsId);
                                 } else {
                                     roomsForHousings.put(housingId,
                                             roomsForHousings.get(
@@ -177,13 +178,14 @@ public class RoomsTableController {
                                     removeListener(refreshListener);
                             room.housingIdProperty().
                                     removeListener(refreshListener);
+                            room.housingIdProperty().
+                                    addListener(housingsId);
                             housingId = room.getHousingId();
-                            housing =
-                                    housings.get(housingId);
+                            housing = housings.get(housingId);
                             if(housing != null) {
                                 housing.nameProperty().removeListener(
                                         refreshListener);
-                                if(!roomsForHousings.containsKey(
+                                if(roomsForHousings.containsKey(
                                         housingId)) {
                                     roomsForHousings.put(housingId,
                                             roomsForHousings.get(

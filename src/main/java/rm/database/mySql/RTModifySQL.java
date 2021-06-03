@@ -70,7 +70,7 @@ public class RTModifySQL extends RTGetSQL {
         logger.debug("Updating teachers in database");
 
         getProvider().prepare("UPDATE teachers " +
-                "SET Name = ?, SET Surname = ?, SET " +
+                "SET Name = ?, Surname = ?, " +
                 "Patronymic = ? WHERE Id = ?");
         for (TeacherInfo teacherInfo : teachers) {
             try {
@@ -85,7 +85,8 @@ public class RTModifySQL extends RTGetSQL {
 
                 getProvider().execute();
             } catch (SQLException e) {
-                logger.warn("Error while adding teachers to database");
+                logger.warn("Error while updating teachers in " +
+                        "database");
                 throw e;
             }
         }
@@ -166,7 +167,7 @@ public class RTModifySQL extends RTGetSQL {
 
                 getProvider().execute();
             } catch (SQLException e) {
-                logger.warn("Error while deleting rooms from " +
+                logger.warn("Error while updating rooms in " +
                         "database");
                 throw e;
             }
@@ -235,7 +236,7 @@ public class RTModifySQL extends RTGetSQL {
 
                 getProvider().execute();
             } catch (SQLException e) {
-                logger.warn("Error while deleting housings from" +
+                logger.warn("Error while updating housings in" +
                         " database");
                 throw e;
             }
@@ -280,8 +281,8 @@ public class RTModifySQL extends RTGetSQL {
             throws SQLException {
         logger.debug("Deleting access connections from database");
 
-        getProvider().prepare("DELETE FROM rtaccess" +
-                "WHERE TeacherId = ? and RoomId = ?");
+        getProvider().prepare("DELETE FROM rtaccess " +
+                "WHERE TeacherId = ? AND RoomId = ?");
         for (Integer teacherId : access.getFirstIds()) {
             for (Integer roomId : access.getFirstConnections(
                     teacherId)) {
@@ -305,9 +306,8 @@ public class RTModifySQL extends RTGetSQL {
 
     /**
      * Saves data about database edit version
-     * @param dbChanges Object that contains changes version
      */
-    public void provideChanges(DbChangesInfo dbChanges)
+    public void provideChanges()
             throws SQLException {
         logger.debug("Saving database edit version");
 

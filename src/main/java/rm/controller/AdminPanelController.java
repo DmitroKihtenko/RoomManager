@@ -32,6 +32,7 @@ public class AdminPanelController {
     private ChangesDetector<HousingInfo> housingsDetector;
     private ConnectionsList clonedAccess;
     private ConnectionsList originalAccess;
+    private Notifications notifications;
 
     @FXML
     private void minimize_stage() {
@@ -59,18 +60,20 @@ public class AdminPanelController {
                 Main.stage.setOpacity(1.0f));
     }
 
-    public void reloadData() {
+    public void reloadData() throws CloneNotSupportedException {
+        HashMap<Integer, HousingInfo> housings = new HashMap<>();
+        HashMap<Integer, RoomInfo> rooms = new HashMap<>();
+        HashMap<Integer, TeacherInfo> teachers = new HashMap<>();
+        originalAccess = new FastMutableConnections();
         try {
-            HashMap<Integer, HousingInfo> housings = new HashMap<>();
-            HashMap<Integer, RoomInfo> rooms = new HashMap<>();
-            HashMap<Integer, TeacherInfo> teachers = new HashMap<>();
-            originalAccess = new FastMutableConnections();
-
             sqlQueries.getHousings(housings);
             sqlQueries.getRooms(rooms, null);
             sqlQueries.getTeachers(teachers);
             sqlQueries.getRtAccess(originalAccess);
-
+        } catch (Exception e) {
+            notifications.push("Data loading error: " +
+                    e.getMessage());
+        } finally {
             HashMap<Integer, HousingInfo> clonedHousings =
                     new HashMap<>(housings.size());
             HashMap<Integer, RoomInfo> clonedRooms =
@@ -80,13 +83,16 @@ public class AdminPanelController {
             clonedAccess = (ConnectionsList)
                     originalAccess.clone();
             for (HousingInfo housing : housings.values()) {
-                clonedHousings.put(housing.getId(), (HousingInfo) housing.clone());
+                clonedHousings.put(housing.getId(), (HousingInfo)
+                        housing.clone());
             }
             for (RoomInfo room : rooms.values()) {
-                clonedRooms.put(room.getId(), (RoomInfo) room.clone());
+                clonedRooms.put(room.getId(), (RoomInfo)
+                        room.clone());
             }
             for (TeacherInfo teacher : teachers.values()) {
-                clonedTeachers.put(teacher.getId(), (TeacherInfo) teacher.clone());
+                clonedTeachers.put(teacher.getId(), (TeacherInfo)
+                        teacher.clone());
             }
 
             roomsTableController.setRooms(clonedRooms, clonedHousings,
@@ -104,44 +110,45 @@ public class AdminPanelController {
             housingsDetector.setChanged(clonedHousings);
             roomsDetector.setChanged(clonedRooms);
             teachersDetector.setChanged(clonedTeachers);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    public void saveData() {
+    public void saveData() throws CloneNotSupportedException {
+        ConnectionsList addedConnections =
+                new FastMutableConnections();
+        ConnectionsList removedConnections =
+                new FastMutableConnections();
+        originalAccess.differences(clonedAccess,
+                addedConnections,
+                removedConnections);
+        roomsDetector.findChanges();
+        housingsDetector.findChanges();
+        teachersDetector.findChanges();
         try {
-            ConnectionsList addedConnections =
-                    new FastMutableConnections();
-            ConnectionsList removedConnections =
-                    new FastMutableConnections();
-            originalAccess.differences(clonedAccess,
-                    addedConnections,
-                    removedConnections);
-            roomsDetector.findChanges();
-            housingsDetector.findChanges();
-            teachersDetector.findChanges();
-
-            sqlQueries.addAccess(addedConnections);
             sqlQueries.removeAccess(removedConnections);
+            sqlQueries.removeHousings(housingsDetector.getRemoved().
+                    values());
             sqlQueries.removeRooms(roomsDetector.getRemoved().
                     values());
-            sqlQueries.addRooms(roomsDetector.getAdded().values());
-            sqlQueries.updateRooms(roomsDetector.getUpdated().
-                    values());
-            sqlQueries.removeHousings(housingsDetector.getRemoved().
+            sqlQueries.removeTeachers(teachersDetector.getRemoved().
                     values());
             sqlQueries.addHousings(housingsDetector.getAdded().
                     values());
+            sqlQueries.addTeachers(teachersDetector.getAdded().
+                    values());
+            sqlQueries.addRooms(roomsDetector.getAdded().values());
+            sqlQueries.addAccess(addedConnections);
             sqlQueries.updateHousings(housingsDetector.
                     getUpdated().values());
-            sqlQueries.removeTeachers(teachersDetector.getRemoved().
-                    values());
-            sqlQueries.addTeachers(teachersDetector.getAdded().
+            sqlQueries.updateRooms(roomsDetector.getUpdated().
                     values());
             sqlQueries.updateTeachers(teachersDetector.getUpdated().
                     values());
-
+            sqlQueries.provideChanges();
+        } catch (Exception e) {
+            notifications.push("Save data error: " +
+                    e.getMessage());
+        } finally {
             housingsDetector.setOriginal(housingsDetector.
                     getChanged());
             teachersDetector.setOriginal(teachersDetector.
@@ -152,7 +159,6 @@ public class AdminPanelController {
             housingsDetector.discardFound();
             roomsDetector.discardFound();
             teachersDetector.discardFound();
-            reloadData();
 
             Map<Integer, HousingInfo> housings = housingsDetector.
                     getChanged();
@@ -171,13 +177,15 @@ public class AdminPanelController {
             clonedAccess = (ConnectionsList)
                     originalAccess.clone();
             for (HousingInfo housing : housings.values()) {
-                clonedHousings.put(housing.getId(), (HousingInfo) housing.clone());
+                clonedHousings.put(housing.getId(), (HousingInfo)
+                        housing.clone());
             }
             for (RoomInfo room : rooms.values()) {
                 clonedRooms.put(room.getId(), (RoomInfo) room.clone());
             }
             for (TeacherInfo teacher : teachers.values()) {
-                clonedTeachers.put(teacher.getId(), (TeacherInfo) teacher.clone());
+                clonedTeachers.put(teacher.getId(), (TeacherInfo)
+                        teacher.clone());
             }
 
             roomsTableController.setRooms(clonedRooms, clonedHousings,
@@ -186,7 +194,8 @@ public class AdminPanelController {
                     originalAccess);
             housingsTableController.setHousings(clonedHousings,
                     clonedRooms);
-            editController.setEditTeachers(clonedAccess, clonedHousings);
+            editController.setEditTeachers(clonedAccess,
+                    clonedHousings);
 
             housingsDetector.setOriginal(housings);
             roomsDetector.setOriginal(rooms);
@@ -195,15 +204,16 @@ public class AdminPanelController {
             housingsDetector.setChanged(clonedHousings);
             roomsDetector.setChanged(clonedRooms);
             teachersDetector.setChanged(clonedTeachers);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws CloneNotSupportedException {
         if(sqlQueries == null) {
-            sqlQueries = (RTModifySQL) Beans.context().get("databaseQueries");
+            sqlQueries = (RTModifySQL) Beans.context().
+                    get("databaseQueries");
+            notifications = (Notifications) Beans.context().
+                    get("notifications");
             roomsDetector = new ChangesDetector<>();
             teachersDetector = new ChangesDetector<>();
             housingsDetector = new ChangesDetector<>();
