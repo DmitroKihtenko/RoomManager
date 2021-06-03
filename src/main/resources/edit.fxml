@@ -5,8 +5,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -93,14 +96,19 @@
                <Insets left="35.0" />
             </VBox.margin>
          </Label>
-         <Label fx:id="notUsedHousingLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="219.0" textFill="WHITE">
+         <Text fill="#c4a5a5" layoutX="17.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info about room:">
+            <font>
+               <Font name="Microsoft Sans Serif" size="15.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="7.0" right="7.0" top="5.0" />
+            </VBox.margin>
+         </Text>
+         <TextField fx:id="notUsedHousingTextField" prefHeight="18.0" prefWidth="235.0" styleClass="txtfield">
             <font>
                <Font name="Microsoft Sans Serif" size="16.0" />
             </font>
-            <VBox.margin>
-               <Insets left="10.0" />
-            </VBox.margin>
-         </Label>
+         </TextField>
       </children>
       <styleClass>
          <String fx:value="txtfield" />
@@ -114,7 +122,7 @@
                <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
             <VBox.margin>
-               <Insets left="7.0" right="7.0" top="7.0" />
+               <Insets left="7.0" right="7.0" top="5.0" />
             </VBox.margin></Text>
          <TextField fx:id="housingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" styleClass="txtfield">
             <VBox.margin>
@@ -129,40 +137,85 @@
          <String fx:value="table-radius" />
       </styleClass>
    </VBox>
-   <VBox alignment="TOP_CENTER" layoutX="325.0" layoutY="103.0" prefHeight="162.0" prefWidth="66.0">
-      <children>
-         <FontAwesomeIcon iconName="PLUS" onMouseClicked="#addNewRoomForTeacher" size="20">
-            <VBox.margin>
-               <Insets top="10.0" />
-            </VBox.margin>
-         </FontAwesomeIcon>
-         <FontAwesomeIcon iconName="MINUS" onMouseClicked="#removeNewRoomForTeacher" size="20">
-            <VBox.margin>
-               <Insets top="15.0" />
-            </VBox.margin>
-         </FontAwesomeIcon>
-         <FontAwesomeIcon onMouseClicked="#setNotUsedReasonRoom" size="20">
-            <VBox.margin>
-               <Insets top="40.0" />
-            </VBox.margin>
-         </FontAwesomeIcon>
-         <FontAwesomeIcon iconName="EDIT" onMouseClicked="#setNewHousingIdForRoom" size="20">
-            <VBox.margin>
-               <Insets top="40.0" />
-            </VBox.margin>
-         </FontAwesomeIcon>
-         <FontAwesomeIcon iconName="REMOVE" onMouseClicked="#deleteHousingIdForRoom" size="20">
-            <VBox.margin>
-               <Insets top="15.0" />
-            </VBox.margin>
-         </FontAwesomeIcon>
-      </children>
-   </VBox>
-   <Label fx:id="infoAboutConnectRoomAndTeacherLabel" layoutX="158.0" layoutY="213.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" textFill="WHITE">
+   <Label fx:id="infoAboutConnectRoomAndTeacherLabel" layoutX="169.0" layoutY="222.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" textFill="WHITE">
       <font>
          <Font name="Microsoft Sans Serif" size="16.0" />
       </font>
    </Label>
+   <HBox layoutX="23.0" layoutY="557.0" prefHeight="70.0" prefWidth="320.0">
+      <styleClass>
+         <String fx:value="txtfield" />
+         <String fx:value="table-radius" />
+      </styleClass>
+      <children>
+         <VBox prefHeight="100.0" prefWidth="160.0">
+            <children>
+               <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Allow/deny access">
+                  <font>
+                     <Font name="Microsoft Sans Serif" size="15.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets left="7.0" right="7.0" top="5.0" />
+                  </VBox.margin>
+               </Text>
+               <HBox alignment="CENTER" prefHeight="15.0" prefWidth="150.0">
+                  <children>
+                     <FontAwesomeIcon iconName="PLUS" onMouseClicked="#addNewRoomForTeacher" size="20">
+                        <HBox.margin>
+                           <Insets right="10.0" />
+                        </HBox.margin>
+                     </FontAwesomeIcon>
+                     <FontAwesomeIcon iconName="MINUS" onMouseClicked="#removeNewRoomForTeacher" size="20">
+                        <HBox.margin>
+                           <Insets left="10.0" />
+                        </HBox.margin>
+                     </FontAwesomeIcon>
+                  </children>
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin>
+               </HBox>
+            </children>
+         </VBox>
+         <Line endX="-100.0" endY="190.0" startX="-100.0" startY="120.0" stroke="WHITE">
+            <effect>
+               <Bloom />
+            </effect>
+            <HBox.margin>
+               <Insets bottom="5.0" top="5.0" />
+            </HBox.margin>
+         </Line>
+         <VBox prefHeight="100.0" prefWidth="160.0">
+            <children>
+               <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Add/remove housing">
+                  <font>
+                     <Font name="Microsoft Sans Serif" size="15.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets left="7.0" right="7.0" top="5.0" />
+                  </VBox.margin>
+               </Text>
+               <HBox alignment="CENTER" prefHeight="15.0" prefWidth="160.0">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin>
+                  <children>
+                     <FontAwesomeIcon iconName="EDIT" onMouseClicked="#setNewHousingIdForRoom" size="20">
+                        <HBox.margin>
+                           <Insets right="10.0" />
+                        </HBox.margin>
+                     </FontAwesomeIcon>
+                     <FontAwesomeIcon iconName="REMOVE" onMouseClicked="#deleteHousingIdForRoom" size="20">
+                        <HBox.margin>
+                           <Insets left="10.0" />
+                        </HBox.margin>
+                     </FontAwesomeIcon>
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+      </children>
+   </HBox>
 
 
 </AnchorPane>

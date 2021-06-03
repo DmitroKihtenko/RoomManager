@@ -57,6 +57,11 @@ public class Main extends Application {
         Beans.context().set("notifications", notifications);
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
