@@ -6,8 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import rm.bean.*;
+import rm.model.*;
 
 import org.apache.log4j.Logger;
 import rm.service.Assertions;

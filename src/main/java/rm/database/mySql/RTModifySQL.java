@@ -1,10 +1,9 @@
 package rm.database.mySql;
 
-import rm.bean.ConnectionsList;
-import rm.bean.HousingInfo;
-import rm.bean.RoomInfo;
-import rm.bean.TeacherInfo;
-import rm.database.DbChangesInfo;
+import rm.model.ConnectionsList;
+import rm.model.HousingInfo;
+import rm.model.RoomInfo;
+import rm.model.TeacherInfo;
 import org.apache.log4j.Logger;
 
 import java.sql.JDBCType;

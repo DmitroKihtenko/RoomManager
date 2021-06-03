@@ -22,7 +22,7 @@ public class Assertions {
     }
 
     /**
-     * Check a number for a positive     *
+     * Check a number for a positive
      * @param number variable to test
      * @param parameter parameter name
      * @param logger logger object

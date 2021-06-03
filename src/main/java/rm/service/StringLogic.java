@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 public class StringLogic {
     /**
      * Checks whether the name does not contain only those symbols that can't be visible on screen
-     *
      * @param parameter string of name
      */
     static public void isVisible(String parameter,
@@ -26,18 +25,19 @@ public class StringLogic {
             }
         }
 
-        if (checkFlag1 || !checkFlag2 || !checkFlag3 || parameter.isEmpty()) {
-            logger.warn("The string contains characters that cannot be seen on the screen");
+        if (checkFlag1 || !checkFlag2 || !checkFlag3 ||
+                parameter.isEmpty()) {
+            logger.warn(name + " parameter does not contains " +
+                    "visible symbols");
 
             throw new IllegalArgumentException(
-                    "The name of a string that contains characters that cannot be seen on the screen " + name
+                    name + " parameter must contain visible symbols"
             );
         }
     }
 
     /**
      * Checks whether the phrase consists of only one whole word
-     *
      * @param parameter phrase string
      */
     static public void isWholeWord(String parameter,
@@ -58,17 +58,16 @@ public class StringLogic {
         }
 
         if (!checkFlag1 || !checkFlag2 || !checkFlag3 || parameter.isEmpty()) {
-            logger.warn("A string does not consist of a single whole word");
+            logger.warn(name + " parameter is not whole word");
 
             throw new IllegalArgumentException(
-                    "A string that does not consist of a single whole word " + name
+                    name + " parameter must be whole word"
             );
         }
     }
 
     /**
      * Checks whether the phrase contains at least one letter
-     *
      * @param parameter phrase string
      */
     static public void containsLetter(String parameter,
@@ -83,10 +82,10 @@ public class StringLogic {
         }
 
         if (checkFlag) {
-            logger.warn("String has no letters");
+            logger.warn(name + " parameter does not contain letters");
 
             throw new IllegalArgumentException(
-                    "A string that contains no letters " + name
+                    name + " parameter does not contain letters"
             );
         }
     }

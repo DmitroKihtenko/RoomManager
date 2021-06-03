@@ -10,8 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
-import rm.bean.ConnectionsList;
-import rm.bean.TeacherInfo;
+import rm.model.ConnectionsList;
+import rm.model.TeacherInfo;
 import rm.service.Assertions;
 import rm.service.Beans;
 

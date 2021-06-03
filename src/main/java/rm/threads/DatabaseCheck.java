@@ -1,6 +1,6 @@
 package rm.threads;
 
-import rm.bean.Notifications;
+import rm.model.Notifications;
 import rm.database.DbChangesInfo;
 import org.apache.log4j.Logger;
 

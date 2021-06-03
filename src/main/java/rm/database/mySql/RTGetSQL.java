@@ -1,6 +1,6 @@
 package rm.database.mySql;
 
-import rm.bean.*;
+import rm.model.*;
 import rm.database.QueryExecutor;
 import org.apache.log4j.Logger;
 import rm.service.Assertions;

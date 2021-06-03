@@ -1,9 +1,11 @@
 package rm.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import org.apache.log4j.Logger;
 import rm.Main;
-import rm.bean.*;
+import rm.model.*;
 import rm.controller.util.ChangesDetector;
 import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
@@ -12,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AdminPanelController {
+    private static final Logger logger =
+            Logger.getLogger(AdminPanelController.class);
     @FXML
     private AnchorPane parent;
     @FXML
@@ -35,13 +39,13 @@ public class AdminPanelController {
     private Notifications notifications;
 
     @FXML
-    private void minimize_stage() {
+    private void minimizeStage() {
         Main.stage.setIconified(true);
     }
 
     @FXML
-    private void close_app() {
-        System.exit(0);
+    private void closeApp() {
+        Platform.exit();
     }
 
     private void makeStageDraggable() {
