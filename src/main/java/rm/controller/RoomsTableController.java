@@ -41,6 +41,9 @@ public class RoomsTableController {
     private final ChangeListener<Number> housingsId;
     private final HashMap<Integer, Integer> roomsForHousings;
 
+    /**
+     * Default constructor. Object initialization
+     */
     public RoomsTableController() {
         selectedRoom = (ObjectProperty<RoomInfo>)
                 Beans.context().get("selectedRoom");
@@ -119,6 +122,12 @@ public class RoomsTableController {
         roomsForHousings = new HashMap<>();
     }
 
+    /**
+     * Initialization room, housing, rtAccess, roomList
+     * @param rooms cloned rooms
+     * @param housings cloned housing
+     * @param rtAccess connection list
+     */
     public void setRooms(HashMap<Integer, RoomInfo> rooms,
                          HashMap<Integer, HousingInfo> housings,
                          ConnectionsList rtAccess) {
@@ -135,6 +144,9 @@ public class RoomsTableController {
         roomsList.addAll(rooms.values());
     }
 
+    /**
+     * Setting listeners for initialized objects
+     */
     @FXML
     public void initialize() {
         if(selectedRoom != null) {
@@ -226,6 +238,9 @@ public class RoomsTableController {
         }
     }
 
+    /**
+     * Add new room in room list
+     */
     @FXML
     public void newRoom() {
         ObservableList<RoomInfo> roomsList = roomsTable.getItems();
@@ -236,6 +251,9 @@ public class RoomsTableController {
         roomsTable.getSelectionModel().select(newRoom);
     }
 
+    /**
+     * Delete selected room of room list
+     */
     @FXML
     public void deleteRoom() {
         ObservableList<RoomInfo> roomsList = roomsTable.getItems();
@@ -248,6 +266,9 @@ public class RoomsTableController {
         }
     }
 
+    /**
+     * Searching room in room list
+     */
     public void searchRooms() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);
         ObservableList<RoomInfo> roomsList = roomsTable.getItems();
@@ -266,6 +287,11 @@ public class RoomsTableController {
         }
     }
 
+    /**
+     * Getter room of string
+     * @param room selected room
+     * @return string value of received room
+     */
     private String getRoomString(RoomInfo room) {
         String value = "";
         HousingInfo housing = housings.get(room.getHousingId());

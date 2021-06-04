@@ -40,6 +40,9 @@ public class AdminPanelController {
     private ConnectionsList originalAccess;
     private final Notifications notifications;
 
+    /**
+     * Default constructor. Object initialization
+     */
     public AdminPanelController() {
         sqlQueries = (RTModifySQL) Beans.context().
                 get("databaseQueries");
@@ -50,6 +53,10 @@ public class AdminPanelController {
         housingsDetector = new ChangesDetector<>();
     }
 
+    /**
+     * Minimizing the program
+     * @param event mouse event
+     */
     @FXML
     private void minimizeStage(MouseEvent event) {
         Node node = (Node) event.getSource();
@@ -57,11 +64,17 @@ public class AdminPanelController {
         stage.setIconified(true);
     }
 
+    /**
+     * Closing the program
+     */
     @FXML
     private void closeApp() {
         Platform.exit();
     }
 
+    /**
+     * Moving the work window
+     */
     private void makeStageDraggable() {
         parent.setOnMousePressed((event) -> {
             xOffSet = event.getSceneX();
@@ -86,6 +99,10 @@ public class AdminPanelController {
         });
     }
 
+    /**
+     * Loading the required data
+     * @throws CloneNotSupportedException
+     */
     public void reloadData() throws CloneNotSupportedException {
         HashMap<Integer, HousingInfo> housings = new HashMap<>();
         HashMap<Integer, RoomInfo> rooms = new HashMap<>();
@@ -139,6 +156,10 @@ public class AdminPanelController {
         }
     }
 
+    /**
+     * Saving data to a database
+     * @throws CloneNotSupportedException
+     */
     public void saveData() throws CloneNotSupportedException {
         ConnectionsList addedConnections =
                 new FastMutableConnections();
@@ -233,6 +254,10 @@ public class AdminPanelController {
         }
     }
 
+    /**
+     * Initialization reloadData and makeStageDraggable
+     * @throws CloneNotSupportedException
+     */
     @FXML
     public void initialize() throws CloneNotSupportedException {
         if(sqlQueries != null) {

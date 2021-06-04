@@ -14,11 +14,17 @@ public class NotificationsController {
 
     private final Notifications notifications;
 
+    /**
+     * Default constructor. Object initialization
+     */
     public NotificationsController() {
         notifications = (Notifications)
                 Beans.context().get("notifications");
     }
 
+    /**
+     * Setting listeners for initialized objects
+     */
     @FXML
     public void initialize() {
         if(notifications != null) {
@@ -42,10 +48,16 @@ public class NotificationsController {
         space.setVisible(false);
     }
 
+    /**
+     * Deleting last received notifications
+     */
     public void close() {
         notifications.removeLast();
     }
 
+    /**
+     * Deleting all received notifications
+     */
     public void closeAll() {
         notifications.clear();
     }
