@@ -47,7 +47,7 @@
                <children>
                     <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
                      <VBox.margin>
-                        <Insets top="40.0" />
+                        <Insets left="40.0" top="40.0" />
                      </VBox.margin>
                   </FontAwesomeIcon>
                   <ComboBox fx:id="housingComboBox" onAction="#getHousingComboBox" prefWidth="150.0" styleClass="combo-box">
