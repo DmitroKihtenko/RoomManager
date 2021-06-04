@@ -145,7 +145,7 @@ public class RoomsTableController {
     }
 
     /**
-     * Setting listeners for initialized objects
+     * Setter listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -267,7 +267,7 @@ public class RoomsTableController {
     }
 
     /**
-     * Searching room in room list
+     * Search room in room list
      */
     public void searchRooms() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);

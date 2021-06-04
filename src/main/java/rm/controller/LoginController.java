@@ -32,7 +32,7 @@ public class LoginController {
     private double yOffSet = 0;
 
     /**
-     * Setting listeners for initialized objects
+     * Setter listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -73,7 +73,7 @@ public class LoginController {
     }
 
     /**
-     * Moving the work window
+     * Move the work window
      */
     private void makeStageDraggable() {
         parent.setOnMousePressed((event) -> {
@@ -100,7 +100,7 @@ public class LoginController {
     }
 
     /**
-     * Minimizing the program
+     * Minimize the program
      * @param event mouse event
      */
     @FXML
@@ -111,7 +111,7 @@ public class LoginController {
     }
 
     /**
-     * Closing the program
+     * Close the program
      */
     @FXML
     private void closeApp() {

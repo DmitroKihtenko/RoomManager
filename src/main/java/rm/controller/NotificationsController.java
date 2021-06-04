@@ -23,7 +23,7 @@ public class NotificationsController {
     }
 
     /**
-     * Setting listeners for initialized objects
+     * Setter listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -49,14 +49,14 @@ public class NotificationsController {
     }
 
     /**
-     * Deleting last received notifications
+     * Deletes last received notifications
      */
     public void close() {
         notifications.removeLast();
     }
 
     /**
-     * Deleting all received notifications
+     * Deletes all received notifications
      */
     public void closeAll() {
         notifications.clear();
