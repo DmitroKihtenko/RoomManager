@@ -1,8 +1,10 @@
 package rm.controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -32,6 +34,8 @@ public class AdminPanelController {
     private TeachersTableController teachersTableController;
     @FXML
     private EditController editController;
+    @FXML
+    private ComboBox<HousingInfo> housingComboBox;
 
     private final Notifications notifications;
     private final RTGetSQL getSql;
@@ -177,5 +181,9 @@ public class AdminPanelController {
             makeStageDraggable();
         }
         firstLaunch = false;
+    }
+
+    public void getHousingComboBox(ActionEvent actionEvent) {
+
     }
 }

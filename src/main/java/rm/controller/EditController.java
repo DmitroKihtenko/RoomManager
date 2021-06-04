@@ -3,6 +3,7 @@ package rm.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import rm.model.*;
 
 import org.apache.log4j.Logger;
@@ -172,5 +173,14 @@ public class EditController {
         } else {
             accessLabel.setText("");
         }
+    }
+
+    public void giveKey(MouseEvent mouseEvent) {
+    }
+
+    public void returnKey(MouseEvent mouseEvent) {
+    }
+
+    public void returnAll(MouseEvent mouseEvent) {
     }
 }
