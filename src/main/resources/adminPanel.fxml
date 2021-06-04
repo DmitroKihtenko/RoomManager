@@ -39,21 +39,16 @@
         </HBox>
         <Pane layoutY="35.0" prefHeight="473.0" prefWidth="1024.0">
             <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="1024.0">
-            <VBox alignment="TOP_CENTER" prefHeight="696.0" prefWidth="68.0">
+            <VBox alignment="TOP_CENTER" prefHeight="478.0" prefWidth="39.0">
                <children>
                     <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
                      <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </FontAwesomeIcon>
-                  <FontAwesomeIcon iconName="SAVE" onMouseClicked="#saveData" size="20">
-                     <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets left="10.0" />
                      </VBox.margin>
                   </FontAwesomeIcon>
                </children>
                <HBox.margin>
-                  <Insets top="35.0" />
+                  <Insets left="5.0" top="35.0" />
                </HBox.margin>
             </VBox>
                 <fx:include fx:id="roomsTable" source="roomsTable.fxml" />
@@ -61,7 +56,7 @@
                 <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
         </Pane>
-      <HBox layoutX="3.0" layoutY="528.0" prefHeight="35.0" prefWidth="650.0" AnchorPane.leftAnchor="20.0">
+      <HBox layoutX="124.0" layoutY="530.0" prefHeight="35.0" prefWidth="650.0" AnchorPane.leftAnchor="124.0">
          <fx:include source="notifications.fxml" />
       </HBox>
     </children>

@@ -25,11 +25,13 @@ public class EditController {
     @FXML
     private Label roomKeyLabel;
     @FXML
-    private TextField numberTextField;
+    private Label numberLabel;
     @FXML
-    private TextField notUsedRoomField;
+    private Label notUsedRoomLabel;
     @FXML
     private Label roomHousingIdLabel;
+    @FXML
+    private Label OccupiedByTeacherLabel;
     @FXML
     private Label accessLabel;
 
@@ -84,12 +86,12 @@ public class EditController {
                                       t1) -> {
                 roomHousingIdLabel.setText("");
                 if (t1 != null && !t1.equals(roomInfo)) {
-                    numberTextField.setText(t1.getNumber());
+                    numberLabel.setText(t1.getNumber());
                     if (t1.getNotUsedReason() != null) {
-                        notUsedRoomField.setText(
+                        notUsedRoomLabel.setText(
                                 t1.getNotUsedReason());
                     } else {
-                        notUsedRoomField.setText("");
+                        notUsedRoomLabel.setText("");
                     }
                     if (t1.getHousingId() != null) {
                         roomHousingIdLabel.setText(
@@ -97,13 +99,13 @@ public class EditController {
                                         getName());
                     }
                 } else if (t1 == null) {
-                    numberTextField.setText("");
+                    numberLabel.setText("");
                     roomHousingIdLabel.setText("");
-                    notUsedRoomField.setText("");
+                    notUsedRoomLabel.setText("");
                 }
                 tryToDisplayAccess();
             });
-            numberTextField.textProperty().addListener(
+            numberLabel.textProperty().addListener(
                 (observableValue, s, t1) -> {
             if(selectedRoom.get() != null &&
                 !t1.equals(selectedRoom.get().getNumber())) {
@@ -119,7 +121,7 @@ public class EditController {
                     }
                 }
             });
-            notUsedRoomField.textProperty().addListener(
+            notUsedRoomLabel.textProperty().addListener(
                 (observableValue, s, t1) -> {
                 if (selectedRoom.get() != null &&
                         !t1.equals(selectedRoom.get().
