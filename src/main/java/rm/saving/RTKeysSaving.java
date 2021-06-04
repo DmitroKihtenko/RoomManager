@@ -67,29 +67,31 @@ public class RTKeysSaving implements XmlSaving {
         logger.debug("Reading info about ordered keys of rooms");
 
         Element keysTag = element.element("keys");
-        Element keyTag;
-        int teacherId;
-        int roomId;
-        Teacher teacher;
-        Room room;
-        for(Object current : keysTag.elements()) {
-            keyTag = (Element) current;
-            if(current != null && (keyTag.getName().
-                    equals("key"))) {
-                try {
-                    teacherId = Integer.parseInt(keyTag.
-                            element("teacher").getText());
-                    roomId = Integer.parseInt(keyTag.
-                            element("room").getText());
-                } catch (NumberFormatException e) {
-                    throw new DocumentException("Teacher value must " +
-                            "be number");
-                }
-                teacher = teachers.get(teacherId);
-                room = rooms.get(roomId);
-                if(teacher != null && room != null) {
-                    teacher.setUsedRoom(roomId);
-                    room.setOccupiedBy(teacherId);
+        if(keysTag.element("none") == null) {
+            Element keyTag;
+            int teacherId;
+            int roomId;
+            Teacher teacher;
+            Room room;
+            for(Object current : keysTag.elements()) {
+                keyTag = (Element) current;
+                if(current != null && (keyTag.getName().
+                        equals("key"))) {
+                    try {
+                        teacherId = Integer.parseInt(keyTag.
+                                element("teacher").getText());
+                        roomId = Integer.parseInt(keyTag.
+                                element("room").getText());
+                    } catch (NumberFormatException e) {
+                        throw new DocumentException("Teacher value " +
+                                "must be number");
+                    }
+                    teacher = teachers.get(teacherId);
+                    room = rooms.get(roomId);
+                    if(teacher != null && room != null) {
+                        teacher.setUsedRoom(roomId);
+                        room.setOccupiedBy(teacherId);
+                    }
                 }
             }
         }
@@ -105,8 +107,9 @@ public class RTKeysSaving implements XmlSaving {
 
         Element keysTag = element.addElement("keys");
         Element currentTag;
+        boolean wasAdded = false;
         for(Teacher teacher : teachers.values()) {
-            if(teacher.usesRoom()) {
+            if(teacher.getUsesRoom()) {
                 currentTag = keysTag.addElement("key");
                 currentTag = currentTag.addElement("teacher");
                 currentTag.setText(String.valueOf(teacher.getId()));
@@ -114,7 +117,11 @@ public class RTKeysSaving implements XmlSaving {
                 currentTag = currentTag.addElement("room");
                 currentTag.setText(String.valueOf(teacher.
                         getUsedRoomId()));
+                wasAdded = true;
             }
+        }
+        if(!wasAdded) {
+            keysTag.addElement("none");
         }
     }
 }

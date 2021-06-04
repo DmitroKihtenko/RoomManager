@@ -13,8 +13,7 @@ import rm.database.ConcurrentQueryProvider;
 import rm.database.mySql.RTGetSQL;
 import rm.model.*;
 import rm.database.mySql.RTModifySQL;
-import rm.saving.DatabaseSaving;
-import rm.saving.XmlSavingsHandler;
+import rm.saving.*;
 import rm.service.Beans;
 
 /**
@@ -63,6 +62,9 @@ public class Main extends Application {
         provider.setDatasource(datasource);
         provider.setUser(user);
         databaseQueries.setProvider(provider);
+        HousingSaving housingSaving = new HousingSaving();
+        RTKeysSaving rtKeysSaving = new RTKeysSaving();
+        DatabaseCheckSaving checkSaving = new DatabaseCheckSaving();
         ObjectProperty<Room> selectedRoom =
                 new SimpleObjectProperty<>(null);
         ObjectProperty<Teacher> selectedTeacher =
@@ -83,6 +85,10 @@ public class Main extends Application {
         Beans.context().set("selectedTeacher", selectedTeacher);
         Beans.context().set("selectedHousing", selectedHousing);
         Beans.context().set("notifications", notifications);
+        Beans.context().set("dataSavings", dataSavings);
+        Beans.context().set("housingSaving", housingSaving);
+        Beans.context().set("rtKeysSaving", rtKeysSaving);
+        Beans.context().set("checkSaving", checkSaving);
     }
 
     /**

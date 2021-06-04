@@ -50,20 +50,19 @@ public class DatabaseCheckSaving implements XmlSaving {
      */
     @Override
     public void read(Element element) throws DocumentException {
-        Element checkTag = element.element("check-interval");
-        if(checkTag == null) {
-            databaseCheck.setEnabled(false);
-        } else {
-            databaseCheck.setEnabled(true);
-            try {
-                databaseCheck.setCheckInterval(Integer.
-                        parseInt(checkTag.getText()));
-            } catch (NumberFormatException e) {
-                throw new DocumentException("Value of database " +
-                        "check interval must be integer number");
-            } catch (IllegalArgumentException e) {
-                throw new DocumentException(e.getMessage());
-            }
+        Element checkTag = element.element("database-check");
+        Element currentTag = checkTag.element("enabled");
+        databaseCheck.setEnabled(Boolean.parseBoolean(
+                currentTag.getText()));
+        currentTag = checkTag.element("interval");
+        try {
+            databaseCheck.setCheckInterval(Integer.
+                    parseInt(currentTag.getText()));
+        } catch (NumberFormatException e) {
+            throw new DocumentException("Value of database " +
+                    "check interval must be integer number");
+        } catch (IllegalArgumentException e) {
+            throw new DocumentException(e.getMessage());
         }
     }
 
@@ -73,10 +72,11 @@ public class DatabaseCheckSaving implements XmlSaving {
      */
     @Override
     public void write(Element element) {
-        if(databaseCheck.getEnabled()) {
-            Element checkTag = element.addElement("check-interval");
-            checkTag.setText(String.valueOf(databaseCheck.
-                    getCheckInterval()));
-        }
+        Element checkTag = element.addElement("database-check");
+        Element currentTag = checkTag.addElement("enabled");
+        currentTag.setText(String.valueOf(databaseCheck.getEnabled()));
+        currentTag = element.addElement("database-check");
+        currentTag.setText(String.valueOf(databaseCheck.
+                getCheckInterval()));
     }
 }

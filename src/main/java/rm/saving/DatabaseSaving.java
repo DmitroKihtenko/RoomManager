@@ -63,6 +63,7 @@ public class DatabaseSaving extends DatasourceSaving {
 
         Element sourceTag = element.element("user");
         Element currentTag;
+        user.setPassword(null);
         for(Object current : sourceTag.elements()) {
             currentTag = (Element) current;
             if(current != null) {
@@ -94,7 +95,9 @@ public class DatabaseSaving extends DatasourceSaving {
         Element sourceTag = element.addElement("user");
         Element current = sourceTag.addElement("name");
         current.addText(user.getName());
-        current = sourceTag.addElement("password");
-        current.addText(user.getPassword());
+        if(user.getPassword() != null) {
+            current = sourceTag.addElement("password");
+            current.addText(user.getPassword());
+        }
     }
 }

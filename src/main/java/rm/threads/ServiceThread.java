@@ -27,7 +27,7 @@ public class ServiceThread extends Thread {
      * Adds new operation for parallel execution
      * @param operation operation object
      */
-    void addOperation(ThreadOperation operation) {
+    public void addOperation(ThreadOperation operation) {
         Assertions.isNotNull(operation,
                 "Thread operation", logger);
 
@@ -38,7 +38,7 @@ public class ServiceThread extends Thread {
      * Removed operation for parallel execution that was contained in class
      * @param operation operation object
      */
-    void removeOperation(ThreadOperation operation) {
+    public void removeOperation(ThreadOperation operation) {
         Assertions.isNotNull(operation,
                 "Thread operation", logger);
 
@@ -49,7 +49,7 @@ public class ServiceThread extends Thread {
      * Indicates whether the operation exists in this thread
      * @param operation operation object
      */
-    boolean existsOperation(ThreadOperation operation) {
+    public boolean existsOperation(ThreadOperation operation) {
         return operations.contains(operation);
     }
 
@@ -58,6 +58,8 @@ public class ServiceThread extends Thread {
      */
     @Override
     public void run() {
+        logger.info("Thread started");
+
         while(true) {
             for(ThreadOperation operation : operations) {
                 operation.make();

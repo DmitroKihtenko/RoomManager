@@ -109,8 +109,8 @@ public class RTGetSQL extends QueryExecutor {
         int result = 0;
 
         try {
-            ResultSet resultSet = getProvider().execute("SELECT FROM" +
-                    " info WHERE Data = 'ChangesVersion'");
+            ResultSet resultSet = getProvider().execute("SELECT * " +
+                    "FROM info WHERE Data = 'ChangesVersion'");
             if(resultSet.next()) {
                 result = resultSet.getInt("Value");
             }
