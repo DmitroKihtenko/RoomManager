@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import rm.model.ConnectionsList;
+import rm.model.Teacher;
 import rm.model.TeacherInfo;
 import rm.service.Assertions;
 import rm.service.Beans;
@@ -22,43 +23,35 @@ import java.util.regex.Pattern;
 public class TeachersTableController {
     private static final Logger logger =
             Logger.getLogger(TeachersTableController.class);
-    private static final String DEF_TEACHER_NAME = "Teacher";
     private static final String NO_INIT_SYMBOL = "-";
 
     @FXML
     private TextField searchField;
     @FXML
-    private TableView<TeacherInfo> teachersTable;
+    private TableView<Teacher> teachersTable;
     @FXML
-    private TableColumn<TeacherInfo, String> teacherNameCol;
+    private TableColumn<Teacher, String> teacherNameCol;
 
-    private final ObjectProperty<TeacherInfo> selectedTeacher;
-    private ConnectionsList rtAccess;
-    private HashMap<Integer, TeacherInfo> teachers;
-
-    private ChangeListener<Object> refreshListener;
+    private final ObjectProperty<Teacher> selectedTeacher;
+    private HashMap<Integer, Teacher> teachers;
 
     /**
      * Default constructor. Object initialization
      */
     public TeachersTableController() {
-        selectedTeacher = (ObjectProperty<TeacherInfo>)
+        selectedTeacher = (ObjectProperty<Teacher>)
                 Beans.context().get("selectedTeacher");
     }
 
     /**
      * Initialization teachers, rtAccess, teacher list
      * @param teachers cloned teachers
-     * @param rtAccess connection list
      */
-    public void setTeachers(HashMap<Integer, TeacherInfo> teachers,
-                            ConnectionsList rtAccess) {
+    public void setTeachers(HashMap<Integer, Teacher> teachers) {
         Assertions.isNotNull(teachers, "Teachers map", logger);
-        Assertions.isNotNull(rtAccess, "Access connections", logger);
 
         this.teachers = teachers;
-        this.rtAccess = rtAccess;
-        ObservableList<TeacherInfo> teachersList =
+        ObservableList<Teacher> teachersList =
                 teachersTable.getItems();
         teachersList.clear();
         teachersList.addAll(teachers.values());
@@ -71,33 +64,6 @@ public class TeachersTableController {
     @FXML
     public void initialize() {
         if(selectedTeacher != null) {
-            refreshListener = (observableValue, o, t1) ->
-                    teachersTable.refresh();
-            teachersTable.getItems().addListener((ListChangeListener
-                    <TeacherInfo>) change -> {
-                while(change.next()) {
-                    if(change.wasAdded()) {
-                        for (TeacherInfo teacher : change.
-                                getAddedSubList()) {
-                            teacher.nameProperty().
-                                    addListener(refreshListener);
-                            teacher.surnameProperty().
-                                    addListener(refreshListener);
-                            teacher.patronymicProperty().
-                                    addListener(refreshListener);
-                        }
-                    } else if(change.wasRemoved()) {
-                        for (TeacherInfo teacher : change.getRemoved()) {
-                            teacher.nameProperty().
-                                    removeListener(refreshListener);
-                            teacher.surnameProperty().
-                                    removeListener(refreshListener);
-                            teacher.patronymicProperty().
-                                    removeListener(refreshListener);
-                        }
-                    }
-                }
-            });
             teachersTable.getSelectionModel().selectedItemProperty().
                     addListener((observableValue, teacherInfo,
                                  t1) -> {
@@ -117,36 +83,6 @@ public class TeachersTableController {
                     searchTeachers();
                 }
             });
-        }
-    }
-
-    /**
-     * Add new teacher in teacher list
-     */
-    @FXML
-    public void newTeacher() {
-        ObservableList<TeacherInfo> teachersList =
-                teachersTable.getItems();
-        TeacherInfo newTeacher = new TeacherInfo(DEF_TEACHER_NAME);
-        newTeacher.createUniqueId();
-        teachersList.add(newTeacher);
-        teachers.put(newTeacher.getId(), newTeacher);
-        teachersTable.getSelectionModel().select(newTeacher);
-    }
-
-    /**
-     * Delete selected teacher of teacher list
-     */
-    @FXML
-    public void deleteTeacher() {
-        ObservableList<TeacherInfo> teachersList =
-                teachersTable.getItems();
-        TeacherInfo teacherToDelete = teachersTable.getSelectionModel().
-                getSelectedItem();
-        if(teacherToDelete != null) {
-            rtAccess.removeFirstConnections(teacherToDelete.getId());
-            teachersList.remove(teacherToDelete);
-            teachers.remove(teacherToDelete.getId());
         }
     }
 
@@ -178,10 +114,10 @@ public class TeachersTableController {
      */
     public void searchTeachers() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);
-        ObservableList<TeacherInfo> teachersList =
+        ObservableList<Teacher> teachersList =
                 teachersTable.getItems();
         teachersList.clear();
-        for (TeacherInfo teacher : teachers.values()) {
+        for (Teacher teacher : teachers.values()) {
             if(text.length() == 0) {
                 teachersList.add(teacher);
             } else {

@@ -2,21 +2,16 @@ package rm.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+import rm.database.mySql.RTGetSQL;
 import rm.model.*;
-import rm.controller.util.ChangesDetector;
-import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
 
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
 
 public class AdminPanelController {
     private static final Logger logger =
@@ -29,35 +24,21 @@ public class AdminPanelController {
     private TeachersTableController teachersTableController;
     @FXML
     private EditController editController;
-    @FXML
-    private HousingsTableController housingsTableController;
 
-    private Notifications notifications;
-    private RTModifySQL getSql;
+    private final Notifications notifications;
+    private final RTGetSQL getSql;
 
-    private RTModifySQL sqlQueries;
     private double xOffSet;
     private double yOffSet;
-
-    private final ChangesDetector<RoomInfo> roomsDetector;
-    private final ChangesDetector<TeacherInfo> teachersDetector;
-    private final ChangesDetector<HousingInfo> housingsDetector;
-    private ConnectionsList clonedAccess;
-    private ConnectionsList originalAccess;
-
-    //private final Notifications notifications;
 
     /**
      * Default constructor. Object initialization
      */
     public AdminPanelController() {
-        sqlQueries = (RTModifySQL) Beans.context().
+        getSql = (RTGetSQL) Beans.context().
                 get("databaseQueries");
         notifications = (Notifications) Beans.context().
                 get("notifications");
-        roomsDetector = new ChangesDetector<>();
-        teachersDetector = new ChangesDetector<>();
-        housingsDetector = new ChangesDetector<>();
     }
 
     /**
@@ -108,182 +89,52 @@ public class AdminPanelController {
 
     /**
      * Load the required data
-     * @throws CloneNotSupportedException
      */
-    public void reloadData() throws CloneNotSupportedException {
-
+    public void reloadData() {
         HashMap<Integer, HousingInfo> housings = new HashMap<>();
         HashMap<Integer, RoomInfo> rooms = new HashMap<>();
         HashMap<Integer, TeacherInfo> teachers = new HashMap<>();
-        originalAccess = new FastMutableConnections();
+        ConnectionsList rtAccess = new FastAccessConnections();
+        HashMap<Integer, Room> castedRooms =
+                new HashMap<>(rooms.size());
+        HashMap<Integer, Teacher> castedTeachers =
+                new HashMap<>(rooms.size());
 
         try {
             getSql.getProvider().connect();
-            sqlQueries.getHousings(housings);
-            sqlQueries.getRooms(rooms, null);
-            sqlQueries.getTeachers(teachers);
-            sqlQueries.getRtAccess(originalAccess);
+            getSql.getHousings(housings);
+            getSql.getRooms(rooms, null);
+            getSql.getTeachers(teachers);
+            getSql.getRtAccess(rtAccess);
         } catch (Exception e) {
             notifications.push("Data loading error: " +
                     e.getMessage());
         } finally {
+            for (RoomInfo room : rooms.values()) {
+                castedRooms.put(room.getId(), (Room) room);
+            }
+            for (TeacherInfo teacher : teachers.values()) {
+                castedTeachers.put(teacher.getId(), (Teacher) teacher);
+            }
+            roomsTableController.setRooms(castedRooms, housings);
+            teachersTableController.setTeachers(castedTeachers);
+            editController.setEditTeachers(rtAccess, housings);
+
             getSql.getProvider().disconnect();
-            HashMap<Integer, HousingInfo> clonedHousings =
-                    new HashMap<>(housings.size());
-            HashMap<Integer, RoomInfo> clonedRooms =
-                    new HashMap<>(rooms.size());
-            HashMap<Integer, TeacherInfo> clonedTeachers =
-                    new HashMap<>(teachers.size());
-            clonedAccess = (ConnectionsList)
-                    originalAccess.clone();
-            for (HousingInfo housing : housings.values()) {
-                clonedHousings.put(housing.getId(), (HousingInfo)
-                        housing.clone());
-            }
-            for (RoomInfo room : rooms.values()) {
-                clonedRooms.put(room.getId(), (RoomInfo)
-                        room.clone());
-            }
-            for (TeacherInfo teacher : teachers.values()) {
-                clonedTeachers.put(teacher.getId(), (TeacherInfo)
-                        teacher.clone());
-            }
-
-            roomsTableController.setRooms(clonedRooms, clonedHousings,
-                    originalAccess);
-            teachersTableController.setTeachers(clonedTeachers,
-                    originalAccess);
-            //housingsTableController.setHousings(clonedHousings,
-                    //clonedRooms);
-            editController.setEditTeachers(clonedAccess, clonedHousings);
-
-            housingsDetector.setOriginal(housings);
-            roomsDetector.setOriginal(rooms);
-            teachersDetector.setOriginal(teachers);
-
-            housingsDetector.setChanged(clonedHousings);
-            roomsDetector.setChanged(clonedRooms);
-            teachersDetector.setChanged(clonedTeachers);
-        }
-    }
-
-    /**
-     * Saves data to a database
-     * @throws CloneNotSupportedException
-     */
-    public void saveData() throws CloneNotSupportedException {
-        ConnectionsList addedConnections =
-                new FastMutableConnections();
-        ConnectionsList removedConnections =
-                new FastMutableConnections();
-        originalAccess.differences(clonedAccess,
-                addedConnections,
-                removedConnections);
-        roomsDetector.findChanges();
-        housingsDetector.findChanges();
-        teachersDetector.findChanges();
-        try {
-            sqlQueries.removeAccess(removedConnections);
-            sqlQueries.removeHousings(housingsDetector.getRemoved().
-                    values());
-            sqlQueries.removeRooms(roomsDetector.getRemoved().
-                    values());
-            sqlQueries.removeTeachers(teachersDetector.getRemoved().
-                    values());
-            sqlQueries.addHousings(housingsDetector.getAdded().
-                    values());
-            sqlQueries.addTeachers(teachersDetector.getAdded().
-                    values());
-            sqlQueries.addRooms(roomsDetector.getAdded().values());
-            sqlQueries.addAccess(addedConnections);
-            sqlQueries.updateHousings(housingsDetector.
-                    getUpdated().values());
-            sqlQueries.updateRooms(roomsDetector.getUpdated().
-                    values());
-            sqlQueries.updateTeachers(teachersDetector.getUpdated().
-                    values());
-            sqlQueries.provideChanges();
-        } catch (Exception e) {
-            notifications.push("Save data error: " +
-                    e.getMessage());
-        } finally {
-            housingsDetector.setOriginal(housingsDetector.
-                    getChanged());
-            teachersDetector.setOriginal(teachersDetector.
-                    getChanged());
-            roomsDetector.setOriginal(roomsDetector.
-                    getChanged());
-
-            housingsDetector.discardFound();
-            roomsDetector.discardFound();
-            teachersDetector.discardFound();
-
-            Map<Integer, HousingInfo> housings = housingsDetector.
-                    getChanged();
-            Map<Integer, RoomInfo> rooms = roomsDetector.
-                    getChanged();
-            Map<Integer, TeacherInfo> teachers = teachersDetector.
-                    getChanged();
-            originalAccess = clonedAccess;
-
-            HashMap<Integer, HousingInfo> clonedHousings =
-                    new HashMap<>(housings.size());
-            HashMap<Integer, RoomInfo> clonedRooms =
-                    new HashMap<>(rooms.size());
-            HashMap<Integer, TeacherInfo> clonedTeachers =
-                    new HashMap<>(teachers.size());
-            clonedAccess = (ConnectionsList)
-                    originalAccess.clone();
-            for (HousingInfo housing : housings.values()) {
-                clonedHousings.put(housing.getId(), (HousingInfo)
-                        housing.clone());
-            }
-            for (RoomInfo room : rooms.values()) {
-                clonedRooms.put(room.getId(), (RoomInfo) room.clone());
-            }
-            for (TeacherInfo teacher : teachers.values()) {
-                clonedTeachers.put(teacher.getId(), (TeacherInfo)
-                        teacher.clone());
-            }
-
-            roomsTableController.setRooms(clonedRooms, clonedHousings,
-                    originalAccess);
-            teachersTableController.setTeachers(clonedTeachers,
-                    originalAccess);
-            housingsTableController.setHousings(clonedHousings,
-                    clonedRooms);
-            editController.setEditTeachers(clonedAccess,
-                    clonedHousings);
-
-            housingsDetector.setOriginal(housings);
-            roomsDetector.setOriginal(rooms);
-            teachersDetector.setOriginal(teachers);
-
-            housingsDetector.setChanged(clonedHousings);
-            roomsDetector.setChanged(clonedRooms);
-            teachersDetector.setChanged(clonedTeachers);
         }
     }
 
     /**
      * Initialization reloadData and makeStageDraggable
-     * @throws CloneNotSupportedException
      */
     @FXML
-    public void initialize() throws CloneNotSupportedException {
-        if(getSql == null) {
-            getSql = (RTModifySQL) Beans.context().
-                    get("databaseQueries");
-            notifications = (Notifications) Beans.context().
-                    get("notifications");
-
-        }
-        getSql.getProvider().getUser().setName("employee");
-        getSql.getProvider().getUser().setPassword("employee");
-
-        makeStageDraggable();
-        if(sqlQueries != null) {
+    public void initialize() {
+        if(getSql != null) {
+            getSql.setDefaultHousing(new HousingInfo("X"));
+            getSql.setDefaultRoom(new Room("0"));
+            getSql.setDefaultTeacher(new Teacher("Name"));
             reloadData();
+            makeStageDraggable();
         }
     }
 }

@@ -38,8 +38,8 @@ public class EditController {
     private ConnectionsList rtAccess;
     private HashMap<Integer, HousingInfo> housings;
 
-    private final ObjectProperty<TeacherInfo> selectedTeacher;
-    private final ObjectProperty<RoomInfo> selectedRoom;
+    private final ObjectProperty<Teacher> selectedTeacher;
+    private final ObjectProperty<Room> selectedRoom;
     private final ObjectProperty<HousingInfo> selectedHousing;
 
     /**
@@ -48,9 +48,9 @@ public class EditController {
     public EditController() {
         notifications = (Notifications) Beans.context().
                 get("notifications");
-        selectedTeacher = (ObjectProperty<TeacherInfo>)
+        selectedTeacher = (ObjectProperty<Teacher>)
                 Beans.context().get("selectedTeacher");
-        selectedRoom = (ObjectProperty<RoomInfo>)
+        selectedRoom = (ObjectProperty<Room>)
                 Beans.context().get("selectedRoom");
         selectedHousing = (ObjectProperty<HousingInfo>)
                 Beans.context().get("selectedHousing");
@@ -136,54 +136,6 @@ public class EditController {
                     }
                 }
             });
-        }
-    }
-
-    /**
-     * Setter new housingId for the selected room
-     */
-    public void setNewHousingIdForRoom() {
-        if (selectedRoom.get() != null &&
-                selectedHousing.get() != null) {
-            selectedRoom.get().setHousingId(
-                    selectedHousing.get().getId());
-            roomHousingIdLabel.setText(housings.get(
-                    selectedRoom.get().getHousingId()).getName());
-        }
-    }
-
-    /**
-     * Deletes housingId for the selected room
-     */
-    public void deleteHousingIdForRoom() {
-        if (selectedRoom.get() != null) {
-            selectedRoom.get().setHousingId(null);
-            roomHousingIdLabel.setText("");
-        }
-    }
-
-    /**
-     * Add a new available room for the selected teacher
-     */
-    public void addNewRoomForTeacher() {
-        if (selectedRoom.get() != null &&
-                selectedTeacher.get() != null) {
-            rtAccess.setConnection(selectedTeacher.get().getId(),
-                    selectedRoom.get().getId());
-        }
-    }
-
-    /**
-     * Remove available room for the selected teacher
-     */
-    public void removeNewRoomForTeacher() {
-        if (selectedRoom.get() != null &&
-                selectedTeacher.get() != null) {
-            if (rtAccess.existsConnection(selectedTeacher.get().getId(),
-                    selectedRoom.get().getId())) {
-                rtAccess.removeConnection(selectedTeacher.get().getId(),
-                        selectedRoom.get().getId());
-            }
         }
     }
 

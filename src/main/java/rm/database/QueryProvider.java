@@ -6,6 +6,7 @@ import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.Objects;
 
 /**
  * A class that encapsulates the logic of working with the JDBC, leaving only the query execution methods for the database
@@ -97,7 +98,7 @@ public class QueryProvider {
      */
     public void connect() throws SQLException {
         connect(datasource.getAddress(), user.getName(),
-                user.getPassword());
+                Objects.requireNonNullElse(user.getPassword(), ""));
     }
 
     /**

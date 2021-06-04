@@ -1,7 +1,6 @@
 package rm;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -10,20 +9,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
+import rm.database.ConcurrentQueryProvider;
+import rm.database.mySql.RTGetSQL;
 import rm.model.*;
 import rm.database.mySql.RTModifySQL;
-import rm.saving.DatasourceSaving;
+import rm.saving.DatabaseSaving;
 import rm.saving.XmlSavingsHandler;
 import rm.service.Beans;
-
-import java.util.Objects;
 
 /**
  * Main class
  */
 public class Main extends Application {
     private static final Logger logger = Logger.getLogger(Main.class);
-    private static final String DATASOURCE_FILE = "datasource.xml";
+    private static final String DATABASE_PATH = "database.xml";
 
     /**
      * Creates main window and gives management to controller {@link rm.controller.LoginController}
@@ -55,21 +54,25 @@ public class Main extends Application {
     public void init() {
         logger.info("Program started");
 
+        ConcurrentQueryProvider provider = new ConcurrentQueryProvider();
+        Datasource datasource = new Datasource();
+        User user = new User();
         XmlSavingsHandler dataSavings = new XmlSavingsHandler();
         Notifications notifications = new Notifications();
-        Datasource datasource = new Datasource();
-        RTModifySQL databaseQueries = new RTModifySQL();
-        databaseQueries.getProvider().setDatasource(datasource);
-        ObjectProperty<RoomInfo> selectedRoom =
+        RTGetSQL databaseQueries = new RTModifySQL();
+        provider.setDatasource(datasource);
+        provider.setUser(user);
+        databaseQueries.setProvider(provider);
+        ObjectProperty<Room> selectedRoom =
                 new SimpleObjectProperty<>(null);
-        ObjectProperty<TeacherInfo> selectedTeacher =
+        ObjectProperty<Teacher> selectedTeacher =
                 new SimpleObjectProperty<>(null);
         ObjectProperty<HousingInfo> selectedHousing =
                 new SimpleObjectProperty<>(null);
 
-        dataSavings.propertiesForPath(DATASOURCE_FILE,
-                new DatasourceSaving(datasource));
-        if(!dataSavings.existsForPath(DATASOURCE_FILE)) {
+        dataSavings.propertiesForPath(DATABASE_PATH,
+                new DatabaseSaving(datasource, user));
+        if(!dataSavings.existsForPath(DATABASE_PATH)) {
             dataSavings.write();
         } else {
             dataSavings.read();
