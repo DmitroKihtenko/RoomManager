@@ -285,7 +285,6 @@ public class RoomsTableController {
                 }
             }
         }
-        throw new IllegalArgumentException("xxx");
     }
 
     /**
