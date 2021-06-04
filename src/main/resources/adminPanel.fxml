@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1360.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminPanelController">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1024.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.AdminPanelController">
     <children>
-        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="1360.0">
+        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="1024.0">
             <children>
                 <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <children>
@@ -37,8 +37,8 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </HBox>
-        <Pane layoutY="35.0" prefHeight="553.0" prefWidth="1360.0">
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="1360.0">
+        <Pane layoutY="35.0" prefHeight="473.0" prefWidth="1024.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="1024.0">
             <VBox alignment="TOP_CENTER" prefHeight="696.0" prefWidth="68.0">
                <children>
                     <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
@@ -58,11 +58,10 @@
             </VBox>
                 <fx:include fx:id="roomsTable" source="roomsTable.fxml" />
                 <fx:include fx:id="teachersTable" source="teachersTable.fxml" />
-                <fx:include fx:id="housingsTable" source="housingsTable.fxml" />
                 <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
         </Pane>
-      <HBox layoutX="112.0" layoutY="589.0" prefHeight="35.0" prefWidth="650.0" AnchorPane.topAnchor="597.0">
+      <HBox layoutX="3.0" layoutY="528.0" prefHeight="35.0" prefWidth="650.0" AnchorPane.leftAnchor="20.0">
          <fx:include source="notifications.fxml" />
       </HBox>
     </children>

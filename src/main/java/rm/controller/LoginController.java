@@ -31,9 +31,7 @@ public class LoginController {
     private double xOffSet = 0;
     private double yOffSet = 0;
 
-    /**
-     * Setter listeners for initialized objects
-     */
+
     @FXML
     public void initialize() {
         if(getSql == null) {
@@ -73,7 +71,7 @@ public class LoginController {
     }
 
     /**
-     * Move the work window
+     * Moving the work window
      */
     private void makeStageDraggable() {
         parent.setOnMousePressed((event) -> {
@@ -100,7 +98,7 @@ public class LoginController {
     }
 
     /**
-     * Minimize the program
+     * Minimizing the program
      * @param event mouse event
      */
     @FXML
@@ -111,7 +109,7 @@ public class LoginController {
     }
 
     /**
-     * Close the program
+     * Closing the program
      */
     @FXML
     private void closeApp() {

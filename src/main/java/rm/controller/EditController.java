@@ -17,15 +17,15 @@ public class EditController {
             Logger.getLogger(EditController.class);
 
     @FXML
-    private TextField nameTextField;
+    private Label nameLabel;
     @FXML
-    private TextField surnameTextField;
+    private Label surnameLabel;
     @FXML
-    private TextField patronymicTextField;
+    private Label patronymicLabel;
+    @FXML
+    private Label roomKeyLabel;
     @FXML
     private TextField numberTextField;
-    @FXML
-    private TextField housingTextField;
     @FXML
     private TextField notUsedRoomField;
     @FXML
@@ -65,69 +65,21 @@ public class EditController {
             selectedTeacher.addListener((observableValue,
                                          teacherInfo, t1) -> {
                 if (t1 != null && !t1.equals(teacherInfo)) {
-                    nameTextField.setText(Objects.requireNonNullElse(
+                    nameLabel.setText(Objects.requireNonNullElse(
                                     t1.getName(),
                                     ""));
-                    surnameTextField.setText(t1.getSurname());
-                    patronymicTextField.setText(Objects.requireNonNullElse(
+                    surnameLabel.setText(t1.getSurname());
+                    patronymicLabel.setText(Objects.requireNonNullElse(
                             t1.getPatronymic(),
                             ""));
                 } else if (t1 == null) {
-                    nameTextField.setText("");
-                    surnameTextField.setText("");
-                    patronymicTextField.setText("");
+                    nameLabel.setText("");
+                    surnameLabel.setText("");
+                    patronymicLabel.setText("");
                 }
                 tryToDisplayAccess();
             });
-            nameTextField.textProperty().addListener(
-                    (observableValue, s, t1) -> {
-                        if (selectedTeacher.get() != null &&
-                                !t1.equals(selectedTeacher.get().getName())) {
-                            if (!t1.equals("")) {
-                                try {
-                                    selectedTeacher.get().setName(t1);
-                                } catch (IllegalArgumentException e) {
-                                    notifications.push("Name syntax " +
-                                            "error: " + e.getMessage());
-                                }
-                            } else {
-                                selectedTeacher.get().setName(null);
-                            }
-                        }
-                    });
-            surnameTextField.textProperty().addListener(
-                    (observableValue, s, t1) -> {
-                if  (selectedTeacher.get() != null &&
-                        !t1.equals(selectedTeacher.get().getSurname())) {
-                    try {
-                        if (!t1.equals("")) {
-                            selectedTeacher.get().setSurname(t1);
-                        } else {
-                            selectedTeacher.get().setSurname("");
-                        }
-                    } catch (IllegalArgumentException e) {
-                        notifications.push("Surname syntax error: "
-                                + e.getMessage());
-                    }
-                }
-            });
-            patronymicTextField.textProperty().addListener((
-                    observableValue, s, t1) -> {
-                if(selectedTeacher.get() != null &&
-                        !t1.equals(selectedTeacher.get().
-                                getPatronymic())) {
-                    try {
-                        if (!t1.equals("")) {
-                            selectedTeacher.get().setPatronymic(t1);
-                        } else {
-                            selectedTeacher.get().setPatronymic(null);
-                        }
-                    } catch (IllegalArgumentException e) {
-                        notifications.push("Teacher patronymic " +
-                                "syntax error: " + e.getMessage());
-                    }
-                }
-            });
+
             selectedRoom.addListener((observableValue, roomInfo,
                                       t1) -> {
                 roomHousingIdLabel.setText("");
@@ -181,30 +133,6 @@ public class EditController {
                     } catch (IllegalArgumentException e) {
                         notifications.push("Room info error: "
                                 + e.getMessage());
-                    }
-                }
-            });
-            selectedHousing.addListener((observableValue, housingInfo,
-                                         t1) -> {
-                if (t1 != null && !t1.equals(housingInfo)) {
-                    housingTextField.setText(t1.getName());
-                } else if (t1 == null) {
-                    housingTextField.setText("");
-                }
-            });
-            housingTextField.textProperty().addListener(
-                (observableValue, s, t1) -> {
-                if (selectedHousing.get() != null &&
-                        !t1.equals(selectedHousing.get().getName())) {
-                    try {
-                        if (!t1.equals("")) {
-                            selectedHousing.get().setName(t1);
-                        } else {
-                            selectedHousing.get().setName("");
-                        }
-                    } catch (IllegalArgumentException e) {
-                        notifications.push("Housing name syntax error: " +
-                                 e.getMessage());
                     }
                 }
             });
