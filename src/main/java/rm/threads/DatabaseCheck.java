@@ -135,4 +135,8 @@ public class DatabaseCheck implements ThreadOperation {
             }
         }
     }
+
+    public void setChangesVersion(int changesVersion) {
+        this.changesVersion = changesVersion;
+    }
 }

@@ -96,9 +96,7 @@ public class Room extends RoomInfo implements Cloneable {
     @Override
     public String toString() {
         String result = "IsAvailable: " + isAvailable() + ", ";
-        if (getOccupiedBy() != null) {
-            result += "OccupiedBy: " + getOccupiedBy();
-        }
+        result += "OccupiedBy: " + getOccupiedBy();
         return super.toString() + ", " + result;
     }
 }

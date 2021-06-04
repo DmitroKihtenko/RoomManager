@@ -2,15 +2,12 @@ package rm.controller;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
-import rm.model.ConnectionsList;
 import rm.model.Teacher;
 import rm.model.TeacherInfo;
 import rm.service.Assertions;
@@ -83,6 +80,12 @@ public class TeachersTableController {
                     searchTeachers();
                 }
             });
+            selectedTeacher.addListener((observableValue, teacher, t1)
+                    -> {
+                if(t1 != null) {
+                    logger.info("Selected teacher: " + t1);
+                }
+            });
         }
     }
 
@@ -136,6 +139,9 @@ public class TeachersTableController {
                     teachersList.add(teacher);
                 }
             }
+        }
+        if(!text.equals("")) {
+            logger.info("Searched teacher by pattern " + text);
         }
     }
 }

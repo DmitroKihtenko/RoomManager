@@ -83,6 +83,8 @@ public class RoomsTableController {
                     searchRooms();
                 }
             });
+            selectedRoom.addListener((observableValue, room, t1)
+                    -> logger.info("Selected room: " + t1));
         }
     }
 
@@ -104,6 +106,9 @@ public class RoomsTableController {
                     roomsList.add(room);
                 }
             }
+        }
+        if(!text.equals("")) {
+            logger.info("Searched rooms by pattern " + text);
         }
     }
 
