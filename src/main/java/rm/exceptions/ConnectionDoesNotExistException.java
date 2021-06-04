@@ -1,5 +1,8 @@
 package rm.exceptions;
 
+/**
+ * Exception for class {@link rm.model.ConnectionsList} that creates if object does not contain some connection
+ */
 public class ConnectionDoesNotExistException extends RuntimeException {
     public ConnectionDoesNotExistException() {
     }
@@ -8,7 +11,8 @@ public class ConnectionDoesNotExistException extends RuntimeException {
         super(message);
     }
 
-    public ConnectionDoesNotExistException(String message, Throwable cause) {
+    public ConnectionDoesNotExistException(String message,
+                                           Throwable cause) {
         super(message, cause);
     }
 
@@ -16,7 +20,11 @@ public class ConnectionDoesNotExistException extends RuntimeException {
         super(cause);
     }
 
-    public ConnectionDoesNotExistException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ConnectionDoesNotExistException(String message,
+                                           Throwable cause,
+                                           boolean enableSuppression,
+                                           boolean writableStackTrace
+    ) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

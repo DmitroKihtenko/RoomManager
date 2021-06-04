@@ -9,6 +9,9 @@ import org.apache.log4j.Logger;
 import java.sql.JDBCType;
 import java.sql.SQLException;
 
+/**
+ * Class successor of class {@link RTGetSQL} that has methods for editing data in database
+ */
 public class RTModifySQL extends RTGetSQL {
     private static final Logger logger =
             Logger.getLogger(RTModifySQL.class);
@@ -42,7 +45,7 @@ public class RTModifySQL extends RTGetSQL {
     }
 
     /**
-     * Deleting teachers from database
+     * Deletes teachers from database
      * @param teachers list with the details of the TeacherInfo’s class
      */
     public void removeTeachers(Iterable<TeacherInfo> teachers)
@@ -64,6 +67,10 @@ public class RTModifySQL extends RTGetSQL {
         }
     }
 
+    /**
+     * Updates teachers from database
+     * @param teachers list with the details of the TeacherInfo’s class
+     */
     public void updateTeachers(Iterable<TeacherInfo> teachers)
             throws SQLException {
         logger.debug("Updating teachers in database");
@@ -92,8 +99,8 @@ public class RTModifySQL extends RTGetSQL {
     }
 
     /**
-     * Method of Adding Data RoomInfo to table rooms
-     * @param rooms list with the details of the RoomInfo’s class.
+     * Adds data of rooms to database
+     * @param rooms list with the objects to add
      */
     public void addRooms(Iterable<RoomInfo> rooms) throws SQLException {
         logger.debug("Adding rooms to database");
@@ -143,6 +150,10 @@ public class RTModifySQL extends RTGetSQL {
         }
     }
 
+    /**
+     * Updates data of rooms in database
+     * @param rooms list with the objects to update
+     */
     public void updateRooms(Iterable<RoomInfo> rooms)
             throws SQLException {
         logger.debug("Updating rooms in database");
@@ -199,7 +210,7 @@ public class RTModifySQL extends RTGetSQL {
 
     /**
      * Removes housings from database
-     * @param housings list with the details of the HousingInfo’s class
+     * @param housings list with housings to delete
      */
     public void removeHousings(Iterable<HousingInfo> housings) throws SQLException {
         logger.debug("Deleting housings from database");
@@ -220,6 +231,10 @@ public class RTModifySQL extends RTGetSQL {
         }
     }
 
+    /**
+     * Adds data of housings to database
+     * @param housings list with the objects to update
+     */
     public void updateHousings(Iterable<HousingInfo> housings)
             throws SQLException {
         logger.debug("Updating housings in database");
@@ -304,7 +319,7 @@ public class RTModifySQL extends RTGetSQL {
     }
 
     /**
-     * Saves data about database edit version
+     * Increases data about database edit version
      */
     public void provideChanges()
             throws SQLException {

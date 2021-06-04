@@ -18,20 +18,40 @@ import rm.service.Beans;
 
 import java.util.Objects;
 
+/**
+ * Main class
+ */
 public class Main extends Application {
     private static final Logger logger = Logger.getLogger(Main.class);
+    private static final String DATASOURCE_FILE = "datasource.xml";
 
+    /**
+     * Creates main window and gives management to controller {@link rm.controller.LoginController}
+     * @param stage window object
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            logger.fatal(Objects.requireNonNullElse(e.getMessage(),
+                    e.toString()));
+            Platform.exit();
+        });
+        Parent root = FXMLLoader.load(getClass().getResource(
+                "/login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
+    /**
+     * Reads data from file and creates all objects needed for other controllers
+     */
     @Override
     public void init() {
+        logger.info("Program started");
+
         XmlSavingsHandler dataSavings = new XmlSavingsHandler();
         Notifications notifications = new Notifications();
         Datasource datasource = new Datasource();
@@ -44,9 +64,13 @@ public class Main extends Application {
         ObjectProperty<HousingInfo> selectedHousing =
                 new SimpleObjectProperty<>(null);
 
-        dataSavings.propertiesForPath("datasource.xml",
+        dataSavings.propertiesForPath(DATASOURCE_FILE,
                 new DatasourceSaving(datasource));
-        dataSavings.read();
+        if(!dataSavings.existsForPath(DATASOURCE_FILE)) {
+            dataSavings.write();
+        } else {
+            dataSavings.read();
+        }
 
         Beans.context().set("databaseQueries", databaseQueries);
         Beans.context().set("selectedRoom", selectedRoom);
@@ -55,20 +79,23 @@ public class Main extends Application {
         Beans.context().set("notifications", notifications);
     }
 
+    /**
+     * Method that called when program finishes
+     * @throws Exception
+     */
     @Override
     public void stop() throws Exception {
         ((RTModifySQL) Beans.context().get("databaseQueries")).
                 getProvider().disconnect();
+        logger.info("Program finished");
         super.stop();
     }
 
+    /**
+     * Main method, program entry point
+     * @param args program arguments
+     */
     public static void main(String[] args) {
-        try {
-            launch(args);
-        } catch (Exception e) {
-            logger.fatal(Objects.requireNonNullElse(e.getMessage(),
-                    e.toString()));
-            Platform.exit();
-        }
+        launch(args);
     }
 }

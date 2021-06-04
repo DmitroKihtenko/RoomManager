@@ -7,31 +7,55 @@ import rm.model.Datasource;
 import rm.model.User;
 import rm.service.Assertions;
 
+/**
+ * Class successor of class {@link DatabaseSaving} that saves info about database user
+ */
 public class DatabaseSaving extends DatasourceSaving {
     private final static Logger logger =
             Logger.getLogger(DatabaseSaving.class);
 
     private User user;
 
+    /**
+     * Constructor, sets as default database and user objects for saving
+     * @param datasource datasource object
+     * @param user user object
+     */
     public DatabaseSaving(Datasource datasource, User user) {
         super(datasource);
         setUser(user);
     }
 
+    /**
+     * Default constructor, creates as default objects of datasource and user
+     */
     public DatabaseSaving() {
         user = new User();
     }
 
+    /**
+     * Getter for user object
+     * @return user object, not null
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Setter for user object
+     * @param user user object, not null
+     */
     public void setUser(User user) {
         Assertions.isNotNull(user, "User", logger);
 
         this.user = user;
     }
 
+    /**
+     * Reads parameters for user and datasource
+     * @param element xml document attribute
+     * @throws DocumentException if any error occurred while reading parameters
+     */
     @Override
     public void read(Element element) throws DocumentException {
         super.read(element);
@@ -58,6 +82,10 @@ public class DatabaseSaving extends DatasourceSaving {
         }
     }
 
+    /**
+     * Writes parameters of user and database
+     * @param element xml document attribute
+     */
     @Override
     public void write(Element element) {
         super.write(element);

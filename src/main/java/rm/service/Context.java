@@ -6,10 +6,16 @@ import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 
+/**
+ * Class used to storage any object in general place in program
+ */
 public class Context {
     private static final Logger logger = Logger.getLogger(Context.class);
     private final HashMap<String, Object> context;
 
+    /**
+     * Default constructor, creates map with no objects inside
+     */
     public Context() {
         context = new HashMap<>();
     }

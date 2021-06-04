@@ -6,30 +6,53 @@ import org.dom4j.Element;
 import rm.model.Datasource;
 import rm.service.Assertions;
 
+/**
+ * Class used to save parameters of datasource object
+ */
 public class DatasourceSaving implements XmlSaving {
     private final static Logger logger =
             Logger.getLogger(DatasourceSaving.class);
 
     private Datasource datasource;
 
+    /**
+     * Constructor, that sets datasource object as default
+     */
     public DatasourceSaving() {
         datasource = new Datasource();
     }
 
+    /**
+     * Default constructor, that creates new default datasource object
+     * @param datasource
+     */
     public DatasourceSaving(Datasource datasource) {
         setDatasource(datasource);
     }
 
+    /**
+     * Getter for datasource object
+     * @return datasource object, not null
+     */
     public Datasource getDatasource() {
         return datasource;
     }
 
+    /**
+     * Setter for datasource object
+     * @param datasource datasource object, not null
+     */
     public void setDatasource(Datasource datasource) {
         Assertions.isNotNull(datasource, "Datasource", logger);
 
         this.datasource = datasource;
     }
 
+    /**
+     * Reads parameters for datasource object
+     * @param element xml document attribute
+     * @throws DocumentException if any error occurred while reading parameters
+     */
     @Override
     public void read(Element element) throws DocumentException {
         logger.debug("Reading datasource info");
@@ -62,6 +85,10 @@ public class DatasourceSaving implements XmlSaving {
         }
     }
 
+    /**
+     * Writes parameters of datasource
+     * @param element xml document attribute
+     */
     @Override
     public void write(Element element) {
         logger.debug("Writing datasource info");

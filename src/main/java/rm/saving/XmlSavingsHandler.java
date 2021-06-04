@@ -17,20 +17,36 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.TreeMap;
 
+/**
+ * Class used to manage any xml parameters saving in different xml files
+ */
 public class XmlSavingsHandler {
     private static final Logger logger =
             Logger.getLogger(XmlSavingsHandler.class);
     private static final String rootElementName = "properties";
 
     private final TreeMap<String, LinkedList<XmlSaving>> properties;
+
+    /**
+     * Default constructor, as default does not contain any files to save data
+     */
     public XmlSavingsHandler() {
         properties = new TreeMap<>();
     }
 
+    /**
+     * Returns all file paths that can be used to write or save data
+     * @return list of string xml file paths
+     */
     public Iterable<String> getPaths() {
         return properties.keySet();
     }
 
+    /**
+     * Writes all data to specified xml file path if this path was registered earlier
+     * @param path string value of file path
+     * @throws IllegalArgumentException if path was not registered in this object
+     */
     public void writeForPath(String path) {
         Assertions.isNotNull(path, "Xml file path", logger);
 
@@ -45,6 +61,11 @@ public class XmlSavingsHandler {
         }
     }
 
+    /**
+     * Reads all data from specified xml file path if this path was registered earlier
+     * @param path string value of file path
+     * @throws IllegalArgumentException if path was not registered in this object
+     */
     public void readForPath(String path) {
         Assertions.isNotNull(path, "Xml file path", logger);
 
@@ -61,26 +82,37 @@ public class XmlSavingsHandler {
         }
     }
 
+    /**
+     * Writes all data for all registered xml files
+     */
     public void write() {
         for(String path : properties.keySet()) {
             write(path);
         }
     }
 
+    /**
+     * Reads all data from all registered xml files
+     */
     public void read() {
         for(String path : properties.keySet()) {
             read(path);
         }
     }
 
+    /**
+     * Registers xml file path and all xml savings to this file
+     * @param path xml file path
+     * @param savings list of xml savings
+     */
     public void propertiesForPath(String path,
-                                  XmlSaving... properties) {
+                                  XmlSaving... savings) {
         Assertions.isNotNull(path, "Xml file path", logger);
-        Assertions.isNotNull(properties, "Savings list", logger);
+        Assertions.isNotNull(savings, "Savings list", logger);
 
         this.properties.remove(path);
         LinkedList<XmlSaving> propertiesList = new LinkedList<>();
-        for(XmlSaving property : properties) {
+        for(XmlSaving property : savings) {
             Assertions.isNotNull(property, "Saving", logger);
 
             propertiesList.add(property);
@@ -88,12 +120,44 @@ public class XmlSavingsHandler {
         this.properties.put(path, propertiesList);
     }
 
+    /**
+     * Removes all savings for specified xml path or doing nothing if path is not registered
+     * @param path xml file path
+     */
     public void discardForPath(String path) {
         Assertions.isNotNull(path, "Xml file path", logger);
 
         properties.remove(path);
     }
 
+    public boolean existsForPath(String path) {
+        Assertions.isNotNull(path, "Xml file path", logger);
+
+        if(properties.containsKey(path)) {
+            File file = new File(path);
+            try {
+                return file.exists();
+            } catch (SecurityException e) {
+                logger.warn("File system access error when trying " +
+                        "to find out whether the file " +
+                        file.getAbsolutePath() + " exists");
+                return false;
+            }
+        } else {
+            logger.error("There are no " +
+                    "savings objects for reading from file " +
+                    path);
+
+            throw new IllegalArgumentException("There are no " +
+                    "savings objects for reading from file " +
+                    path);
+        }
+    }
+
+    /**
+     * Method that reads data from some specified path without check of file registration
+     * @param key xml file path
+     */
     private void read(String key) {
         File file = new File(key);
         logger.debug("Reading savings from file " +
@@ -140,6 +204,10 @@ public class XmlSavingsHandler {
         }
     }
 
+    /**
+     * Method that writes data for some specified path without check of file registration
+     * @param key xml file path
+     */
     public void write(String key) {
         File file = new File(key);
         logger.debug("Writing savings to file " +

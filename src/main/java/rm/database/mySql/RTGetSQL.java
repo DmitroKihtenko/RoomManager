@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Class successor of class {@link QueryExecutor} that has methods for receiving data from database
+ */
 public class RTGetSQL extends QueryExecutor {
     private static final Logger logger =
             Logger.getLogger(RTGetSQL.class);
@@ -16,24 +19,35 @@ public class RTGetSQL extends QueryExecutor {
     private RoomInfo defaultRoom;
     private TeacherInfo defaultTeacher;
 
+    /**
+     * Setter for default object of housing that used to create another object while getting data from database
+     * @param defaultHousing object of housing
+     */
     public void setDefaultHousing(HousingInfo defaultHousing) {
-        Assertions.isNotNull(defaultHousing, "Default housing",
-                logger);
         this.defaultHousing = defaultHousing;
     }
 
+    /**
+     * Setter for default object of room that used to create another object while getting data from database
+     * @param defaultRoom object of room
+     */
     public void setDefaultRoom(RoomInfo defaultRoom) {
-        Assertions.isNotNull(defaultRoom, "Default room",
-                logger);
         this.defaultRoom = defaultRoom;
     }
 
+    /**
+     * Setter for default object of teacher that used to create another object while getting data from database
+     * @param defaultTeacher object of teacher
+     */
     public void setDefaultTeacher(TeacherInfo defaultTeacher) {
-        Assertions.isNotNull(defaultTeacher, "Default teacher",
-                logger);
         this.defaultTeacher = defaultTeacher;
     }
 
+    /**
+     * Creates new object of class {@link TeacherInfo} or clones default teacher object if it has been set
+     * @return object of teacher
+     * @throws SQLException
+     */
     protected TeacherInfo newTeacher() throws SQLException {
         TeacherInfo object;
         if(defaultTeacher == null) {
@@ -48,6 +62,11 @@ public class RTGetSQL extends QueryExecutor {
         return object;
     }
 
+    /**
+     * Creates new object of class {@link RoomInfo} or clones default room object if it has been set
+     * @return object of teacher
+     * @throws SQLException
+     */
     protected RoomInfo newRoom() throws SQLException {
         RoomInfo object;
         if(defaultRoom == null) {
@@ -62,6 +81,11 @@ public class RTGetSQL extends QueryExecutor {
         return object;
     }
 
+    /**
+     * Creates new object of class {@link HousingInfo} or clones default housing object if it has been set
+     * @return object of teacher
+     * @throws SQLException
+     */
     protected HousingInfo newHousing() throws SQLException {
         HousingInfo object;
         if(defaultHousing == null) {
@@ -80,9 +104,9 @@ public class RTGetSQL extends QueryExecutor {
      * Gets data about database edit version
      * @return number of database edit version
      */
-    public Integer getDatabaseChanges() throws SQLException {
+    public int getDatabaseChanges() throws SQLException {
         logger.debug("Getting database version info");
-        Integer result = null;
+        int result = 0;
 
         try {
             ResultSet resultSet = getProvider().execute("SELECT FROM" +

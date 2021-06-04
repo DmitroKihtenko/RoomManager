@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Class used to find changes between two classes of type {@link Map} with parameters Integer and T
+ * @param <T> second parameter in class {@link Map}
+ */
 public class ChangesDetector<T> {
     private static final Logger logger =
             Logger.getLogger(ChangesDetector.class);
@@ -17,6 +21,9 @@ public class ChangesDetector<T> {
     private final TreeMap<Integer, T> removed;
     private final TreeMap<Integer, T> updated;
 
+    /**
+     * Default constructor creates all maps as empty
+     */
     public ChangesDetector() {
         setOriginal(new HashMap<>());
         setChanged(new HashMap<>());
@@ -25,6 +32,10 @@ public class ChangesDetector<T> {
         updated = new TreeMap<>();
     }
 
+    /**
+     * Setter for original map where changes must be found
+     * @param original original map
+     */
     public void setOriginal(Map<Integer, T> original) {
         Assertions.isNotNull(original, "Original map for changes",
                 logger);
@@ -32,6 +43,10 @@ public class ChangesDetector<T> {
         this.original = original;
     }
 
+    /**
+     * Setter for changed map that used to compare with original map
+     * @param changed changed map
+     */
     public void setChanged(Map<Integer, T> changed) {
         Assertions.isNotNull(changed, "Changed map",
                 logger);
@@ -39,6 +54,9 @@ public class ChangesDetector<T> {
         this.changed = changed;
     }
 
+    /**
+     * Finds changes between original and changed map
+     */
     public void findChanges() {
         logger.debug("Searching changes for objects");
 
@@ -68,28 +86,51 @@ public class ChangesDetector<T> {
         }
     }
 
+    /**
+     * Clears map of added, updated and removed objects
+     */
     public void discardFound() {
         added.clear();
         removed.clear();
         updated.clear();
     }
 
+    /**
+     * Getter for original map
+     * @return original map
+     */
     public Map<Integer, T> getOriginal() {
         return original;
     }
 
+    /**
+     * Getter for changed map
+     * @return changed map
+     */
     public Map<Integer, T> getChanged() {
         return changed;
     }
 
+    /**
+     * Getter for map of added objects
+     * @return map of added objects
+     */
     public Map<Integer, T> getAdded() {
         return added;
     }
 
+    /**
+     * Getter for map of removed objects
+     * @return map of removed objects
+     */
     public Map<Integer, T> getRemoved() {
         return removed;
     }
 
+    /**
+     * Getter for map of updated objects
+     * @return map of updated objects
+     */
     public Map<Integer, T> getUpdated() {
         return updated;
     }

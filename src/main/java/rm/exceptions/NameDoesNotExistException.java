@@ -1,5 +1,8 @@
 package rm.exceptions;
 
+/**
+ * Exception for class {@link rm.service.Context} that creates if object does not exist some object with specified name
+ */
 public class NameDoesNotExistException extends RuntimeException {
     public NameDoesNotExistException() {
     }

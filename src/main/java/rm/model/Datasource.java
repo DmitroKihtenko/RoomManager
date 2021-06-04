@@ -23,10 +23,10 @@ public class Datasource {
      * Default constructor. Sets as the default data for connecting to mysql database
      */
     public Datasource() {
-        url = new SimpleStringProperty("@localhost");
-        port = new SimpleStringProperty("1521");
-        source = "oracle:thin";
-        databaseName = null;
+        url = new SimpleStringProperty("//localhost");
+        port = new SimpleStringProperty("3306");
+        source = "mysql";
+        databaseName = "roommanager";
     }
 
     /**
