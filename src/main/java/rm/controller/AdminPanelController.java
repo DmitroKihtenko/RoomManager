@@ -1,13 +1,15 @@
 package rm.controller;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import org.apache.log4j.Logger;
 import rm.database.mySql.RTGetSQL;
 import rm.model.*;
@@ -19,6 +21,7 @@ import rm.service.Beans;
 import rm.threads.DatabaseCheck;
 import rm.threads.ServiceThread;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminPanelController {
@@ -40,9 +43,11 @@ public class AdminPanelController {
     private final Notifications notifications;
     private final RTGetSQL getSql;
     private final XmlSavingsHandler dataSavings;
-    private Integer selectedHousing;
+    private final HousingSaving housingSaving;
     private final HashMap<Integer, Room> castedRooms;
     private final HashMap<Integer, Teacher> castedTeachers;
+    private final HashMap<Integer, HousingInfo> housings;
+    private final DatabaseCheck checkOperation;
     boolean firstLaunch;
 
     private double xOffSet;
@@ -55,6 +60,7 @@ public class AdminPanelController {
         firstLaunch = true;
         castedRooms = new HashMap<>();
         castedTeachers = new HashMap<>();
+        housings = new HashMap<>();
         getSql = (RTGetSQL) Beans.context().
                 get("databaseQueries");
         notifications = (Notifications) Beans.context().
@@ -63,12 +69,12 @@ public class AdminPanelController {
                 get("dataSavings");
         DatabaseCheckSaving checkSaving = (DatabaseCheckSaving)
                 Beans.context().get("checkSaving");
-        HousingSaving housingSaving = (HousingSaving)
+        housingSaving = (HousingSaving)
                 Beans.context().get("housingSaving");
         RTKeysSaving rtKeysSaving = (RTKeysSaving) Beans.context().
                 get("rtKeysSaving");
         rtKeysSaving.setKeysData(castedRooms, castedTeachers);
-        DatabaseCheck checkOperation = new DatabaseCheck(notifications, getSql);
+        checkOperation = new DatabaseCheck(notifications, getSql);
         checkSaving.setDatabaseCheck(checkOperation);
         dataSavings.propertiesForPath(PROPERTIES_PATH,
                 housingSaving,
@@ -136,35 +142,44 @@ public class AdminPanelController {
         if(!firstLaunch) {
             dataSavings.writeForPath(EMPLOYEE_PATH);
         }
-        HashMap<Integer, HousingInfo> housings = new HashMap<>();
-        HashMap<Integer, RoomInfo> rooms = new HashMap<>();
+        housings.clear();
         HashMap<Integer, TeacherInfo> teachers = new HashMap<>();
         ConnectionsList rtAccess = new FastAccessConnections();
-        castedRooms.clear();
         castedTeachers.clear();
 
         try {
             getSql.getProvider().connect();
             getSql.getHousings(housings);
-            getSql.getRooms(rooms, null);
             getSql.getTeachers(teachers);
             getSql.getRtAccess(rtAccess);
+            checkOperation.setChangesVersion(getSql.getDatabaseChanges());
+            logger.info("Reloaded data from database");
         } catch (Exception e) {
             notifications.push("Data loading error: " +
                     e.getMessage());
         } finally {
-            for (RoomInfo room : rooms.values()) {
-                castedRooms.put(room.getId(), (Room) room);
-            }
+            getSql.getProvider().disconnect();
             for (TeacherInfo teacher : teachers.values()) {
                 castedTeachers.put(teacher.getId(), (Teacher) teacher);
             }
-            dataSavings.readForPath(EMPLOYEE_PATH);
-            roomsTableController.setRooms(castedRooms, housings);
             teachersTableController.setTeachers(castedTeachers);
             editController.setEditTeachers(rtAccess, housings);
+            ObservableList<HousingInfo> housingsList =
+                    FXCollections.observableList(new
+                            ArrayList<>(housings.values()));
+            housingComboBox.setItems(housingsList);
+            if(housingSaving.getSelectedHousing() == null) {
+                for (HousingInfo housing : housings.values()) {
+                    housingComboBox.getSelectionModel().
+                            select(housing);
+                    break;
+                }
+            } else {
+                housingComboBox.getSelectionModel().
+                        select(housings.get(housingSaving.
+                                getSelectedHousing()));
+            }
 
-            getSql.getProvider().disconnect();
         }
     }
 
@@ -177,13 +192,57 @@ public class AdminPanelController {
             getSql.setDefaultHousing(new HousingInfo("X"));
             getSql.setDefaultRoom(new Room("0"));
             getSql.setDefaultTeacher(new Teacher("Name"));
+            housingComboBox.setConverter(new StringConverter<>() {
+                @Override
+                public String toString(HousingInfo housingInfo) {
+                    if(housingInfo == null) {
+                        return "No";
+                    }
+                    return housingInfo.getName();
+                }
+
+                @Override
+                public HousingInfo fromString(String s) {
+                    return null;
+                }
+            });
+            housingComboBox.getSelectionModel().selectedItemProperty().
+                    addListener((observableValue, oldV, newV) -> {
+                        if(oldV != newV && newV != null) {
+                            housingSaving.setSelectedHousing(newV.getId());
+                            reloadRooms();
+                            dataSavings.readForPath(EMPLOYEE_PATH);
+                            logger.info("Selected housing: " + newV);
+                        }
+                    });
             reloadData();
             makeStageDraggable();
         }
         firstLaunch = false;
     }
 
-    public void getHousingComboBox(ActionEvent actionEvent) {
+    private void reloadRooms() {
+        HashMap<Integer, RoomInfo> rooms = new HashMap<>();
+        castedRooms.clear();
 
+        try {
+            getSql.getProvider().connect();
+            getSql.getRooms(rooms, housingComboBox.
+                    getSelectionModel().getSelectedItem());
+            logger.info("Reloaded rooms for housing " +
+                    housingComboBox.getSelectionModel().
+                            getSelectedItem());
+        } catch (Exception e) {
+            notifications.push("Data loading error: " +
+                    e.getMessage());
+        } finally {
+            getSql.getProvider().disconnect();
+            for (RoomInfo room : rooms.values()) {
+                castedRooms.put(room.getId(), (Room) room);
+            }
+            dataSavings.readForPath(EMPLOYEE_PATH);
+
+            roomsTableController.setRooms(castedRooms, housings);
+        }
     }
 }
