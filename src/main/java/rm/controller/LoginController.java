@@ -31,6 +31,9 @@ public class LoginController {
     private double xOffSet = 0;
     private double yOffSet = 0;
 
+    /**
+     * Setting listeners for initialized objects
+     */
     @FXML
     public void initialize() {
         if(getSql == null) {
@@ -69,6 +72,9 @@ public class LoginController {
         makeStageDraggable();
     }
 
+    /**
+     * Moving the work window
+     */
     private void makeStageDraggable() {
         parent.setOnMousePressed((event) -> {
             xOffSet = event.getSceneX();
@@ -93,6 +99,10 @@ public class LoginController {
         });
     }
 
+    /**
+     * Minimizing the program
+     * @param event mouse event
+     */
     @FXML
     private void minimizeStage(MouseEvent event) {
         Node node = (Node) event.getSource();
@@ -100,11 +110,19 @@ public class LoginController {
         stage.setIconified(true);
     }
 
+    /**
+     * Closing the program
+     */
     @FXML
     private void closeApp() {
         Platform.exit();
     }
 
+    /**
+     * Call a new scene on successful connection
+     * @param event action event
+     * @throws IOException
+     */
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         try {

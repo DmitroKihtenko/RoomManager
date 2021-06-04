@@ -35,11 +35,19 @@ public class HousingsTableController {
     private HashMap<Integer, HousingInfo> housings;
     private ChangeListener<Object> refreshListener;
 
+    /**
+     * Default constructor. Object initialization
+     */
     public HousingsTableController() {
         selectedHousing = (ObjectProperty<HousingInfo>)
                 Beans.context().get("selectedHousing");
     }
 
+    /**
+     * Setter for rooms HashMap and housing HashMap
+     * @param housings clonedHousing
+     * @param rooms clonedRooms
+     */
     public void setHousings(HashMap<Integer, HousingInfo> housings,
                             HashMap<Integer, RoomInfo> rooms) {
         Assertions.isNotNull(rooms, "Rooms map", logger);
@@ -54,6 +62,9 @@ public class HousingsTableController {
         housingsTable.setItems(housingsList);
     }
 
+    /**
+     * Setting listeners for initialized objects
+     */
     @FXML
     public void initialize() {
         if(selectedHousing != null) {
@@ -97,6 +108,9 @@ public class HousingsTableController {
         }
     }
 
+    /**
+     * Add new housing in housingList
+     */
     public void newHousing() {
         ObservableList<HousingInfo> housingsList =
                 housingsTable.getItems();
@@ -107,6 +121,9 @@ public class HousingsTableController {
         housingsTable.getSelectionModel().select(newHousing);
     }
 
+    /**
+     * Deleting housing of housingList
+     */
     public void deleteHousing() {
         ObservableList<HousingInfo> housingsList =
                 housingsTable.getItems();
@@ -125,6 +142,9 @@ public class HousingsTableController {
         }
     }
 
+    /**
+     * Searching housing of housing list
+     */
     public void searchHousings() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);
         ObservableList<HousingInfo> housingsList =

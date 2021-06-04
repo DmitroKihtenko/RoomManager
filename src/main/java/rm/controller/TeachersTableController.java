@@ -38,11 +38,19 @@ public class TeachersTableController {
 
     private ChangeListener<Object> refreshListener;
 
+    /**
+     * Default constructor. Object initialization
+     */
     public TeachersTableController() {
         selectedTeacher = (ObjectProperty<TeacherInfo>)
                 Beans.context().get("selectedTeacher");
     }
 
+    /**
+     * Initialization teachers, rtAccess, teacher list
+     * @param teachers cloned teachers
+     * @param rtAccess connection list
+     */
     public void setTeachers(HashMap<Integer, TeacherInfo> teachers,
                             ConnectionsList rtAccess) {
         Assertions.isNotNull(teachers, "Teachers map", logger);
@@ -57,6 +65,9 @@ public class TeachersTableController {
         teachersTable.setItems(teachersList);
     }
 
+    /**
+     * Setting listeners for initialized objects
+     */
     @FXML
     public void initialize() {
         if(selectedTeacher != null) {
@@ -109,6 +120,9 @@ public class TeachersTableController {
         }
     }
 
+    /**
+     * Add new teacher in teacher list
+     */
     @FXML
     public void newTeacher() {
         ObservableList<TeacherInfo> teachersList =
@@ -120,6 +134,9 @@ public class TeachersTableController {
         teachersTable.getSelectionModel().select(newTeacher);
     }
 
+    /**
+     * Delete selected teacher of teacher list
+     */
     @FXML
     public void deleteTeacher() {
         ObservableList<TeacherInfo> teachersList =
@@ -133,6 +150,11 @@ public class TeachersTableController {
         }
     }
 
+    /**
+     *
+     * @param teacher
+     * @return
+     */
     private String getShortName(TeacherInfo teacher) {
         String name = teacher.getSurname() + " ";
         if(teacher.getName() != null) {
@@ -151,6 +173,9 @@ public class TeachersTableController {
         return name;
     }
 
+    /**
+     * Searching teacher in teachers list
+     */
     public void searchTeachers() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);
         ObservableList<TeacherInfo> teachersList =
