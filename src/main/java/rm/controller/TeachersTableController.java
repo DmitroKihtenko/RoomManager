@@ -32,11 +32,16 @@ public class TeachersTableController {
     @FXML
     private TableColumn<TeacherInfo, String> teacherNameCol;
 
-    private ObjectProperty<TeacherInfo> selectedTeacher;
+    private final ObjectProperty<TeacherInfo> selectedTeacher;
     private ConnectionsList rtAccess;
     private HashMap<Integer, TeacherInfo> teachers;
 
     private ChangeListener<Object> refreshListener;
+
+    public TeachersTableController() {
+        selectedTeacher = (ObjectProperty<TeacherInfo>)
+                Beans.context().get("selectedTeacher");
+    }
 
     public void setTeachers(HashMap<Integer, TeacherInfo> teachers,
                             ConnectionsList rtAccess) {
@@ -54,9 +59,7 @@ public class TeachersTableController {
 
     @FXML
     public void initialize() {
-        if(selectedTeacher == null) {
-            selectedTeacher = (ObjectProperty<TeacherInfo>)
-                    Beans.context().get("selectedTeacher");
+        if(selectedTeacher != null) {
             refreshListener = (observableValue, o, t1) ->
                     teachersTable.refresh();
             teachersTable.getItems().addListener((ListChangeListener

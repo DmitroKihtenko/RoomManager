@@ -30,10 +30,15 @@ public class HousingsTableController {
     @FXML
     private TableColumn<HousingInfo, String> housingNameCol;
 
-    private ObjectProperty<HousingInfo> selectedHousing;
+    private final ObjectProperty<HousingInfo> selectedHousing;
     private HashMap<Integer, RoomInfo> rooms;
     private HashMap<Integer, HousingInfo> housings;
     private ChangeListener<Object> refreshListener;
+
+    public HousingsTableController() {
+        selectedHousing = (ObjectProperty<HousingInfo>)
+                Beans.context().get("selectedHousing");
+    }
 
     public void setHousings(HashMap<Integer, HousingInfo> housings,
                             HashMap<Integer, RoomInfo> rooms) {
@@ -51,9 +56,7 @@ public class HousingsTableController {
 
     @FXML
     public void initialize() {
-        if(selectedHousing == null) {
-            selectedHousing = (ObjectProperty<HousingInfo>)
-                    Beans.context().get("selectedHousing");
+        if(selectedHousing != null) {
             refreshListener = (observableValue, o, t1) ->
                     housingsTable.refresh();
             housingsTable.getItems().addListener((ListChangeListener

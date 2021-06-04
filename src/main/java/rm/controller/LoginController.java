@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import rm.Main;
 import rm.model.Notifications;
 import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
@@ -28,7 +27,6 @@ public class LoginController {
     private PasswordField passwordField;
 
     private Notifications notifications;
-
     private RTModifySQL getSql;
     private double xOffSet = 0;
     private double yOffSet = 0;
@@ -77,25 +75,33 @@ public class LoginController {
             yOffSet = event.getSceneY();
         });
         parent.setOnMouseDragged((event) -> {
-            Main.stage.setX(event.getScreenX() - xOffSet);
-            Main.stage.setY(event.getScreenY() - yOffSet);
-            Main.stage.setOpacity(0.8f);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setX(event.getScreenX() - xOffSet);
+            stage.setY(event.getScreenY() - yOffSet);
+            stage.setOpacity(0.8f);
         });
         parent.setOnDragDone((event) -> {
-            Main.stage.setOpacity(1.0f);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setOpacity(1.0f);
         });
         parent.setOnMouseReleased((event) -> {
-            Main.stage.setOpacity(1.0f);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setOpacity(1.0f);
         });
     }
 
     @FXML
     private void minimizeStage(MouseEvent event) {
-        Main.stage.setIconified(true);
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     @FXML
-    private void closeApp(MouseEvent event) {
+    private void closeApp() {
         Platform.exit();
     }
 

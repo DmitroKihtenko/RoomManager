@@ -12,13 +12,16 @@ public class NotificationsController {
     @FXML
     Label notificationText;
 
-    private Notifications notifications;
+    private final Notifications notifications;
+
+    public NotificationsController() {
+        notifications = (Notifications)
+                Beans.context().get("notifications");
+    }
 
     @FXML
     public void initialize() {
-        if(notifications == null) {
-            notifications = (Notifications)
-                    Beans.context().get("notifications");
+        if(notifications != null) {
             notifications.pushedProperty().addListener((
                     observableValue, aBoolean, t1) -> {
                         if(!space.isVisible()) {
