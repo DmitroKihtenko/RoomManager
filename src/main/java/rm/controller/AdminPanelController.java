@@ -2,7 +2,9 @@ package rm.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -12,6 +14,7 @@ import rm.controller.util.ChangesDetector;
 import rm.database.mySql.RTModifySQL;
 import rm.service.Beans;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +32,9 @@ public class AdminPanelController {
     @FXML
     private HousingsTableController housingsTableController;
 
+    private Notifications notifications;
+    private RTModifySQL getSql;
+
     private RTModifySQL sqlQueries;
     private double xOffSet;
     private double yOffSet;
@@ -38,7 +44,8 @@ public class AdminPanelController {
     private final ChangesDetector<HousingInfo> housingsDetector;
     private ConnectionsList clonedAccess;
     private ConnectionsList originalAccess;
-    private final Notifications notifications;
+
+    //private final Notifications notifications;
 
     /**
      * Default constructor. Object initialization
@@ -104,11 +111,14 @@ public class AdminPanelController {
      * @throws CloneNotSupportedException
      */
     public void reloadData() throws CloneNotSupportedException {
+
         HashMap<Integer, HousingInfo> housings = new HashMap<>();
         HashMap<Integer, RoomInfo> rooms = new HashMap<>();
         HashMap<Integer, TeacherInfo> teachers = new HashMap<>();
         originalAccess = new FastMutableConnections();
+
         try {
+            getSql.getProvider().connect();
             sqlQueries.getHousings(housings);
             sqlQueries.getRooms(rooms, null);
             sqlQueries.getTeachers(teachers);
@@ -117,6 +127,7 @@ public class AdminPanelController {
             notifications.push("Data loading error: " +
                     e.getMessage());
         } finally {
+            getSql.getProvider().disconnect();
             HashMap<Integer, HousingInfo> clonedHousings =
                     new HashMap<>(housings.size());
             HashMap<Integer, RoomInfo> clonedRooms =
@@ -142,8 +153,8 @@ public class AdminPanelController {
                     originalAccess);
             teachersTableController.setTeachers(clonedTeachers,
                     originalAccess);
-            housingsTableController.setHousings(clonedHousings,
-                    clonedRooms);
+            //housingsTableController.setHousings(clonedHousings,
+                    //clonedRooms);
             editController.setEditTeachers(clonedAccess, clonedHousings);
 
             housingsDetector.setOriginal(housings);
@@ -260,9 +271,19 @@ public class AdminPanelController {
      */
     @FXML
     public void initialize() throws CloneNotSupportedException {
+        if(getSql == null) {
+            getSql = (RTModifySQL) Beans.context().
+                    get("databaseQueries");
+            notifications = (Notifications) Beans.context().
+                    get("notifications");
+
+        }
+        getSql.getProvider().getUser().setName("employee");
+        getSql.getProvider().getUser().setPassword("employee");
+
+        makeStageDraggable();
         if(sqlQueries != null) {
             reloadData();
         }
-        makeStageDraggable();
     }
 }

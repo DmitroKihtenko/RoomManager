@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -30,20 +29,4 @@
             <TableColumn fx:id="teacherNameCol" maxWidth="200.0" minWidth="198.0" prefWidth="198.0" text="Teacher" />
         </columns>
     </TableView>
-    <HBox alignment="CENTER_LEFT" layoutX="119.0" layoutY="474.0" prefHeight="45.0" prefWidth="63.0">
-        <children>
-            <FontAwesomeIcon iconName="USER_PLUS" onMouseClicked="#newTeacher" size="20">
-                <HBox.margin>
-                    <Insets right="10.0" />
-                </HBox.margin>
-            </FontAwesomeIcon>
-        </children>
-        <children>
-            <FontAwesomeIcon iconName="USER_TIMES" onMouseClicked="#deleteTeacher" size="20">
-                <HBox.margin>
-                    <Insets right="10.0" />
-                </HBox.margin>
-            </FontAwesomeIcon>
-        </children>
-    </HBox>
 </Pane>

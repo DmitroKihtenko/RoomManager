@@ -32,13 +32,16 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        /*
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             logger.fatal(Objects.requireNonNullElse(e.getMessage(),
                     e.toString()));
             Platform.exit();
         });
+
+         */
         Parent root = FXMLLoader.load(getClass().getResource(
-                "/login.fxml"));
+                "/adminPanel.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
