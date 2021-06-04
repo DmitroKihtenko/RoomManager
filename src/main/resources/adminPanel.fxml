@@ -43,7 +43,7 @@
                <children>
                     <FontAwesomeIcon iconName="REFRESH" onMouseClicked="#reloadData" size="20">
                      <VBox.margin>
-                        <Insets />
+                        <Insets left="10.0" />
                      </VBox.margin>
                   </FontAwesomeIcon>
                </children>
@@ -56,7 +56,7 @@
                 <fx:include fx:id="edit" source="edit.fxml" />
             </HBox>
         </Pane>
-      <HBox layoutX="132.0" layoutY="530.0" prefHeight="35.0" prefWidth="650.0" AnchorPane.leftAnchor="132.0">
+      <HBox layoutX="124.0" layoutY="530.0" prefHeight="35.0" prefWidth="650.0" AnchorPane.leftAnchor="124.0">
          <fx:include source="notifications.fxml" />
       </HBox>
     </children>
