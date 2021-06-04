@@ -86,3 +86,11 @@
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;
 }
+
+.combo-box-base {
+    -fx-background-color: #3B4148;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-border-color: #D3D3D3
+    -fx-border-width: 1 1 1 1
+}
