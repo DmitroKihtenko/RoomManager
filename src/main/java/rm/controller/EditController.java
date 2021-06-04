@@ -1,6 +1,8 @@
 package rm.controller;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -32,7 +34,7 @@ public class EditController {
     @FXML
     private Label roomHousingIdLabel;
     @FXML
-    private Label OccupiedByTeacherLabel;
+    private Label occupiedByTeacherLabel;
     @FXML
     private Label accessLabel;
 
@@ -40,6 +42,7 @@ public class EditController {
 
     private ConnectionsList rtAccess;
     private HashMap<Integer, HousingInfo> housings;
+    private HashMap<Integer, Teacher> teachers;
 
     private final ObjectProperty<Teacher> selectedTeacher;
     private final ObjectProperty<Room> selectedRoom;
@@ -75,6 +78,12 @@ public class EditController {
                     patronymicLabel.setText(Objects.requireNonNullElse(
                             t1.getPatronymic(),
                             ""));
+
+                    if (t1.getUsesRoom()) {
+                        roomKeyLabel.setText(String.valueOf(t1.getUsedRoomId())); // поменять
+                    } else {
+                        roomKeyLabel.setText("");
+                    }
                 } else if (t1 == null) {
                     nameLabel.setText("");
                     surnameLabel.setText("");
@@ -99,45 +108,19 @@ public class EditController {
                                 housings.get(t1.getHousingId()).
                                         getName());
                     }
+                    if (t1.getOccupiedBy() != null) {
+                        occupiedByTeacherLabel.setText(String.valueOf(selectedTeacher.get().getId())); // переделать!
+                        //occupiedByTeacherLabel.setText(teachers.get(t1.getOccupiedBy()).getName());
+                    } else {
+                        occupiedByTeacherLabel.setText("");
+                    }
                 } else if (t1 == null) {
                     numberLabel.setText("");
                     roomHousingIdLabel.setText("");
                     notUsedRoomLabel.setText("");
+                    occupiedByTeacherLabel.setText("");
                 }
                 tryToDisplayAccess();
-            });
-            numberLabel.textProperty().addListener(
-                (observableValue, s, t1) -> {
-            if(selectedRoom.get() != null &&
-                !t1.equals(selectedRoom.get().getNumber())) {
-                    try {
-                        if (!t1.equals("")) {
-                            selectedRoom.get().setNumber(t1);
-                        } else {
-                            selectedRoom.get().setNumber("");
-                        }
-                    } catch (IllegalArgumentException e) {
-                        notifications.push("Room name syntax error: " +
-                                e.getMessage());
-                    }
-                }
-            });
-            notUsedRoomLabel.textProperty().addListener(
-                (observableValue, s, t1) -> {
-                if (selectedRoom.get() != null &&
-                        !t1.equals(selectedRoom.get().
-                                getNotUsedReason())) {
-                    try {
-                        if (!t1.equals("")) {
-                            selectedRoom.get().setNotUsedReason(t1);
-                        } else {
-                            selectedRoom.get().setNotUsedReason(null);
-                        }
-                    } catch (IllegalArgumentException e) {
-                        notifications.push("Room info error: "
-                                + e.getMessage());
-                    }
-                }
             });
         }
     }
@@ -148,11 +131,12 @@ public class EditController {
      * @param housings getting clonedHousing
      */
     public void setEditTeachers(ConnectionsList rtAccess,
-                                HashMap<Integer, HousingInfo> housings) {
+                                HashMap<Integer, HousingInfo> housings/*, HashMap<Integer, Teacher> teachers*/) {
         Assertions.isNotNull(rtAccess, "Access connections", logger);
         Assertions.isNotNull(housings, "Housing map", logger);
         this.rtAccess = rtAccess;
         this.housings = housings;
+        //this.teachers = teachers;
         rtAccess.changedProperty().addListener(
                 (observableValue, aBoolean, t1) -> tryToDisplayAccess());
     }
@@ -176,9 +160,23 @@ public class EditController {
     }
 
     public void giveKey(MouseEvent mouseEvent) {
+        if (!selectedTeacher.get().getUsesRoom()) {
+            selectedTeacher.get().setUsedRoom(selectedRoom.get().getId());
+
+            selectedRoom.get().setOccupiedBy(selectedTeacher.get().getId());
+            occupiedByTeacherLabel.setText(String.valueOf(selectedTeacher.get().getId())); // переделать!
+            System.out.println("Ключ выдан " + selectedTeacher.get().getName() + ": Аудитория - " + selectedRoom.get().getId());
+        } else {
+            System.out.println("Ключ уже выдан!");
+        }
+
     }
 
     public void returnKey(MouseEvent mouseEvent) {
+        if (selectedTeacher.get().getUsesRoom()) {
+            selectedTeacher.get().setNotUsedRoom();
+            System.out.println("Ключ получен!");
+        }
     }
 
     public void returnAll(MouseEvent mouseEvent) {
