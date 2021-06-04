@@ -42,6 +42,9 @@ public class EditController {
     private final ObjectProperty<RoomInfo> selectedRoom;
     private final ObjectProperty<HousingInfo> selectedHousing;
 
+    /**
+     * Default constructor. Object initialization
+     */
     public EditController() {
         notifications = (Notifications) Beans.context().
                 get("notifications");
@@ -54,7 +57,7 @@ public class EditController {
     }
 
     /**
-     *
+     * Setting listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -209,7 +212,7 @@ public class EditController {
     }
 
     /**
-     *
+     * Setting new housingId for the selected room
      */
     public void setNewHousingIdForRoom() {
         if (selectedRoom.get() != null &&
@@ -222,7 +225,7 @@ public class EditController {
     }
 
     /**
-     *
+     * Deleting housingId for the selected room
      */
     public void deleteHousingIdForRoom() {
         if (selectedRoom.get() != null) {
@@ -232,7 +235,7 @@ public class EditController {
     }
 
     /**
-     *
+     * Add a new available room for the selected teacher
      */
     public void addNewRoomForTeacher() {
         if (selectedRoom.get() != null &&
@@ -243,7 +246,7 @@ public class EditController {
     }
 
     /**
-     *
+     * Remove available room for the selected teacher
      */
     public void removeNewRoomForTeacher() {
         if (selectedRoom.get() != null &&
@@ -258,8 +261,8 @@ public class EditController {
 
     /**
      * Setter for connectionsList, for housing HashMap
-     * @param rtAccess
-     * @param housings
+     * @param rtAccess getting ConnectionsList
+     * @param housings getting clonedHousing
      */
     public void setEditTeachers(ConnectionsList rtAccess,
                                 HashMap<Integer, HousingInfo> housings) {
@@ -271,6 +274,9 @@ public class EditController {
                 (observableValue, aBoolean, t1) -> tryToDisplayAccess());
     }
 
+    /**
+     * Displaying access between the selected room and the selected teacher
+     */
     private void tryToDisplayAccess() {
         if (selectedTeacher.get() != null &&
                 selectedRoom.get() != null) {

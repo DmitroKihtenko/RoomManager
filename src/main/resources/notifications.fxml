@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="space" prefHeight="160.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.NotificationsController">
-   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="649.0" styleClass="txtfield" stylesheets="@Stylesheet.css">
+<AnchorPane fx:id="space" prefHeight="160.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.NotificationsController">
+   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="800.0" styleClass="txtfield" stylesheets="@Stylesheet.css">
       <children>
          <FontAwesomeIcon iconName="EXCLAMATION_TRIANGLE" size="20">
             <HBox.margin>
                <Insets left="5.0" right="5.0" />
             </HBox.margin>
          </FontAwesomeIcon>
-           <Label fx:id="notificationText" contentDisplay="CENTER" maxWidth="590.0" prefHeight="26.0" prefWidth="580.0" textFill="WHITE">
+           <Label fx:id="notificationText" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="701.0" prefHeight="30.0" prefWidth="701.0" textFill="WHITE">
             <font>
                <Font name="Microsoft Sans Serif" size="16.0" />
             </font>
