@@ -1,16 +1,13 @@
 package rm.model;
 
 import javafx.beans.property.*;
-import org.apache.log4j.Logger;
-
-import java.util.Objects;
 
 /**
  * Class successor of class {@link TeacherInfo} that contains data about used by teacher room
  */
 public class Teacher extends TeacherInfo implements Cloneable {
-    private BooleanProperty usesRoom;
-    private IntegerProperty usedRoomId;
+    private final BooleanProperty usesRoom;
+    private final IntegerProperty usedRoomId;
 
     /**
      * Constructor, sets default value of teacher surname
@@ -18,13 +15,15 @@ public class Teacher extends TeacherInfo implements Cloneable {
      */
     public Teacher(String surname) {
         super(surname);
+        usesRoom = new SimpleBooleanProperty(false);
+        usedRoomId = new SimpleIntegerProperty(IdHolder.DEFAULT_ID);
     }
 
     /**
      * Indicates whether the teacher used some room
      * @return true if teacher uses some room, otherwise returns false
      */
-    public boolean usesRoom() {
+    public boolean getUsesRoom() {
         return usesRoom.get();
     }
 
@@ -75,7 +74,7 @@ public class Teacher extends TeacherInfo implements Cloneable {
     @Override
     public void replicate(Replicable object) {
         Teacher teacher = (Teacher) object;
-        if (this.usesRoom()) {
+        if (this.getUsesRoom()) {
             teacher.setUsedRoom(getUsedRoomId());
         } else {
             teacher.setNotUsedRoom();
@@ -92,7 +91,7 @@ public class Teacher extends TeacherInfo implements Cloneable {
 
     @Override
     public String toString() {
-        String result = "UsesRoom: " + usesRoom() + ", ";
+        String result = "UsesRoom: " + getUsesRoom() + ", ";
         result += "UsedRoomId: " + getUsedRoomId();
         return super.toString() + ", " + result;
     }

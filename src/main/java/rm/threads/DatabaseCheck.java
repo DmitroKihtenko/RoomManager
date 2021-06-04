@@ -1,5 +1,6 @@
 package rm.threads;
 
+import javafx.application.Platform;
 import rm.database.mySql.RTGetSQL;
 import rm.model.Notifications;
 import org.apache.log4j.Logger;
@@ -119,8 +120,9 @@ public class DatabaseCheck implements ThreadOperation {
                         changesVersion = receivedValue;
                         logger.info("Database edit version has " +
                                         "been changed");
-                        notifications.push("Database has been " +
-                                "changed. Please update your data");
+                        Platform.runLater(() -> notifications.
+                                push("Database has been " +
+                                "changed. Please update your data"));
                     }
                 }
             } catch (SQLException e) {
