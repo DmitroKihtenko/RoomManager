@@ -26,6 +26,9 @@ public class ConcurrentQueryProvider extends QueryProvider {
         }
         super.connect(address, user, password);
     }
+    public ConcurrentQueryProvider() {
+        lock = new ReentrantLock();
+    }
 
     /**
      * Creates connection with specified database object and user object. Locks the object for other threads
