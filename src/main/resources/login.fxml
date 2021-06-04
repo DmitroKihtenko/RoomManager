@@ -74,7 +74,7 @@
                   <Font name="Microsoft Sans Serif" size="15.0" />
                </font>
             </JFXButton>
-            <HBox alignment="CENTER" layoutX="187.0" layoutY="386.0" prefHeight="160.0" prefWidth="650.0">
+            <HBox alignment="CENTER" layoutX="112.0" layoutY="386.0" prefHeight="160.0" prefWidth="650.0">
                <fx:include source="notifications.fxml" />
             </HBox>
          </children>
