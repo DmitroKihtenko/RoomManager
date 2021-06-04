@@ -57,7 +57,7 @@ public class EditController {
     }
 
     /**
-     * Setting listeners for initialized objects
+     * Setter listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -212,7 +212,7 @@ public class EditController {
     }
 
     /**
-     * Setting new housingId for the selected room
+     * Setter new housingId for the selected room
      */
     public void setNewHousingIdForRoom() {
         if (selectedRoom.get() != null &&
@@ -225,7 +225,7 @@ public class EditController {
     }
 
     /**
-     * Deleting housingId for the selected room
+     * Deletes housingId for the selected room
      */
     public void deleteHousingIdForRoom() {
         if (selectedRoom.get() != null) {
@@ -275,7 +275,7 @@ public class EditController {
     }
 
     /**
-     * Displaying access between the selected room and the selected teacher
+     * Display access between the selected room and the selected teacher
      */
     private void tryToDisplayAccess() {
         if (selectedTeacher.get() != null &&

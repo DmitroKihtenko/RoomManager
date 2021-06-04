@@ -54,7 +54,7 @@ public class AdminPanelController {
     }
 
     /**
-     * Minimizing the program
+     * Minimize the program
      * @param event mouse event
      */
     @FXML
@@ -73,7 +73,7 @@ public class AdminPanelController {
     }
 
     /**
-     * Moving the work window
+     * Moves the work window
      */
     private void makeStageDraggable() {
         parent.setOnMousePressed((event) -> {
@@ -100,7 +100,7 @@ public class AdminPanelController {
     }
 
     /**
-     * Loading the required data
+     * Load the required data
      * @throws CloneNotSupportedException
      */
     public void reloadData() throws CloneNotSupportedException {
@@ -157,7 +157,7 @@ public class AdminPanelController {
     }
 
     /**
-     * Saving data to a database
+     * Saves data to a database
      * @throws CloneNotSupportedException
      */
     public void saveData() throws CloneNotSupportedException {

@@ -63,7 +63,7 @@ public class HousingsTableController {
     }
 
     /**
-     * Setting listeners for initialized objects
+     * Setter listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -122,7 +122,7 @@ public class HousingsTableController {
     }
 
     /**
-     * Deleting housing of housingList
+     * Delete housing of housingList
      */
     public void deleteHousing() {
         ObservableList<HousingInfo> housingsList =
@@ -143,7 +143,7 @@ public class HousingsTableController {
     }
 
     /**
-     * Searching housing of housing list
+     * Search housing of housing list
      */
     public void searchHousings() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);

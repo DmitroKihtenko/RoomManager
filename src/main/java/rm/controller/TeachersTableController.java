@@ -66,7 +66,7 @@ public class TeachersTableController {
     }
 
     /**
-     * Setting listeners for initialized objects
+     * Setter listeners for initialized objects
      */
     @FXML
     public void initialize() {
@@ -151,9 +151,9 @@ public class TeachersTableController {
     }
 
     /**
-     *
-     * @param teacher
-     * @return
+     * Method that creates the short name of the teacher
+     * @param teacher teacher info
+     * @return name selected teacher of string
      */
     private String getShortName(TeacherInfo teacher) {
         String name = teacher.getSurname() + " ";
@@ -174,7 +174,7 @@ public class TeachersTableController {
     }
 
     /**
-     * Searching teacher in teachers list
+     * Search teacher in teachers list
      */
     public void searchTeachers() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);
