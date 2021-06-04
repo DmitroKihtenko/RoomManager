@@ -104,7 +104,7 @@
                <Insets left="7.0" right="7.0" />
             </VBox.margin>
          </Text>
-         <TextField fx:id="notUsedHousingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0">
+         <TextField fx:id="notUsedRoomField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="200.0">
             <font>
                <Font name="Microsoft Sans Serif" size="15.0" />
             </font>
@@ -144,7 +144,7 @@
          <String fx:value="table-radius" />
       </styleClass>
    </VBox>
-   <Label fx:id="infoAboutConnectRoomAndTeacherLabel" layoutX="210.0" layoutY="194.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" textFill="WHITE">
+   <Label fx:id="accessLabel" layoutX="210.0" layoutY="194.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="175.0" textFill="WHITE">
       <font>
          <Font name="Microsoft Sans Serif" size="15.0" />
       </font>

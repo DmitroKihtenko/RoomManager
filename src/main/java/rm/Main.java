@@ -20,7 +20,6 @@ import java.util.Objects;
 
 public class Main extends Application {
     private static final Logger logger = Logger.getLogger(Main.class);
-    public static Stage stage = null;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -28,7 +27,6 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
-        Main.stage = stage;
         stage.show();
     }
 

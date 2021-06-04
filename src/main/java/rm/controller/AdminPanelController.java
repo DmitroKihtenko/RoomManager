@@ -2,9 +2,11 @@ package rm.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.apache.log4j.Logger;
-import rm.Main;
 import rm.model.*;
 import rm.controller.util.ChangesDetector;
 import rm.database.mySql.RTModifySQL;
@@ -31,16 +33,28 @@ public class AdminPanelController {
     private double xOffSet;
     private double yOffSet;
 
-    private ChangesDetector<RoomInfo> roomsDetector;
-    private ChangesDetector<TeacherInfo> teachersDetector;
-    private ChangesDetector<HousingInfo> housingsDetector;
+    private final ChangesDetector<RoomInfo> roomsDetector;
+    private final ChangesDetector<TeacherInfo> teachersDetector;
+    private final ChangesDetector<HousingInfo> housingsDetector;
     private ConnectionsList clonedAccess;
     private ConnectionsList originalAccess;
-    private Notifications notifications;
+    private final Notifications notifications;
+
+    public AdminPanelController() {
+        sqlQueries = (RTModifySQL) Beans.context().
+                get("databaseQueries");
+        notifications = (Notifications) Beans.context().
+                get("notifications");
+        roomsDetector = new ChangesDetector<>();
+        teachersDetector = new ChangesDetector<>();
+        housingsDetector = new ChangesDetector<>();
+    }
 
     @FXML
-    private void minimizeStage() {
-        Main.stage.setIconified(true);
+    private void minimizeStage(MouseEvent event) {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     @FXML
@@ -54,14 +68,22 @@ public class AdminPanelController {
             yOffSet = event.getSceneY();
         });
         parent.setOnMouseDragged((event) -> {
-            Main.stage.setX(event.getScreenX() - xOffSet);
-            Main.stage.setY(event.getScreenY() - yOffSet);
-            Main.stage.setOpacity(0.8f);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setX(event.getScreenX() - xOffSet);
+            stage.setY(event.getScreenY() - yOffSet);
+            stage.setOpacity(0.8f);
         });
-        parent.setOnDragDone((event) ->
-                Main.stage.setOpacity(1.0f));
-        parent.setOnMouseReleased((event) ->
-                Main.stage.setOpacity(1.0f));
+        parent.setOnDragDone((event) -> {
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setOpacity(1.0f);
+        });
+        parent.setOnMouseReleased((event) -> {
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setOpacity(1.0f);
+        });
     }
 
     public void reloadData() throws CloneNotSupportedException {
@@ -213,14 +235,7 @@ public class AdminPanelController {
 
     @FXML
     public void initialize() throws CloneNotSupportedException {
-        if(sqlQueries == null) {
-            sqlQueries = (RTModifySQL) Beans.context().
-                    get("databaseQueries");
-            notifications = (Notifications) Beans.context().
-                    get("notifications");
-            roomsDetector = new ChangesDetector<>();
-            teachersDetector = new ChangesDetector<>();
-            housingsDetector = new ChangesDetector<>();
+        if(sqlQueries != null) {
             reloadData();
         }
         makeStageDraggable();

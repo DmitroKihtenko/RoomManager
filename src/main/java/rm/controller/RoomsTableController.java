@@ -35,13 +35,15 @@ public class RoomsTableController {
     private HashMap<Integer, RoomInfo> rooms;
     private HashMap<Integer, HousingInfo> housings;
     private ConnectionsList rtAccess;
-    private ObjectProperty<RoomInfo> selectedRoom;
+    private final ObjectProperty<RoomInfo> selectedRoom;
 
     private final ChangeListener<Object> refreshListener;
     private final ChangeListener<Number> housingsId;
     private final HashMap<Integer, Integer> roomsForHousings;
 
     public RoomsTableController() {
+        selectedRoom = (ObjectProperty<RoomInfo>)
+                Beans.context().get("selectedRoom");
         refreshListener = (observableValue, o, t1) ->
                 roomsTable.refresh();
         housingsId = new ChangeListener<>() {
@@ -135,9 +137,7 @@ public class RoomsTableController {
 
     @FXML
     public void initialize() {
-        if(selectedRoom == null) {
-            selectedRoom = (ObjectProperty<RoomInfo>)
-                    Beans.context().get("selectedRoom");
+        if(selectedRoom != null) {
             roomsTable.getItems().addListener((ListChangeListener
                     <RoomInfo>) change -> {
                 Integer housingId;
