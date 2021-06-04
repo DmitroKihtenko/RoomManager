@@ -191,7 +191,7 @@ public class RoomsTableController {
                             room.housingIdProperty().
                                     removeListener(refreshListener);
                             room.housingIdProperty().
-                                    addListener(housingsId);
+                                    removeListener(housingsId);
                             housingId = room.getHousingId();
                             housing = housings.get(housingId);
                             if(housing != null) {
@@ -267,7 +267,7 @@ public class RoomsTableController {
     }
 
     /**
-     * Search room in room list
+     * Search room in rooms list
      */
     public void searchRooms() {
         String text = searchField.getText().toLowerCase(Locale.ROOT);
@@ -285,10 +285,11 @@ public class RoomsTableController {
                 }
             }
         }
+        throw new IllegalArgumentException("xxx");
     }
 
     /**
-     * Getter room of string
+     * Creates room string with housing
      * @param room selected room
      * @return string value of received room
      */

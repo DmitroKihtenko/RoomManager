@@ -2,9 +2,12 @@ package rm.service;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Class with static methods used to check some assertions for strings
+ */
 public class StringLogic {
     /**
-     * Checks whether the name does not contain only those symbols that can't be visible on screen
+     * Checks whether the string contains at least one symbol that can be visible on screen
      * @param parameter string of name
      */
     static public void isVisible(String parameter,

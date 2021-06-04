@@ -1,5 +1,8 @@
 package rm.exceptions;
 
+/**
+ * Exception for class {@link rm.service.Context} that creates if object already has some object with specified name
+ */
 public class NameAlreadyExistsException extends RuntimeException {
     public NameAlreadyExistsException() {
     }

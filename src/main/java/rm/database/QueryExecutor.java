@@ -3,6 +3,9 @@ package rm.database;
 import rm.service.Assertions;
 import org.apache.log4j.Logger;
 
+/**
+ * Abstract class that describes common logic of class that executes queries to database
+ */
 public abstract class QueryExecutor {
     private static final Logger logger =
             Logger.getLogger(QueryExecutor.class);

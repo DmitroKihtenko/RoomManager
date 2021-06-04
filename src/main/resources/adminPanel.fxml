@@ -15,7 +15,7 @@
             <children>
                 <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Admin" textFill="#c2c2c2">
+                        <Label text="Room Manager" textFill="#c2c2c2">
                             <font>
                                 <Font size="15.0" />
                             </font>

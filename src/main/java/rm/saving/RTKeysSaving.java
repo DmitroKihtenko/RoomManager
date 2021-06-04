@@ -7,18 +7,39 @@ import rm.model.Room;
 import rm.model.Teacher;
 import rm.service.Assertions;
 
+import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class used to save keys from rooms received by teachers
+ */
 public class RTKeysSaving implements XmlSaving {
     private static final Logger logger =
             Logger.getLogger(RTKeysSaving.class);
     private Map<Integer, Room> rooms;
     private Map<Integer, Teacher> teachers;
 
+    /**
+     * Default constructor that creates empty maps of rooms and teachers
+     */
+    public RTKeysSaving() {
+        rooms = new HashMap<>();
+        teachers = new HashMap<>();
+    }
+
+    /**
+     * Getter for rooms map
+     * @return map of rooms, not null
+     */
     public Map<Integer, Room> getRooms() {
         return rooms;
     }
 
+    /**
+     * Setter for rooms map
+     * @param rooms map of rooms, not null
+     * @param teachers map of teachers, not null
+     */
     public void setKeysData(Map<Integer, Room> rooms,
                             Map<Integer, Teacher> teachers) {
         Assertions.isNotNull(rooms, "Rooms map", logger);
@@ -28,10 +49,19 @@ public class RTKeysSaving implements XmlSaving {
         this.teachers = teachers;
     }
 
+    /**
+     * Getter for teachers map
+     * @return map of teachers, not null
+     */
     public Map<Integer, Teacher> getTeachers() {
         return teachers;
     }
 
+    /**
+     * Reads data about keys from rooms received by teachers
+     * @param element xml document element
+     * @throws DocumentException if any error occurred while reading data
+     */
     @Override
     public void read(Element element) throws DocumentException {
         logger.debug("Reading info about ordered keys of rooms");
@@ -65,6 +95,10 @@ public class RTKeysSaving implements XmlSaving {
         }
     }
 
+    /**
+     * Writes data about keys from rooms received by teachers
+     * @param element xml document element
+     */
     @Override
     public void write(Element element) {
         logger.debug("Writing info about ordered keys of rooms");

@@ -3,6 +3,9 @@ package rm.service;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Class with static methods used in any module of program to check some assertion and throw exception
+ */
 public class Assertions {
     /**
      * Checks some object for null value
