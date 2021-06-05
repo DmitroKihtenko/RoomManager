@@ -9,8 +9,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="parent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="350.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.EditController">
-    <VBox layoutX="54.0" layoutY="39.0" prefHeight="151.0" prefWidth="235.0" stylesheets="@Stylesheet.css" AnchorPane.topAnchor="39.0">
+<AnchorPane fx:id="parent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="330.0" styleClass="parent" stylesheets="@Stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rm.controller.EditController">
+    <VBox layoutX="32.0" layoutY="40.0" prefHeight="151.0" prefWidth="235.0" stylesheets="@Stylesheet.css" AnchorPane.topAnchor="40.0">
         <children>
             <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
             <font>
@@ -79,7 +79,7 @@
          <String fx:value="table-radius" />
       </styleClass>
     </VBox>
-   <VBox layoutX="54.0" layoutY="270.0" prefHeight="151.0" prefWidth="235.0" AnchorPane.topAnchor="270.0">
+   <VBox layoutX="32.0" layoutY="270.0" prefHeight="151.0" prefWidth="235.0" AnchorPane.topAnchor="270.0">
       <children>
          <Text fill="#c4a5a5" strokeType="OUTSIDE" strokeWidth="0.0" text="Room:">
             <font>
@@ -155,7 +155,7 @@
          <Font name="Microsoft Sans Serif" size="15.0" />
       </font>
    </Label>
-   <VBox layoutX="314.0" layoutY="40.0" prefHeight="430.0" prefWidth="22.0">
+   <VBox layoutX="298.0" layoutY="40.0" prefHeight="430.0" prefWidth="22.0">
       <children>
          <FontAwesomeIcon iconName="ARROW_CIRCLE_RIGHT" onMouseClicked="#giveKey" size="25">
             <VBox.margin>
