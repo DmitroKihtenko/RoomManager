@@ -162,8 +162,6 @@ public class AdminPanelController {
             for (TeacherInfo teacher : teachers.values()) {
                 castedTeachers.put(teacher.getId(), (Teacher) teacher);
             }
-            teachersTableController.setTeachers(castedTeachers);
-            editController.setEditTeachers(rtAccess, housings);
             ObservableList<HousingInfo> housingsList =
                     FXCollections.observableList(new
                             ArrayList<>(housings.values()));
@@ -179,7 +177,10 @@ public class AdminPanelController {
                         select(housings.get(housingSaving.
                                 getSelectedHousing()));
             }
-
+            dataSavings.readForPath(EMPLOYEE_PATH);
+            teachersTableController.setTeachers(castedTeachers);
+            editController.setEditTeachers(rtAccess, housings,
+                    castedTeachers, castedRooms);
         }
     }
 
@@ -211,7 +212,7 @@ public class AdminPanelController {
                         if(oldV != newV && newV != null) {
                             housingSaving.setSelectedHousing(newV.getId());
                             reloadRooms();
-                            dataSavings.readForPath(EMPLOYEE_PATH);
+                            returnTeachersKeys();
                             logger.info("Selected housing: " + newV);
                         }
                     });
@@ -243,6 +244,12 @@ public class AdminPanelController {
             dataSavings.readForPath(EMPLOYEE_PATH);
 
             roomsTableController.setRooms(castedRooms, housings);
+        }
+    }
+
+    private void returnTeachersKeys() {
+        for(Teacher teacher : castedTeachers.values()) {
+            teacher.setNotUsedRoom();
         }
     }
 }

@@ -1,6 +1,7 @@
 package rm;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +13,10 @@ import org.apache.log4j.Logger;
 import rm.database.ConcurrentQueryProvider;
 import rm.database.mySql.RTGetSQL;
 import rm.model.*;
-import rm.database.mySql.RTModifySQL;
 import rm.saving.*;
 import rm.service.Beans;
+
+import java.util.Objects;
 
 /**
  * Main class
@@ -24,20 +26,17 @@ public class Main extends Application {
     private static final String DATABASE_PATH = "database.xml";
 
     /**
-     * Creates main window and gives management to controller {@link rm.controller.LoginController}
+     * Creates main window and gives management to controller {@link rm.controller.AdminPanelController}
      * @param stage window object
      * @throws Exception
      */
     @Override
     public void start(Stage stage) throws Exception {
-        /*
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             logger.fatal(Objects.requireNonNullElse(e.getMessage(),
                     e.toString()));
             Platform.exit();
         });
-
-         */
         Parent root = FXMLLoader.load(getClass().getResource(
                 "/adminPanel.fxml"));
         Scene scene = new Scene(root);
@@ -58,7 +57,7 @@ public class Main extends Application {
         User user = new User();
         XmlSavingsHandler dataSavings = new XmlSavingsHandler();
         Notifications notifications = new Notifications();
-        RTGetSQL databaseQueries = new RTModifySQL();
+        RTGetSQL databaseQueries = new RTGetSQL();
         provider.setDatasource(datasource);
         provider.setUser(user);
         databaseQueries.setProvider(provider);
@@ -68,8 +67,6 @@ public class Main extends Application {
         ObjectProperty<Room> selectedRoom =
                 new SimpleObjectProperty<>(null);
         ObjectProperty<Teacher> selectedTeacher =
-                new SimpleObjectProperty<>(null);
-        ObjectProperty<HousingInfo> selectedHousing =
                 new SimpleObjectProperty<>(null);
 
         dataSavings.propertiesForPath(DATABASE_PATH,
@@ -83,7 +80,6 @@ public class Main extends Application {
         Beans.context().set("databaseQueries", databaseQueries);
         Beans.context().set("selectedRoom", selectedRoom);
         Beans.context().set("selectedTeacher", selectedTeacher);
-        Beans.context().set("selectedHousing", selectedHousing);
         Beans.context().set("notifications", notifications);
         Beans.context().set("dataSavings", dataSavings);
         Beans.context().set("housingSaving", housingSaving);
@@ -97,8 +93,6 @@ public class Main extends Application {
      */
     @Override
     public void stop() throws Exception {
-        ((RTModifySQL) Beans.context().get("databaseQueries")).
-                getProvider().disconnect();
         logger.info("Program finished");
         super.stop();
     }
