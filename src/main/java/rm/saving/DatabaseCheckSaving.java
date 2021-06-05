@@ -75,7 +75,7 @@ public class DatabaseCheckSaving implements XmlSaving {
         Element checkTag = element.addElement("database-check");
         Element currentTag = checkTag.addElement("enabled");
         currentTag.setText(String.valueOf(databaseCheck.getEnabled()));
-        currentTag = element.addElement("database-check");
+        currentTag = checkTag.addElement("interval");
         currentTag.setText(String.valueOf(databaseCheck.
                 getCheckInterval()));
     }

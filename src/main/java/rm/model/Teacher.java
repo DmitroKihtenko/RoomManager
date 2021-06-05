@@ -49,7 +49,7 @@ public class Teacher extends TeacherInfo implements Cloneable {
      */
     public void setNotUsedRoom() {
         this.usesRoom.set(false);
-        this.usedRoomId.set(0);
+        this.usedRoomId.set(IdHolder.DEFAULT_ID);
     }
 
     /**

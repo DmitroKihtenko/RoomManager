@@ -89,7 +89,7 @@
 
 .combo-box {
     -fx-font-size: 15px;
-    -fx-prompt-text-fill: black;
+    -fx-prompt-text-fill: white;
     -fx-text-fill: black;
     -fx-background-color: none;
     -fx-border-width: 0 0 1 0;

@@ -47,7 +47,7 @@
                         <Insets left="20.0" top="40.0" />
                      </VBox.margin>
                   </FontAwesomeIcon>
-                  <ComboBox fx:id="housingComboBox" onAction="#getHousingComboBox" prefWidth="150.0" styleClass="combo-box">
+                  <ComboBox fx:id="housingComboBox" prefWidth="150.0" styleClass="combo-box">
                      <VBox.margin>
                         <Insets left="5.0" top="61.0" />
                      </VBox.margin>

@@ -41,7 +41,7 @@ public class Room extends RoomInfo implements Cloneable {
      * @return id of teacher if room is occupied by teacher, otherwise returns null
      */
     public Integer getOccupiedBy() {
-        if (!this.isAvailable.get()) {
+        if (this.isAvailable.get()) {
             return null;
         }
         if(this.occupiedBy.get() == IdHolder.DEFAULT_ID) {
@@ -78,10 +78,10 @@ public class Room extends RoomInfo implements Cloneable {
     @Override
     public void replicate(Replicable object) {
         Room room = (Room) object;
-        if(getOccupiedBy() != null) {
-            room.setOccupiedBy(getOccupiedBy());
-        } else {
+        if(isAvailable()) {
             room.setNotOccupied();
+        } else {
+            room.setOccupiedBy(getOccupiedBy());
         }
         super.replicate(room);
     }
