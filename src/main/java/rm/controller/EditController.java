@@ -227,10 +227,9 @@ public class EditController {
                 selectedRoom.get() != null) {
             if(!rtAccess.existsConnection(selectedTeacher.get().
                     getId(), selectedRoom.get().getId())) {
-                logger.warn("Attempt to give from room to teacher" +
+                logger.warn("Attempt to give key of room to teacher" +
                         " that has not access");
-                notifications.push("Attempt to give from room " +
-                        "to teacher that has not access");
+                notifications.push("Teacher has not access");
             } else {
                 if(!selectedRoom.get().isUsed()) {
                     logger.warn("Attempt to give from room that " +
