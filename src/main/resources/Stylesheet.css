@@ -88,13 +88,13 @@
 }
 
 .combo-box {
-    -fx-font-size: 12px;
+    -fx-font-size: 15px;
     -fx-prompt-text-fill: black;
     -fx-text-fill: black;
     -fx-background-color: none;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #bdbdbd;
-    -fx-padding: 0 0 3 -8;
+    -fx-padding: 0 0 3 1;
 }
 
 .combo-box .list-cell:filled:selected .text {
@@ -105,9 +105,17 @@
     -fx-background-color: black;
 }
 
-.combo-box-popup .list-view
-{
+.combo-box-popup > .list-view {
     -fx-background-color: #303138;
-    -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+.combo-box-popup *.list-cell {
+    -fx-background-color: #303138;
+    -fx-selection-bar: white;
+    -fx-cell-focus-inner-border: white;
+    -fx-text-fill: black;
+    -fx-padding: 0 0 3 1;
+}
+
+.combo-box-popup *.list-cell:hover {
+    -fx-background-color: #3B4148;
 }
