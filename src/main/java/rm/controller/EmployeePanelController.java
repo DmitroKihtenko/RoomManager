@@ -24,9 +24,9 @@ import rm.threads.ServiceThread;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdminPanelController {
+public class EmployeePanelController {
     private static final Logger logger =
-            Logger.getLogger(AdminPanelController.class);
+            Logger.getLogger(EmployeePanelController.class);
     private static final String PROPERTIES_PATH = "properties.xml";
     private static final String EMPLOYEE_PATH = "employeeData.xml";
     @FXML
@@ -56,7 +56,7 @@ public class AdminPanelController {
     /**
      * Default constructor. Object initialization
      */
-    public AdminPanelController() {
+    public EmployeePanelController() {
         firstLaunch = true;
         castedRooms = new HashMap<>();
         castedTeachers = new HashMap<>();
