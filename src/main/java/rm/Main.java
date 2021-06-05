@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
+import rm.controller.EmployeePanelController;
 import rm.database.ConcurrentQueryProvider;
 import rm.database.mySql.RTGetSQL;
 import rm.model.*;
@@ -26,7 +27,7 @@ public class Main extends Application {
     private static final String DATABASE_PATH = "database.xml";
 
     /**
-     * Creates main window and gives management to controller {@link rm.controller.AdminPanelController}
+     * Creates main window and gives management to controller {@link EmployeePanelController}
      * @param stage window object
      * @throws Exception
      */
@@ -38,7 +39,7 @@ public class Main extends Application {
             Platform.exit();
         });
         Parent root = FXMLLoader.load(getClass().getResource(
-                "/adminPanel.fxml"));
+                "/employeePanel.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
