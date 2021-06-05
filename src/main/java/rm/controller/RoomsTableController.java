@@ -49,6 +49,12 @@ public class RoomsTableController {
                 Beans.context().get("selectedRoom");
         refreshListener = (observableValue, o, t1) ->
                 roomsTable.refresh();
+        selectedRoom.addListener((observableValue, housingInfo,
+                                     t1) -> {
+            if(housingInfo != t1) {
+                logger.info("Selected room: " + t1);
+            }
+        });
         housingsId = new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Number>
@@ -249,6 +255,7 @@ public class RoomsTableController {
         roomsList.add(newRoom);
         rooms.put(newRoom.getId(), newRoom);
         roomsTable.getSelectionModel().select(newRoom);
+        logger.info("Added new room: " + newRoom);
     }
 
     /**
@@ -263,6 +270,7 @@ public class RoomsTableController {
             rtAccess.removeSecondConnections(roomToDelete.getId());
             roomsList.remove(roomToDelete);
             rooms.remove(roomToDelete.getId());
+            logger.info("Removed room: " + roomToDelete);
         }
     }
 
@@ -284,6 +292,9 @@ public class RoomsTableController {
                     roomsList.add(room);
                 }
             }
+        }
+        if(!text.equals("")) {
+            logger.info("Searched room for pattern " + text);
         }
     }
 

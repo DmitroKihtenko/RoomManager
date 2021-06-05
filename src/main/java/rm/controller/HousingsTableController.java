@@ -2,6 +2,7 @@ package rm.controller;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,6 +42,12 @@ public class HousingsTableController {
     public HousingsTableController() {
         selectedHousing = (ObjectProperty<HousingInfo>)
                 Beans.context().get("selectedHousing");
+        selectedHousing.addListener((observableValue, housingInfo,
+                                     t1) -> {
+            if(housingInfo != t1) {
+                logger.info("Selected housing: " + t1);
+            }
+        });
     }
 
     /**
@@ -119,6 +126,7 @@ public class HousingsTableController {
         housingsList.add(newHousing);
         housings.put(newHousing.getId(), newHousing);
         housingsTable.getSelectionModel().select(newHousing);
+        logger.info("Added new housing: " + newHousing);
     }
 
     /**
@@ -139,6 +147,7 @@ public class HousingsTableController {
                     room.setHousingId(null);
                 }
             }
+            logger.info("Removed housing: " + housingToRemove);
         }
     }
 
@@ -163,6 +172,9 @@ public class HousingsTableController {
                     housingsList.add(housing);
                 }
             }
+        }
+        if(!text.equals("")) {
+            logger.info("Searched housing for pattern " + text);
         }
     }
 }

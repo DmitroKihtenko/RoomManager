@@ -158,7 +158,7 @@ public class RoomInfo extends IdHolder implements Cloneable {
         String result =  "Number: " + getNumber() + ", ";
         result += "HousingId: " + getHousingId() + ", ";
         result += "IsUsed: " + isUsed() + ", ";
-        result += "NotUsedReason: " + getNotUsedReason() + ". ";
+        result += "NotUsedReason: " + getNotUsedReason();
         return super.toString() + ", " + result;
     }
 

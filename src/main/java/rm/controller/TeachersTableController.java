@@ -44,6 +44,12 @@ public class TeachersTableController {
     public TeachersTableController() {
         selectedTeacher = (ObjectProperty<TeacherInfo>)
                 Beans.context().get("selectedTeacher");
+        selectedTeacher.addListener((observableValue, housingInfo,
+                                  t1) -> {
+            if(housingInfo != t1) {
+                logger.info("Selected teacher: " + t1);
+            }
+        });
     }
 
     /**
@@ -132,6 +138,7 @@ public class TeachersTableController {
         teachersList.add(newTeacher);
         teachers.put(newTeacher.getId(), newTeacher);
         teachersTable.getSelectionModel().select(newTeacher);
+        logger.info("Added new teacher: " + newTeacher);
     }
 
     /**
@@ -147,6 +154,7 @@ public class TeachersTableController {
             rtAccess.removeFirstConnections(teacherToDelete.getId());
             teachersList.remove(teacherToDelete);
             teachers.remove(teacherToDelete.getId());
+            logger.info("Removed teacher: " + teacherToDelete);
         }
     }
 
@@ -200,6 +208,9 @@ public class TeachersTableController {
                     teachersList.add(teacher);
                 }
             }
+        }
+        if(!text.equals("")) {
+            logger.info("Searched teacher for pattern " + text);
         }
     }
 }
